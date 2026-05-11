@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        var hour = new Date().getHours();
+        var isNight = hour >= 18 || hour < 7;
+        document.documentElement.classList.toggle("theme-night", isNight);
+      })();
+    </script>
+    <title>Piero Pasquariello | Cronos creator hub</title>
+    <meta
+      name="description"
+      content="Personal Web3 hub for Piero Pasquariello, an Italian nurse and Cronos Ambassador sharing content across X, Medium and Reddit."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://your-domain.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Piero Pasquariello | Cronos creator hub" />
+    <meta
+      property="og:description"
+      content="A personal Web3 hub that connects X, Medium and Reddit into one recognizable personal brand."
+    />
+    <meta property="og:url" content="https://your-domain.com/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Piero Pasquariello | Cronos creator hub" />
+    <meta
+      name="twitter:description"
+      content="A profile-style creator hub with a Cronos-inspired feel, designed to turn visitors into followers."
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260511a" />
+    <script defer src="./app.js?v=20260511a"></script>
+  </head>
+  <body>
+    <div class="bg-orb bg-orb-a"></div>
+    <div class="bg-orb bg-orb-b"></div>
+    <div class="signal-backdrop" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="bg-noise"></div>
+
+    <main class="app-shell" id="top">
+      <section class="profile-shell panel reveal">
+        <div class="signal-topline">
+          <p class="eyebrow"><span class="status-dot"></span>Personal Web3 Hub</p>
+        </div>
+
+        <div class="signal-stage">
+          <div class="profile-meta">
+            <div class="profile-intro">
+              <div>
+                <h1>
+                  <span class="name-line">Piero Pasquariello</span>
+                  <span class="tagline-line"
+                    >Helping people understand Cronos, Web3 and digital finance without the noise.</span
+                  >
+                </h1>
+              </div>
+            </div>
+
+            <div class="profile-actions">
+              <a
+                class="action-button action-primary"
+                data-link="latest-article"
+                href="https://medium.com/@pieropasquariello/cronos-app-is-not-about-turning-everyone-into-a-trader-755d7d64136a"
+              >
+                <img class="button-logo" src="https://cdn.simpleicons.org/medium/FFFFFF?viewbox=auto" alt="" aria-hidden="true" />
+                <span>Read my latest article</span>
+                <span class="button-arrow">›</span>
+              </a>
+              <a class="action-button action-secondary" data-link="x" href="https://x.com/PieroPasqiari88">
+                <img class="button-logo" src="https://cdn.simpleicons.org/x/FFFFFF?viewbox=auto" alt="" aria-hidden="true" />
+                <span>Follow on X</span>
+                <span class="button-arrow">›</span>
+              </a>
+            </div>
+
+            <p class="bio" id="bio"></p>
+
+            <div class="proof-strip" aria-label="Profile highlights">
+              <span><strong>Cronos Ambassador</strong></span>
+              <span><strong>Crypto since 2021</strong></span>
+              <span><strong>Healthcare background</strong></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="social-section panel reveal" id="social">
+        <div class="social-section-head">
+          <p class="eyebrow">Where to find me</p>
+          <p>Quick links to the platforms I use most.</p>
+        </div>
+        <div class="social-grid">
+          <a class="signal-card signal-card-accent where-card" href="https://x.com/PieroPasqiari88" target="_blank" rel="noreferrer">
+            <span class="platform-orb platform-orb-x" aria-hidden="true">
+              <img src="https://cdn.simpleicons.org/x/FFFFFF?viewbox=auto" alt="" aria-hidden="true" />
+            </span>
+            <span class="where-copy">
+              <strong>X</strong>
+              <small>Daily Cronos takes and updates</small>
+            </span>
+            <span class="external-mark">↗</span>
+          </a>
+          <a class="signal-card where-card" href="https://medium.com/@pieropasquariello" target="_blank" rel="noreferrer">
+            <span class="platform-orb platform-orb-medium" aria-hidden="true">
+              <img src="https://cdn.simpleicons.org/medium/111827?viewbox=auto" alt="" aria-hidden="true" />
+            </span>
+            <span class="where-copy">
+              <strong>Medium</strong>
+              <small>Long-form articles and deeper analysis</small>
+            </span>
+            <span class="external-mark">↗</span>
+          </a>
+          <a class="signal-card where-card" href="#reddit">
+            <span class="platform-orb platform-orb-reddit" aria-hidden="true">
+              <img src="https://cdn.simpleicons.org/reddit/FF4500?viewbox=auto" alt="" aria-hidden="true" />
+            </span>
+            <span class="where-copy">
+              <strong>Reddit</strong>
+              <small>Community posts and Web3 discussions</small>
+            </span>
+            <span class="external-mark">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="news-section panel reveal" id="news" aria-label="News">
+        <div class="news-head">
+          <div>
+            <p class="eyebrow">News</p>
+            <h2>Cronos, crypto and Web3 signals worth watching.</h2>
+            <p>Curated updates and quick reads from the ecosystem, shown without stealing focus from the main hub.</p>
+          </div>
+          <a class="section-link" href="#posts">View all →</a>
+        </div>
+        <div class="news-grid" id="newsGrid" aria-label="Latest news cards"></div>
+      </section>
+
+      <section class="nav-strip panel reveal" aria-label="Section navigation">
+        <a href="#posts">Posts</a>
+        <a href="#about">About</a>
+        <a href="#proof">Proof</a>
+        <a href="#medium">Medium</a>
+      </section>
+
+      <section class="about-grid reveal" id="about">
+        <article class="panel about-card about-card-main">
+          <p class="eyebrow">About</p>
+          <h2>I create content for people who want to understand crypto without getting lost in noise.</h2>
+          <div class="trust-metrics" aria-label="Trust markers">
+            <span>Since 2021</span>
+            <span>Cronos Ambassador</span>
+            <span>Healthcare background</span>
+            <span>Multi-platform writer</span>
+          </div>
+          <p>
+            My healthcare background taught me the value of clarity and trust. I bring the same
+            mindset into Web3, writing about Cronos, adoption, DeFi and on-chain finance in a
+            simple and human way.
+          </p>
+        </article>
+
+        <article class="panel about-card about-card-side" id="proof">
+          <p class="eyebrow">Proof</p>
+          <div class="trust-metrics trust-metrics-tight" aria-label="Proof markers">
+            <span>Since 2021</span>
+            <span>Cronos Ambassador</span>
+          </div>
+          <ul>
+            <li>Nurse and healthcare professional</li>
+            <li>Active in crypto since 2021</li>
+            <li>Cronos Ambassador</li>
+            <li>Writing across X, Medium and Reddit</li>
+            <li>Focused on simple Web3 education</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="posts-header reveal" id="posts">
+        <div>
+          <h2>Selected writing</h2>
+          <p>A curated preview of my articles, posts and community content.</p>
+        </div>
+        <a class="section-link" href="/writing">View all writing →</a>
+      </section>
+
+      <section class="content-columns" id="articleList" aria-live="polite"></section>
+
+      <section class="panel follow-panel reveal" id="follow">
+        <div>
+          <p class="eyebrow">Follow</p>
+          <h2>One profile. One voice. Multiple platforms.</h2>
+        </div>
+        <div class="follow-links">
+          <a class="action-button action-primary" data-link="x-follow" href="#x"
+            >Follow on X</a
+          >
+          <a class="action-button action-secondary" data-link="medium-follow" href="#medium"
+            >Read on Medium</a
+          >
+          <a class="action-button action-ghost" data-link="reddit-follow" href="#reddit"
+            >Join on Reddit</a
+          >
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
