@@ -126,48 +126,38 @@ function getFirstImageSrc(html) {
 }
 
 function detectLanguage(text) {
-  const value = text.toLowerCase();
-  const italianHints = [
-    "perché",
-    "perche",
-    "italiano",
-    "italiana",
-    "spiegato",
-    "spiegata",
-    "adozione",
-    "fiducia",
-    "linguaggio",
-    "cronos",
-    "cro ",
-    "cro'",
-    "cro'",
-    "web3",
-    "semplice",
-    "mercato",
-    "mercati",
-    "risposta",
-    "notizia",
-    "mercati",
+  const value = cleanText(text).toLowerCase();
+  const italianSignals = [
+    /[àèéìòù’]/,
+    /\b(perché|perche|italiano|italiana|italiani|italiane|spiegato|spiegata|spiegazione|adozione|fiducia|linguaggio|chiarezza|chiaro|parlare|funziona|proposta|notizia|community italiana|guida|grafia|contesto)\b/,
+    /\b(del|della|dello|degli|delle|nell'|nell|sull'|sull|dall'|dall|all'|all)\b/,
+  ];
+  const englishSignals = [
+    /\b(the|and|with|without|because|should|need|when|what|why|more|better|users|markets|understandable|mobile-first|simple)\b/,
   ];
 
-  if (/[àèéìòù’]/.test(text)) {
+  if (italianSignals.some((pattern) => pattern.test(value))) {
     return "it";
   }
 
-  if (italianHints.some((hint) => value.includes(hint))) {
-    return "it";
+  if (englishSignals.some((pattern) => pattern.test(value))) {
+    return "en";
   }
 
   return "en";
 }
 
 function cleanText(value) {
-  return value
+  return stripCdata(String(value))
     .replace(/\s+/g, " ")
     .replace(/&#39;/g, "'")
     .replace(/&quot;/g, '"')
     .replace(/&amp;/g, "&")
     .trim();
+}
+
+function stripCdata(value) {
+  return String(value).replace(/<!\[CDATA\[|\]\]>/g, "");
 }
 
 function stripHtml(value) {
