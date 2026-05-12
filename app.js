@@ -118,14 +118,12 @@ const mediumFeedState = {
   error: null,
 };
 
-const spotlightItems = [
-  site.sections[0].items[0],
-  site.sections[0].items[2],
-  site.sections[1].items[0],
-].filter(Boolean);
+const preferredWritingSectionId = getPreferredWritingSectionId();
+const spotlightItems = getSpotlightItems();
 
 const els = {
   bio: document.querySelector("#bio"),
+  localeNote: document.querySelector("#localeNote"),
   articleList: document.querySelector("#articleList"),
   newsGrid: document.querySelector("#newsGrid"),
   followX: document.querySelector('[data-link="x"]'),
@@ -136,7 +134,7 @@ const els = {
   followReddit2: document.querySelector('[data-link="reddit-follow"]'),
 };
 
-let activeWritingSectionId = site.sections[0]?.id || "medium";
+let activeWritingSectionId = preferredWritingSectionId || site.sections[0]?.id || "medium";
 let writingSwitcherBound = false;
 let themeTimerId = null;
 
@@ -149,6 +147,12 @@ loadLiveMediumFeed();
 
 function render() {
   els.bio.textContent = site.bio;
+  if (els.localeNote) {
+    els.localeNote.textContent =
+      getBrowserLanguage() === "it"
+        ? "Articoli in italiano in evidenza. La sezione italiana si apre per prima."
+        : "English and Italian articles are both available, with the Italian section one tap away.";
+  }
   renderSpotlightArticles();
   setLink(els.followX, site.xUrl);
   setLinks(els.followLatest, site.latestArticleUrl);
@@ -417,6 +421,52 @@ function setupWritingSwitcher() {
 
   window.addEventListener("resize", syncWritingSwitcherState);
   syncWritingSwitcherState();
+}
+
+function getPreferredWritingSectionId() {
+  const preferredLanguage = getBrowserLanguage();
+  if (preferredLanguage === "it") {
+    return "italian-writing";
+  }
+
+  return "global-writing";
+}
+
+function getSpotlightItems() {
+  const italianFirst = getPreferredWritingSectionId() === "italian-writing";
+  const englishMedium = site.sections[0]?.items[0];
+  const englishLinkedIn = site.sections[0]?.items[2];
+  const italianMedium = site.sections[1]?.items[0];
+  const italianLinkedIn = site.sections[1]?.items[1];
+
+  return (italianFirst
+    ? [italianMedium, italianLinkedIn, englishMedium]
+    : [englishMedium, englishLinkedIn, italianMedium]
+  ).filter(Boolean);
+}
+
+function getBrowserLanguage() {
+  const values = [];
+
+  if (typeof navigator !== "undefined") {
+    if (Array.isArray(navigator.languages)) {
+      values.push(...navigator.languages);
+    }
+    if (typeof navigator.language === "string") {
+      values.push(navigator.language);
+    }
+  }
+
+  const pageLanguage = document.documentElement?.lang;
+  if (typeof pageLanguage === "string") {
+    values.push(pageLanguage);
+  }
+
+  const match = values
+    .map((value) => String(value).toLowerCase())
+    .find((value) => value.startsWith("it"));
+
+  return match ? "it" : "en";
 }
 
 function setupTimeBasedTheme() {
