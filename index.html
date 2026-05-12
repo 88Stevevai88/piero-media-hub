@@ -44,6 +44,26 @@
     <div class="bg-noise"></div>
 
     <main class="app-shell" id="top">
+      <header class="site-header nav-strip panel reveal" aria-label="Primary navigation">
+        <a class="site-brand" href="#top">Piero Pasquariello</a>
+        <nav class="site-nav" aria-label="Site sections">
+          <a href="#posts">Posts</a>
+          <a href="#about">About</a>
+          <a href="#proof">Proof</a>
+          <a href="#social">Social</a>
+          <a href="#follow">Follow</a>
+        </nav>
+        <a
+          class="site-cta action-button action-primary"
+          data-link="latest-article"
+          href="https://medium.com/@pieropasquariello/cronos-app-is-not-about-turning-everyone-into-a-trader-755d7d64136a"
+        >
+          <img class="button-logo" src="https://cdn.simpleicons.org/medium/FFFFFF?viewbox=auto" alt="" aria-hidden="true" />
+          <span>Read latest</span>
+          <span class="button-arrow">›</span>
+        </a>
+      </header>
+
       <section class="profile-shell panel reveal">
         <div class="signal-topline">
           <p class="eyebrow"><span class="status-dot"></span>Personal Web3 Hub</p>
@@ -96,7 +116,7 @@
           <p>Quick links to the platforms I use most.</p>
         </div>
         <div class="social-grid">
-          <a class="signal-card signal-card-accent where-card" href="https://x.com/PieroPasqiari88" target="_blank" rel="noreferrer">
+          <a class="signal-card signal-card-accent where-card" id="x" href="https://x.com/PieroPasqiari88" target="_blank" rel="noreferrer">
             <span class="platform-orb platform-orb-x" aria-hidden="true">
               <img src="https://cdn.simpleicons.org/x/FFFFFF?viewbox=auto" alt="" aria-hidden="true" />
             </span>
@@ -106,7 +126,7 @@
             </span>
             <span class="external-mark">↗</span>
           </a>
-          <a class="signal-card where-card" href="https://medium.com/@pieropasquariello" target="_blank" rel="noreferrer">
+          <a class="signal-card where-card" id="medium" href="https://medium.com/@pieropasquariello" target="_blank" rel="noreferrer">
             <span class="platform-orb platform-orb-medium" aria-hidden="true">
               <img src="https://cdn.simpleicons.org/medium/111827?viewbox=auto" alt="" aria-hidden="true" />
             </span>
@@ -116,7 +136,7 @@
             </span>
             <span class="external-mark">↗</span>
           </a>
-          <a class="signal-card where-card" href="#reddit">
+          <a class="signal-card where-card" id="reddit" href="#follow">
             <span class="platform-orb platform-orb-reddit" aria-hidden="true">
               <img src="https://cdn.simpleicons.org/reddit/FF4500?viewbox=auto" alt="" aria-hidden="true" />
             </span>
@@ -139,13 +159,6 @@
           <a class="section-link" href="#posts">View all →</a>
         </div>
         <div class="news-grid" id="newsGrid" aria-label="Latest news cards"></div>
-      </section>
-
-      <section class="nav-strip panel reveal" aria-label="Section navigation">
-        <a href="#posts">Posts</a>
-        <a href="#about">About</a>
-        <a href="#proof">Proof</a>
-        <a href="#medium">Medium</a>
       </section>
 
       <section class="about-grid reveal" id="about">
@@ -185,7 +198,7 @@
         <div>
           <h2>Selected writing</h2>
         </div>
-        <a class="section-link" href="/writing">View all writing →</a>
+        <a class="section-link" href="https://medium.com/@pieropasquariello" target="_blank" rel="noreferrer">View all writing →</a>
       </section>
 
       <section class="content-columns" id="articleList" aria-live="polite"></section>

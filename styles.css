@@ -956,6 +956,55 @@ html.theme-night .trust-metrics span {
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
+.site-header {
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  overflow-x: visible;
+}
+
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+.site-nav {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.site-cta {
+  flex: 0 0 auto;
+  min-height: 40px;
+}
+
+.site-header .site-brand:hover,
+.site-header .site-brand:focus-visible {
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  box-shadow: none;
+}
+
+.site-header .site-nav a {
+  white-space: nowrap;
+}
+
 .nav-strip a {
   white-space: nowrap;
   color: var(--muted-strong);
@@ -967,6 +1016,10 @@ html.theme-night .trust-metrics span {
 html.theme-night .nav-strip {
   background:
     linear-gradient(180deg, rgba(14, 24, 37, 0.92), rgba(9, 17, 27, 0.9));
+}
+
+html.theme-night .site-brand {
+  color: var(--text);
 }
 
 html.theme-night .nav-strip a {
@@ -990,6 +1043,22 @@ html.theme-night .nav-strip a:hover {
   box-shadow:
     0 10px 24px rgba(53, 94, 132, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.site-header .site-brand,
+.site-header .site-brand:hover,
+.site-header .site-brand:focus-visible,
+.site-header .site-brand.is-active {
+  padding: 0;
+  border-radius: 0;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text);
+}
+
+.site-header .action-button {
+  white-space: nowrap;
 }
 
 .about-grid {
@@ -1478,6 +1547,20 @@ html.theme-night .follow-panel {
   .follow-panel {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .site-header {
+    flex-wrap: wrap;
+  }
+
+  .site-nav {
+    justify-content: flex-start;
+    order: 3;
+    width: 100%;
+  }
+
+  .site-cta {
+    order: 2;
   }
 
   .social-grid {

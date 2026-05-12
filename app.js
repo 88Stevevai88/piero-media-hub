@@ -156,7 +156,7 @@ const els = {
   articleList: document.querySelector("#articleList"),
   newsGrid: document.querySelector("#newsGrid"),
   followX: document.querySelector('[data-link="x"]'),
-  followLatest: document.querySelector('[data-link="latest-article"]'),
+  followLatest: document.querySelectorAll('[data-link="latest-article"]'),
   followMedium: document.querySelector('[data-link="medium"]'),
   followX2: document.querySelector('[data-link="x-follow"]'),
   followMedium2: document.querySelector('[data-link="medium-follow"]'),
@@ -178,7 +178,7 @@ function render() {
   els.bio.textContent = site.bio;
   renderNews();
   setLink(els.followX, site.xUrl);
-  setLink(els.followLatest, site.latestArticleUrl);
+  setLinks(els.followLatest, site.latestArticleUrl);
   setLink(els.followMedium, site.mediumUrl);
   setLink(els.followX2, site.xUrl);
   setLink(els.followMedium2, site.mediumUrl);
@@ -295,7 +295,7 @@ async function loadLiveMediumFeed() {
 
     if (items.length && typeof items[0]?.href === "string") {
       site.latestArticleUrl = items[0].href;
-      setLink(els.followLatest, site.latestArticleUrl);
+      setLinks(els.followLatest, site.latestArticleUrl);
     }
 
     renderWritingSections();
@@ -352,6 +352,10 @@ function setLink(node, href) {
   node.removeAttribute("target");
   node.removeAttribute("rel");
   node.setAttribute("aria-label", "Link da aggiungere");
+}
+
+function setLinks(nodes, href) {
+  Array.from(nodes || []).forEach((node) => setLink(node, href));
 }
 
 function safeHref(href) {
@@ -519,7 +523,7 @@ function setupActiveNav() {
     new Set(
       navLinks
         .map((link) => link.getAttribute("href"))
-        .filter((href) => href && href.startsWith("#")),
+        .filter((href) => href && href.startsWith("#") && href !== "#top"),
     ),
   )
     .map((href) => document.querySelector(href))
