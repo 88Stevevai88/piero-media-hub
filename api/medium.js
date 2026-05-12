@@ -27,12 +27,12 @@ module.exports = async function mediumFeedHandler(req, res) {
 
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/json; charset=utf-8");
-    res.setHeader("Cache-Control", "s-maxage=600, stale-while-revalidate=86400");
+    res.setHeader("Cache-Control", "no-store, max-age=0");
     res.end(JSON.stringify({ items, updatedAt: new Date().toISOString() }));
   } catch (error) {
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/json; charset=utf-8");
-    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("Cache-Control", "no-store, max-age=0");
     res.end(JSON.stringify({ items: [], error: "Unable to load Medium feed" }));
   }
 };
@@ -129,18 +129,21 @@ function detectLanguage(text) {
   const value = cleanText(text).toLowerCase();
   const italianSignals = [
     /[àèéìòù’]/,
-    /\b(perché|perche|italiano|italiana|italiani|italiane|spiegato|spiegata|spiegazione|adozione|fiducia|linguaggio|chiarezza|chiaro|parlare|funziona|proposta|notizia|community italiana|guida|grafia|contesto)\b/,
-    /\b(del|della|dello|degli|delle|nell'|nell|sull'|sull|dall'|dall|all'|all)\b/,
+    /\b(perché|perche|italiano|italiana|italiani|italiane|community italiana|guida italiana|spiegazione|adozione|fiducia|linguaggio|chiarezza|proposta|contesto)\b/,
+    /\b(non è|l'|dell'|nell'|sull'|all'|per l'|c'è|un articolo italiano|una nota italiana|per la community italiana)\b/,
   ];
   const englishSignals = [
-    /\b(the|and|with|without|because|should|need|when|what|why|more|better|users|markets|understandable|mobile-first|simple)\b/,
+    /\b(the|and|with|without|because|should|need|when|what|why|more|better|users|markets|understandable|mobile-first|simple|next|this|that)\b/,
   ];
 
-  if (italianSignals.some((pattern) => pattern.test(value))) {
+  const italianScore = italianSignals.reduce((score, pattern) => score + (pattern.test(value) ? 1 : 0), 0);
+  const englishScore = englishSignals.reduce((score, pattern) => score + (pattern.test(value) ? 1 : 0), 0);
+
+  if (italianScore >= 2 && italianScore >= englishScore) {
     return "it";
   }
 
-  if (englishSignals.some((pattern) => pattern.test(value))) {
+  if (englishScore > italianScore) {
     return "en";
   }
 
