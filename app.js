@@ -112,6 +112,12 @@ const site = {
   ],
 };
 
+const mediumFeedState = {
+  status: "idle",
+  items: [],
+  error: null,
+};
+
 const newsItems = [
   {
     id: "cronos-app",
@@ -166,6 +172,7 @@ setupReveal();
 setupActiveNav();
 setupWritingSwitcher();
 setupTimeBasedTheme();
+loadLiveMediumFeed();
 
 function render() {
   els.bio.textContent = site.bio;
@@ -202,7 +209,7 @@ function renderWritingSections() {
 
   els.articleList.innerHTML = `${switcher}${site.sections
     .map((section) => {
-      const streamItems = section.items.filter((item) => item.language === section.language);
+      const streamItems = getWritingItemsForSection(section);
       const sectionTitle =
         section.id === "global-writing"
           ? "Medium articles and LinkedIn posts"
@@ -227,6 +234,22 @@ function renderWritingSections() {
   syncWritingSwitcherState();
 }
 
+function getWritingItemsForSection(section) {
+  const liveMediumItems = mediumFeedState.items.filter(
+    (item) => item.source === "medium" && item.language === section.language,
+  );
+  const fallbackMediumItems = section.items.filter(
+    (item) => item.source === "medium" && item.language === section.language,
+  );
+  const linkedinItems = section.items.filter(
+    (item) => item.source === "linkedin" && item.language === section.language,
+  );
+
+  const mediumItems = (liveMediumItems.length ? liveMediumItems : fallbackMediumItems).slice(0, 2);
+
+  return [...mediumItems, ...linkedinItems];
+}
+
 function renderArticleCard(item, section, featured = false) {
   const cardClass = featured ? "post-card post-card-featured" : "post-card post-card-compact";
   const ctaLabel = section.id === "italian-writing" ? "Apri →" : featured ? "Open article →" : "Read →";
@@ -248,6 +271,38 @@ function renderArticleCard(item, section, featured = false) {
       </div>
     </article>
   `;
+}
+
+async function loadLiveMediumFeed() {
+  if (typeof fetch !== "function") {
+    return;
+  }
+
+  mediumFeedState.status = "loading";
+
+  try {
+    const response = await fetch("/api/medium", { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`Medium feed request failed with ${response.status}`);
+    }
+
+    const payload = await response.json();
+    const items = Array.isArray(payload?.items) ? payload.items : [];
+
+    mediumFeedState.items = items;
+    mediumFeedState.status = "ready";
+    mediumFeedState.error = null;
+
+    if (items.length && typeof items[0]?.href === "string") {
+      site.latestArticleUrl = items[0].href;
+      setLink(els.followLatest, site.latestArticleUrl);
+    }
+
+    renderWritingSections();
+  } catch (error) {
+    mediumFeedState.status = "error";
+    mediumFeedState.error = error instanceof Error ? error.message : String(error);
+  }
 }
 
 function renderNews() {
