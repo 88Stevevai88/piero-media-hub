@@ -380,6 +380,20 @@ html.theme-night .signal-stage::after {
     box-shadow 160ms ease;
 }
 
+.news-card-media {
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid rgba(74, 101, 129, 0.12);
+  aspect-ratio: 16 / 10;
+}
+
+.news-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 html.theme-night .news-card,
 html.theme-night .signal-card,
 html.theme-night .post-card,
@@ -459,6 +473,13 @@ html.theme-night .nav-strip a.is-active {
   color: var(--text);
   font-size: 0.98rem;
   line-height: 1.28;
+}
+
+.news-card p {
+  margin: 0;
+  color: var(--muted-strong);
+  line-height: 1.45;
+  font-size: 0.84rem;
 }
 
 .news-card-meta {

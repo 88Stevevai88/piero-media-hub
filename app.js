@@ -5,7 +5,7 @@ const site = {
     "https://medium.com/@pieropasquariello/cronos-app-is-not-about-turning-everyone-into-a-trader-755d7d64136a",
   redditUrl: "#reddit",
   bio:
-    "I write simple, human content about Cronos, DeFi and on-chain finance, without jargon or unnecessary noise.",
+    "I publish simple, human articles about Cronos, Web3 and digital finance in English and Italian, then point readers to the platforms where I write.",
   sections: [
     {
       id: "global-writing",
@@ -118,38 +118,11 @@ const mediumFeedState = {
   error: null,
 };
 
-const newsItems = [
-  {
-    id: "cronos-app",
-    category: "Cronos App",
-    title: "Cronos App puts simplicity first",
-    description:
-      "A simple take on why consumer crypto needs cleaner interfaces and better education.",
-    source: "Product Watch",
-    date: "May 2026",
-    url: "#",
-  },
-  {
-    id: "defi-journeys",
-    category: "DeFi",
-    title: "DeFi needs clearer user journeys",
-    description:
-      "A clearer path through wallets, onboarding and trust is becoming more important than clever terminology.",
-    source: "DeFi Radar",
-    date: "May 2026",
-    url: "#",
-  },
-  {
-    id: "community-signals",
-    category: "Community",
-    title: "Community signals are moving fast",
-    description:
-      "A short pulse on the conversations, questions and ideas that are showing up across the ecosystem.",
-    source: "Community Watch",
-    date: "May 2026",
-    url: "#",
-  },
-];
+const spotlightItems = [
+  site.sections[0].items[0],
+  site.sections[0].items[2],
+  site.sections[1].items[0],
+].filter(Boolean);
 
 const els = {
   bio: document.querySelector("#bio"),
@@ -176,7 +149,7 @@ loadLiveMediumFeed();
 
 function render() {
   els.bio.textContent = site.bio;
-  renderNews();
+  renderSpotlightArticles();
   setLink(els.followX, site.xUrl);
   setLinks(els.followLatest, site.latestArticleUrl);
   setLink(els.followMedium, site.mediumUrl);
@@ -305,24 +278,28 @@ async function loadLiveMediumFeed() {
   }
 }
 
-function renderNews() {
+function renderSpotlightArticles() {
   if (!els.newsGrid) {
     return;
   }
 
-  els.newsGrid.innerHTML = newsItems
+  els.newsGrid.innerHTML = spotlightItems
     .map(
       (item) => `
         <article class="news-card">
+          <div class="news-card-media">
+            <img src="${safeSrc(item.image)}" alt="${escapeHtml(item.imageAlt || item.title)}" loading="lazy" />
+          </div>
           <div class="news-card-top">
-            <span class="news-chip">${escapeHtml(item.category)}</span>
+            <span class="news-chip">${escapeHtml(item.badge || item.source)}</span>
           </div>
           <h3>${escapeHtml(item.title)}</h3>
+          <p>${escapeHtml(item.summary || item.description || "")}</p>
           <div class="news-card-meta">
-            <span>${escapeHtml(item.source)}</span>
-            <span>${escapeHtml(item.date)}</span>
+            <span>${escapeHtml(item.meta || item.source || "")}</span>
+            <span>${item.language === "it" ? "Italian" : "English"}</span>
           </div>
-          <a class="news-link" href="${safeHref(item.url)}" ${linkAttrs(item.url)}>Read →</a>
+          <a class="news-link" href="${safeHref(item.href || item.url)}" ${linkAttrs(item.href || item.url)}>Open article →</a>
         </article>
       `,
     )
@@ -372,6 +349,10 @@ function linkAttrs(href) {
 
 function isInternalHref(href) {
   return typeof href === "string" && href.startsWith("#");
+}
+
+function safeSrc(src) {
+  return src || "./assets/ougo.png";
 }
 
 function setupReveal() {
