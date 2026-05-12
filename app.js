@@ -123,7 +123,6 @@ const spotlightItems = getSpotlightItems(getWritingSections());
 
 const els = {
   bio: document.querySelector("#bio"),
-  localeNote: document.querySelector("#localeNote"),
   articleList: document.querySelector("#articleList"),
   newsGrid: document.querySelector("#newsGrid"),
   followX: document.querySelector('[data-link="x"]'),
@@ -147,12 +146,6 @@ loadLiveMediumFeed();
 
 function render() {
   els.bio.textContent = site.bio;
-  if (els.localeNote) {
-    els.localeNote.textContent =
-      getBrowserLanguage() === "it"
-        ? "Articoli in italiano in evidenza. La home si apre prima sulla sezione italiana."
-        : "English articles come first for international visitors, with the Italian section one tap away.";
-  }
   renderSpotlightArticles();
   setLink(els.followX, site.xUrl);
   setLinks(els.followLatest, site.latestArticleUrl);

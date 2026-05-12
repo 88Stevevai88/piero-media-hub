@@ -814,12 +814,12 @@ h1 span {
   line-height: 1.2;
 }
 
-.locale-note {
-  margin: 10px 0 0;
-  color: var(--accent);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
+.hero-support {
+  margin: 8px 0 0;
+  max-width: 50ch;
+  color: var(--muted);
+  line-height: 1.48;
+  font-size: 0.84rem;
 }
 
 .profile-actions {
