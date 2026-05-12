@@ -119,7 +119,7 @@ const mediumFeedState = {
 };
 
 const preferredWritingSectionId = getPreferredWritingSectionId();
-const spotlightItems = getSpotlightItems();
+const spotlightItems = getSpotlightItems(getWritingSections());
 
 const els = {
   bio: document.querySelector("#bio"),
@@ -150,8 +150,8 @@ function render() {
   if (els.localeNote) {
     els.localeNote.textContent =
       getBrowserLanguage() === "it"
-        ? "Articoli in italiano in evidenza. La sezione italiana si apre per prima."
-        : "English and Italian articles are both available, with the Italian section one tap away.";
+        ? "Articoli in italiano in evidenza. La home si apre prima sulla sezione italiana."
+        : "English articles come first for international visitors, with the Italian section one tap away.";
   }
   renderSpotlightArticles();
   setLink(els.followX, site.xUrl);
@@ -165,9 +165,10 @@ function render() {
 }
 
 function renderWritingSections() {
+  const sections = getWritingSections();
   const switcher = `
     <div class="writing-switcher" role="tablist" aria-label="Choose writing stream">
-      ${site.sections
+      ${sections
         .map(
           (section) => `
             <button
@@ -184,7 +185,7 @@ function renderWritingSections() {
     </div>
   `;
 
-  els.articleList.innerHTML = `${switcher}${site.sections
+  els.articleList.innerHTML = `${switcher}${sections
     .map((section) => {
       const streamItems = getWritingItemsForSection(section);
       const sectionTitle =
@@ -225,6 +226,16 @@ function getWritingItemsForSection(section) {
   const mediumItems = (liveMediumItems.length ? liveMediumItems : fallbackMediumItems).slice(0, 2);
 
   return [...mediumItems, ...linkedinItems];
+}
+
+function getWritingSections() {
+  const sections = [getSectionById("global-writing"), getSectionById("italian-writing")].filter(Boolean);
+
+  if (preferredWritingSectionId === "italian-writing") {
+    return sections.reverse();
+  }
+
+  return sections;
 }
 
 function renderArticleCard(item, section, featured = false) {
@@ -432,21 +443,26 @@ function getPreferredWritingSectionId() {
   return "global-writing";
 }
 
-function getSpotlightItems() {
-  const italianFirst = getPreferredWritingSectionId() === "italian-writing";
-  const englishMedium = site.sections[0]?.items[0];
-  const englishLinkedIn = site.sections[0]?.items[2];
-  const italianMedium = site.sections[1]?.items[0];
-  const italianLinkedIn = site.sections[1]?.items[1];
+function getSpotlightItems(sections) {
+  const primarySection = sections[0];
+  const secondarySection = sections[1];
 
-  return (italianFirst
-    ? [italianMedium, italianLinkedIn, englishMedium]
-    : [englishMedium, englishLinkedIn, italianMedium]
-  ).filter(Boolean);
+  const primaryMedium = primarySection?.items.find((item) => item.source === "medium");
+  const primaryLinkedIn = primarySection?.items.find((item) => item.source === "linkedin");
+  const secondaryMedium = secondarySection?.items.find((item) => item.source === "medium");
+
+  return [primaryMedium, primaryLinkedIn, secondaryMedium].filter(Boolean);
 }
 
 function getBrowserLanguage() {
   const values = [];
+  const timeZone = (() => {
+    try {
+      return Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+    } catch {
+      return "";
+    }
+  })();
 
   if (typeof navigator !== "undefined") {
     if (Array.isArray(navigator.languages)) {
@@ -466,7 +482,15 @@ function getBrowserLanguage() {
     .map((value) => String(value).toLowerCase())
     .find((value) => value.startsWith("it"));
 
-  return match ? "it" : "en";
+  if (match || timeZone === "Europe/Rome") {
+    return "it";
+  }
+
+  return "en";
+}
+
+function getSectionById(id) {
+  return site.sections.find((section) => section.id === id);
 }
 
 function setupTimeBasedTheme() {
