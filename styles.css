@@ -1098,6 +1098,7 @@ html.theme-night .nav-strip a:hover {
 .content-columns {
   display: grid;
   gap: 12px;
+  align-items: start;
 }
 
 .writing-section {
@@ -1113,6 +1114,30 @@ html.theme-night .writing-section {
 
 .writing-switcher {
   display: none;
+}
+
+.writing-switcher-btn {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 0 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(76, 219, 255, 0.16);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(239, 245, 251, 0.92));
+  color: var(--muted-strong);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 16px rgba(53, 94, 132, 0.05);
+}
+
+.writing-switcher-btn.is-active {
+  color: #0f3f63;
+  border-color: rgba(76, 219, 255, 0.5);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(226, 244, 252, 0.96));
+  box-shadow:
+    0 10px 22px rgba(53, 94, 132, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .writing-section-head {
@@ -1492,6 +1517,59 @@ html.theme-night .follow-panel {
   }
 }
 
+@media (min-width: 921px) {
+  .content-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 920px) {
+  .content-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .posts-header,
+  .writing-section-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .posts-header h2,
+  .posts-header p {
+    max-width: 100%;
+  }
+
+  .writing-section-copy {
+    max-width: 100%;
+  }
+
+  .writing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .writing-switcher {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 4px 2px 2px;
+    margin: -2px 0 4px;
+    scrollbar-width: none;
+  }
+
+  .writing-switcher::-webkit-scrollbar {
+    display: none;
+  }
+
+  .writing-section {
+    padding: 12px;
+    display: none;
+  }
+
+  .writing-section.is-active {
+    display: grid;
+  }
+}
+
 @media (max-width: 620px) {
   .app-shell {
     width: min(100vw - 16px, 1200px);
@@ -1603,52 +1681,6 @@ html.theme-night .follow-panel {
 
   .follow-links .action-button {
     flex: 1 1 0;
-  }
-
-  .writing-switcher {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding: 4px 2px 2px;
-    margin: -2px 0 4px;
-    scrollbar-width: none;
-  }
-
-  .writing-switcher::-webkit-scrollbar {
-    display: none;
-  }
-
-  .writing-switcher-btn {
-    flex: 0 0 auto;
-    min-height: 34px;
-    padding: 0 13px;
-    border-radius: 999px;
-    border: 1px solid rgba(76, 219, 255, 0.16);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(239, 245, 251, 0.92));
-    color: var(--muted-strong);
-    font-size: 0.74rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    box-shadow: 0 8px 16px rgba(53, 94, 132, 0.05);
-  }
-
-  .writing-switcher-btn.is-active {
-    color: #0f3f63;
-    border-color: rgba(76, 219, 255, 0.5);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(226, 244, 252, 0.96));
-    box-shadow:
-      0 10px 22px rgba(53, 94, 132, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  }
-
-  .writing-section {
-    padding: 12px;
-    display: none;
-  }
-
-  .writing-section.is-active {
-    display: grid;
   }
 
   .writing-section-head h3 {
