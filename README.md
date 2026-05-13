@@ -7,7 +7,7 @@ Personal site and editorial hub for an infermiere passionate about crypto since 
 - modern personal website
 - mobile-first layout
 - SEO-ready structure
-- central hub for X, Medium and Reddit
+- central hub for X, Medium and LinkedIn
 - designed to turn readers into followers
 
 ## Customize
@@ -16,7 +16,6 @@ Open `app.js` and replace:
 
 - `xUrl`
 - `mediumUrl`
-- `redditUrl`
 - featured article title and link
 - article list content
 

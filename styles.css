@@ -730,6 +730,11 @@ html.theme-night .signal-card-accent {
   background: linear-gradient(180deg, #fff8f4, #fffefc);
 }
 
+.platform-orb-linkedin {
+  color: #ffffff;
+  background: linear-gradient(180deg, #1f6fb2, #0d4f8b);
+}
+
 .external-mark,
 .button-arrow {
   color: var(--accent);

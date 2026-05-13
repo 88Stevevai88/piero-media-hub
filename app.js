@@ -3,9 +3,8 @@ const site = {
   mediumUrl: "https://medium.com/@pieropasquariello",
   latestArticleUrl:
     "https://medium.com/@pieropasquariello/cronos-app-is-not-about-turning-everyone-into-a-trader-755d7d64136a",
-  redditUrl: "#reddit",
   bio:
-    "I publish simple, human articles about Cronos, Web3 and digital finance in English and Italian, then point readers to the platforms where I write.",
+    "I publish simple, human articles about Cronos, Web3 and digital finance in English and Italian.",
   sections: [
     {
       id: "global-writing",
@@ -129,12 +128,19 @@ const els = {
   featuredHeading: document.querySelector("#featuredHeading"),
   featuredDescription: document.querySelector("#featuredDescription"),
   featuredLink: document.querySelector("#featuredLink"),
+  heroTagline: document.querySelector("#heroTagline"),
+  heroSupport: document.querySelector("#heroSupport"),
+  socialEyebrow: document.querySelector("#socialEyebrow"),
+  socialDescription: document.querySelector("#socialDescription"),
+  followEyebrow: document.querySelector("#followEyebrow"),
+  followHeading: document.querySelector("#followHeading"),
   followX: document.querySelector('[data-link="x"]'),
   followLatest: document.querySelectorAll('[data-link="latest-article"]'),
   followMedium: document.querySelector('[data-link="medium"]'),
   followX2: document.querySelector('[data-link="x-follow"]'),
   followMedium2: document.querySelector('[data-link="medium-follow"]'),
-  followReddit2: document.querySelector('[data-link="reddit-follow"]'),
+  followLinkedIn2: document.querySelector('[data-link="linkedin-follow"]'),
+  socialLinkedIn: document.querySelector('[data-link="linkedin"]'),
 };
 
 let activeWritingSectionId = preferredWritingSectionId || site.sections[0]?.id || "medium";
@@ -149,6 +155,7 @@ setupTimeBasedTheme();
 loadLiveMediumFeed();
 
 function render() {
+  renderLocalizedHeroCopy();
   els.bio.textContent = site.bio;
   renderFeaturedSectionCopy();
   renderSpotlightArticles();
@@ -157,7 +164,8 @@ function render() {
   setLink(els.followMedium, site.mediumUrl);
   setLink(els.followX2, site.xUrl);
   setLink(els.followMedium2, site.mediumUrl);
-  setLink(els.followReddit2, site.redditUrl);
+  setLink(els.followLinkedIn2, getPrimaryLinkedInUrl(getBrowserLanguage()));
+  setLink(els.socialLinkedIn, getPrimaryLinkedInUrl(getBrowserLanguage()));
 
   renderWritingSections();
 }
@@ -518,6 +526,49 @@ function getBrowserLanguage() {
 
 function getSectionById(id) {
   return site.sections.find((section) => section.id === id);
+}
+
+function getPrimaryLinkedInUrl(preferredLanguage) {
+  const section =
+    getWritingSections().find((entry) => entry.language === preferredLanguage) || getWritingSections()[0];
+  const linkedInItem = section?.items.find((item) => item.source === "linkedin");
+  return linkedInItem?.href || site.mediumUrl;
+}
+
+function renderLocalizedHeroCopy() {
+  const isItalian = getBrowserLanguage() === "it";
+
+  if (els.heroTagline) {
+    els.heroTagline.textContent = isItalian
+      ? "Scrivo articoli chiari su Cronos, Web3 e finanza digitale."
+      : "I write clear articles about Cronos, Web3 and digital finance.";
+  }
+
+  if (els.heroSupport) {
+    els.heroSupport.textContent = isItalian
+      ? "Leggi gli ultimi articoli e apri le piattaforme dove pubblico."
+      : "Read the latest articles and open the platforms where I publish.";
+  }
+
+  if (els.socialEyebrow) {
+    els.socialEyebrow.textContent = isItalian ? "Dove trovarmi" : "Where to find me";
+  }
+
+  if (els.socialDescription) {
+    els.socialDescription.textContent = isItalian
+      ? "Link rapidi alle piattaforme che uso di più."
+      : "Quick links to the platforms I use most.";
+  }
+
+  if (els.followEyebrow) {
+    els.followEyebrow.textContent = isItalian ? "Seguimi" : "Follow";
+  }
+
+  if (els.followHeading) {
+    els.followHeading.textContent = isItalian
+      ? "Leggi gli articoli, poi seguimi dove pubblico."
+      : "Read the articles, then follow the platforms where I publish.";
+  }
 }
 
 function renderFeaturedSectionCopy() {

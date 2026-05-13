@@ -92,8 +92,8 @@
               <div>
                 <h1>
                   <span class="name-line">Piero Pasquariello</span>
-                  <span class="tagline-line"
-                    >I write articles about Cronos, Web3 and digital finance in English and Italian.</span
+                  <span class="tagline-line" id="heroTagline"
+                    >I write clear articles about Cronos, Web3 and digital finance.</span
                   >
                 </h1>
               </div>
@@ -117,8 +117,8 @@
             </div>
 
             <p class="bio" id="bio"></p>
-            <p class="hero-support">
-              Browse the latest writing and follow the platforms where I publish.
+            <p class="hero-support" id="heroSupport">
+              Read the latest articles and open the platforms where I publish.
             </p>
 
             <div class="proof-strip" aria-label="Profile highlights">
@@ -132,11 +132,11 @@
 
       <section class="social-section panel reveal" id="social">
         <div class="social-section-head">
-          <p class="eyebrow">Where to find me</p>
-          <p>Quick links to the platforms I use most.</p>
+          <p class="eyebrow" id="socialEyebrow">Where to find me</p>
+          <p id="socialDescription">Quick links to the platforms I use most.</p>
         </div>
         <div class="social-grid">
-          <a class="signal-card signal-card-accent where-card" id="x" href="https://x.com/PieroPasqiari88" target="_blank" rel="noreferrer">
+          <a class="signal-card signal-card-accent where-card" id="x" data-link="x" href="https://x.com/PieroPasqiari88">
             <span class="platform-orb platform-orb-x" aria-hidden="true">
               <img src="https://cdn.simpleicons.org/x/FFFFFF?viewbox=auto" alt="" aria-hidden="true" />
             </span>
@@ -146,7 +146,7 @@
             </span>
             <span class="external-mark">↗</span>
           </a>
-          <a class="signal-card where-card" id="medium" href="https://medium.com/@pieropasquariello" target="_blank" rel="noreferrer">
+          <a class="signal-card where-card" id="medium" data-link="medium" href="https://medium.com/@pieropasquariello">
             <span class="platform-orb platform-orb-medium" aria-hidden="true">
               <img src="https://cdn.simpleicons.org/medium/111827?viewbox=auto" alt="" aria-hidden="true" />
             </span>
@@ -156,13 +156,13 @@
             </span>
             <span class="external-mark">↗</span>
           </a>
-          <a class="signal-card where-card" id="reddit" href="#follow">
-            <span class="platform-orb platform-orb-reddit" aria-hidden="true">
-              <img src="https://cdn.simpleicons.org/reddit/FF4500?viewbox=auto" alt="" aria-hidden="true" />
+          <a class="signal-card where-card" id="linkedin" data-link="linkedin" href="#follow">
+            <span class="platform-orb platform-orb-linkedin" aria-hidden="true">
+              <img src="https://cdn.simpleicons.org/linkedin/FFFFFF?viewbox=auto" alt="" aria-hidden="true" />
             </span>
             <span class="where-copy">
-              <strong>Reddit</strong>
-              <small>Community posts and Web3 discussions</small>
+              <strong>LinkedIn</strong>
+              <small>Short posts and article updates</small>
             </span>
             <span class="external-mark">↗</span>
           </a>
@@ -225,8 +225,8 @@
 
       <section class="panel follow-panel reveal" id="follow">
         <div>
-          <p class="eyebrow">Follow</p>
-          <h2>Read the articles, then follow the platforms where I publish.</h2>
+          <p class="eyebrow" id="followEyebrow">Follow</p>
+          <h2 id="followHeading">Read the articles, then follow the platforms where I publish.</h2>
         </div>
         <div class="follow-links">
           <a class="action-button action-primary" data-link="x-follow" href="#x"
@@ -235,8 +235,8 @@
           <a class="action-button action-secondary" data-link="medium-follow" href="#medium"
             >Read on Medium</a
           >
-          <a class="action-button action-ghost" data-link="reddit-follow" href="#reddit"
-            >Join on Reddit</a
+          <a class="action-button action-ghost" data-link="linkedin-follow" href="#linkedin"
+            >Read on LinkedIn</a
           >
         </div>
       </section>
