@@ -21,6 +21,7 @@ const site = {
           summary:
             "Because the next wave of users does not need more trading noise. It needs clarity, context and a product that feels usable from day one.",
           meta: "Medium article",
+          publishedAt: "2026-05-12T09:00:00+02:00",
           href: "https://medium.com/@pieropasquariello/cronos-app-is-not-about-turning-everyone-into-a-trader-755d7d64136a",
           pageHref: "/writing/cronos-app-is-not-about-turning-everyone-into-a-trader/",
           image: "https://cdn-images-1.medium.com/max/1024/1*nMbmzHGRdCLWU9eX5U4CKQ.png",
@@ -34,6 +35,7 @@ const site = {
           summary:
             "A focused piece on fragmentation in financial apps and why simpler, more coherent experiences win trust.",
           meta: "Medium article",
+          publishedAt: "2026-05-05T09:00:00+02:00",
           href: "https://medium.com/@pieropasquariello/cronos-app-and-the-problem-of-too-many-financial-apps-3f1f580260bc",
           pageHref: "/writing/cronos-app-and-the-problem-of-too-many-financial-apps/",
           image: "https://cdn-images-1.medium.com/max/1024/1*C9_pli7yGAxlNS6vuvKfvA.png",
@@ -47,6 +49,7 @@ const site = {
           summary:
             "Tokenized markets need mobile-first clarity if they want normal users to trust what they see.",
           meta: "LinkedIn article",
+          publishedAt: "2026-05-01T09:00:00+02:00",
           href: "https://www.linkedin.com/pulse/247-markets-need-better-mobile-experience-piero-pasquariello-zsbfc/",
           pageHref: "/writing/247-markets-need-better-mobile-experience/",
           image: "./assets/ougo.png",
@@ -60,6 +63,7 @@ const site = {
           summary:
             "A simple take on why product clarity matters more than another technical feature drop.",
           meta: "LinkedIn article",
+          publishedAt: "2026-04-28T09:00:00+02:00",
           href: "https://www.linkedin.com/posts/piero-pasquariello-778a9212a_ugcPost-7458535000385179649-lnZV?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB_XAswBp4NxXA595vwNFcielzlAweCzWcs",
           pageHref: "/writing/most-crypto-apps-still-feel-like-built-for-power-users/",
           image: "./assets/ougo.png",
@@ -82,6 +86,7 @@ const site = {
           summary:
             "Una spiegazione semplice della nuova proposta CRO: non solo staking reward, ma anche funding, revenue, exit commitment e sostenibilità.",
           meta: "Medium IT",
+          publishedAt: "2026-05-11T09:00:00+02:00",
           href: "https://medium.com/@pieropasquariello/perch%C3%A9-lapy-non-%C3%A8-il-vero-punto-della-nuova-proposta-cro-022a26e97b92?source=rss-d7209a415961------2",
           pageHref: "/writing/perche-lapy-non-e-il-vero-punto-della-nuova-proposta-cro/",
           image: "https://cdn-images-1.medium.com/max/1024/1*dl7SGvr7YoelLdGY-AF8Hg.png",
@@ -95,6 +100,7 @@ const site = {
           summary:
             "Una nota italiana su come parole semplici, onboarding chiaro e meno rumore aiutano chi entra nel Web3.",
           meta: "LinkedIn IT",
+          publishedAt: "2026-05-09T09:00:00+02:00",
           href: "https://www.linkedin.com/pulse/247-markets-need-better-mobile-experience-piero-pasquariello-zsbfc/",
           pageHref: "/writing/perche-una-ux-chiara-costruisce-fiducia/",
           image: "./assets/ougo.png",
@@ -108,6 +114,7 @@ const site = {
           summary:
             "Un altro passaggio semplice per la community italiana: chiarezza prima del rumore.",
           meta: "LinkedIn IT",
+          publishedAt: "2026-05-08T09:00:00+02:00",
           href: "https://www.linkedin.com/posts/piero-pasquariello-778a9212a_ugcPost-7458536295452160000-2luA?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB_XAswBp4NxXA595vwNFcielzlAweCzWcs",
           pageHref: "/writing/cronos-funziona-meglio-quando-e-spiegato-bene/",
           image: "./assets/ougo.png",
@@ -239,9 +246,10 @@ function getWritingItemsForSection(section) {
     (item) => item.source === "linkedin" && item.language === section.language,
   );
 
-  const mediumItems = (liveMediumItems.length ? liveMediumItems : fallbackMediumItems).slice(0, 2);
+  const mediumItems = liveMediumItems.length ? liveMediumItems : fallbackMediumItems;
+  const combined = uniqueWritingItems([...mediumItems, ...linkedinItems]);
 
-  return [...mediumItems, ...linkedinItems];
+  return sortWritingItems(combined).slice(0, 2);
 }
 
 function getWritingSections() {
@@ -318,8 +326,7 @@ function renderSpotlightArticles() {
   const isItalian = getBrowserLanguage() === "it";
   const openLabel = isItalian ? "Leggi articolo →" : "Read article →";
   const languageLabel = isItalian ? { it: "Italiano", en: "Inglese" } : { it: "Italian", en: "English" };
-  const [primaryItem, secondaryOne, secondaryTwo] = spotlightItems;
-  const secondaryItems = [secondaryOne, secondaryTwo].filter(Boolean);
+  const [primaryItem, ...secondaryItems] = spotlightItems;
   const primaryHref = primaryItem?.pageHref || primaryItem?.href || primaryItem?.url;
 
   els.newsGrid.innerHTML = `
@@ -493,15 +500,13 @@ function getPreferredWritingSectionId() {
 }
 
 function getSpotlightItems(sections, preferredLanguage) {
-  const primarySection =
-    sections.find((section) => section.language === preferredLanguage) || sections[0];
-  const primaryMedium = primarySection?.items.find((item) => item.source === "medium");
-  const primaryLinkedIn = primarySection?.items.find((item) => item.source === "linkedin");
-  const remainingItems = primarySection?.items.filter(
-    (item) => item !== primaryMedium && item !== primaryLinkedIn,
-  );
+  const allItems = uniqueWritingItems([
+    ...sections.flatMap((section) => section.items),
+    ...mediumFeedState.items,
+  ]);
+  const combined = sortWritingItems(allItems);
 
-  return [primaryMedium, primaryLinkedIn, ...remainingItems].filter(Boolean).slice(0, 3);
+  return combined.slice(0, 4);
 }
 
 function getBrowserLanguage() {
@@ -543,6 +548,41 @@ function getPrimaryLinkedInUrl(preferredLanguage) {
     getWritingSections().find((entry) => entry.language === preferredLanguage) || getWritingSections()[0];
   const linkedInItem = section?.items.find((item) => item.source === "linkedin");
   return linkedInItem?.href || site.mediumUrl;
+}
+
+function sortWritingItems(items) {
+  return [...items].sort((a, b) => {
+    const timeA = getPublishedTime(a);
+    const timeB = getPublishedTime(b);
+    if (timeA !== timeB) {
+      return timeB - timeA;
+    }
+
+    return String(a.title || "").localeCompare(String(b.title || ""));
+  });
+}
+
+function getPublishedTime(item) {
+  const publishedAt = item?.publishedAt || item?.pubDate || item?.date || "";
+  const parsed = Date.parse(publishedAt);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function uniqueWritingItems(items) {
+  const seen = new Set();
+  return items.filter((item) => {
+    const key =
+      item?.pageHref ||
+      item?.href ||
+      item?.url ||
+      `${item?.title || ""}::${item?.publishedAt || item?.pubDate || ""}`;
+    if (seen.has(key)) {
+      return false;
+    }
+
+    seen.add(key);
+    return true;
+  });
 }
 
 function setupMobileMenu() {

@@ -101,6 +101,8 @@ function parseMediumFeed(xml) {
         href: item.href,
         image: item.image,
         imageAlt: item.imageAlt,
+        pubDate: item.pubDate,
+        publishedAt: item.pubDate,
       };
     });
 }
