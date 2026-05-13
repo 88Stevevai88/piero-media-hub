@@ -305,7 +305,7 @@ function renderSpotlightArticles() {
   }
 
   const isItalian = getBrowserLanguage() === "it";
-  const openLabel = isItalian ? "Apri articolo →" : "Open article →";
+  const openLabel = isItalian ? "Leggi articolo →" : "Read article →";
   const languageLabel = isItalian ? { it: "Italiano", en: "Inglese" } : { it: "Italian", en: "English" };
   const [primaryItem, secondaryOne, secondaryTwo] = spotlightItems;
   const secondaryItems = [secondaryOne, secondaryTwo].filter(Boolean);
@@ -575,23 +575,23 @@ function renderFeaturedSectionCopy() {
   const isItalian = getBrowserLanguage() === "it";
 
   if (els.featuredEyebrow) {
-    els.featuredEyebrow.textContent = isItalian ? "In evidenza" : "Featured";
+    els.featuredEyebrow.textContent = isItalian ? "In primo piano" : "Writing highlights";
   }
 
   if (els.featuredHeading) {
     els.featuredHeading.textContent = isItalian
-      ? "Articoli selezionati che mostrano il mio modo di scrivere."
-      : "Selected articles that show the range of my writing.";
+      ? "Una selezione mirata dei miei ultimi contenuti."
+      : "A focused view of my latest writing.";
   }
 
   if (els.featuredDescription) {
     els.featuredDescription.textContent = isItalian
-      ? "Tre post reali da Medium e LinkedIn, scelti per portare subito dentro i contenuti."
-      : "Three real posts from Medium and LinkedIn, chosen to give visitors a fast path into the content.";
+      ? "Articoli e post su Cronos, Web3 e finanza digitale, scelti per mostrare i temi su cui scrivo di più."
+      : "Articles and posts on Cronos, Web3 and digital finance, chosen to show the topics I write about most.";
   }
 
   if (els.featuredLink) {
-    els.featuredLink.textContent = isItalian ? "Vedi tutto →" : "View all →";
+    els.featuredLink.textContent = isItalian ? "Vedi tutti gli articoli →" : "Browse all writing →";
   }
 
   if (els.newsGrid) {
