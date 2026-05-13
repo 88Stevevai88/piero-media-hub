@@ -10,7 +10,7 @@ const site = {
       id: "global-writing",
       label: "EN / Global writing",
       description: "English Medium articles and LinkedIn posts about Cronos, Web3 and digital finance.",
-      href: "https://medium.com/@pieropasquariello",
+      href: "/writing/#english",
       language: "en",
       items: [
         {
@@ -22,6 +22,7 @@ const site = {
             "Because the next wave of users does not need more trading noise. It needs clarity, context and a product that feels usable from day one.",
           meta: "Medium article",
           href: "https://medium.com/@pieropasquariello/cronos-app-is-not-about-turning-everyone-into-a-trader-755d7d64136a",
+          pageHref: "/writing/cronos-app-is-not-about-turning-everyone-into-a-trader/",
           image: "https://cdn-images-1.medium.com/max/1024/1*nMbmzHGRdCLWU9eX5U4CKQ.png",
           imageAlt: "Cover image from the Medium article about Cronos App and trading noise",
         },
@@ -34,6 +35,7 @@ const site = {
             "A focused piece on fragmentation in financial apps and why simpler, more coherent experiences win trust.",
           meta: "Medium article",
           href: "https://medium.com/@pieropasquariello/cronos-app-and-the-problem-of-too-many-financial-apps-3f1f580260bc",
+          pageHref: "/writing/cronos-app-and-the-problem-of-too-many-financial-apps/",
           image: "https://cdn-images-1.medium.com/max/1024/1*C9_pli7yGAxlNS6vuvKfvA.png",
           imageAlt: "Cover image from the Medium article about too many financial apps",
         },
@@ -46,6 +48,7 @@ const site = {
             "Tokenized markets need mobile-first clarity if they want normal users to trust what they see.",
           meta: "LinkedIn article",
           href: "https://www.linkedin.com/pulse/247-markets-need-better-mobile-experience-piero-pasquariello-zsbfc/",
+          pageHref: "/writing/247-markets-need-better-mobile-experience/",
           image: "./assets/ougo.png",
           imageAlt: "LinkedIn cover about 24/7 markets made understandable",
         },
@@ -58,6 +61,7 @@ const site = {
             "A simple take on why product clarity matters more than another technical feature drop.",
           meta: "LinkedIn article",
           href: "https://www.linkedin.com/posts/piero-pasquariello-778a9212a_ugcPost-7458535000385179649-lnZV?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB_XAswBp4NxXA595vwNFcielzlAweCzWcs",
+          pageHref: "/writing/most-crypto-apps-still-feel-like-built-for-power-users/",
           image: "./assets/ougo.png",
           imageAlt: "LinkedIn cover about markets made understandable",
         },
@@ -67,7 +71,7 @@ const site = {
       id: "italian-writing",
       label: "IT / Cronos in italiano",
       description: "Articoli Medium e note LinkedIn in italiano su Cronos, CRO e Web3.",
-      href: "#posts",
+      href: "/writing/#italian",
       language: "it",
       items: [
         {
@@ -79,6 +83,7 @@ const site = {
             "Una spiegazione semplice della nuova proposta CRO: non solo staking reward, ma anche funding, revenue, exit commitment e sostenibilità.",
           meta: "Medium IT",
           href: "https://medium.com/@pieropasquariello/perch%C3%A9-lapy-non-%C3%A8-il-vero-punto-della-nuova-proposta-cro-022a26e97b92?source=rss-d7209a415961------2",
+          pageHref: "/writing/perche-lapy-non-e-il-vero-punto-della-nuova-proposta-cro/",
           image: "https://cdn-images-1.medium.com/max/1024/1*dl7SGvr7YoelLdGY-AF8Hg.png",
           imageAlt: "Cover image from the Italian Medium article about the new CRO proposal",
         },
@@ -91,6 +96,7 @@ const site = {
             "Una nota italiana su come parole semplici, onboarding chiaro e meno rumore aiutano chi entra nel Web3.",
           meta: "LinkedIn IT",
           href: "https://www.linkedin.com/pulse/247-markets-need-better-mobile-experience-piero-pasquariello-zsbfc/",
+          pageHref: "/writing/perche-una-ux-chiara-costruisce-fiducia/",
           image: "./assets/ougo.png",
           imageAlt: "LinkedIn cover about 24/7 markets made understandable",
         },
@@ -103,6 +109,7 @@ const site = {
             "Un altro passaggio semplice per la community italiana: chiarezza prima del rumore.",
           meta: "LinkedIn IT",
           href: "https://www.linkedin.com/posts/piero-pasquariello-778a9212a_ugcPost-7458536295452160000-2luA?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB_XAswBp4NxXA595vwNFcielzlAweCzWcs",
+          pageHref: "/writing/cronos-funziona-meglio-quando-e-spiegato-bene/",
           image: "./assets/ougo.png",
           imageAlt: "LinkedIn cover about Cronos explained simply",
         },
@@ -252,6 +259,7 @@ function renderArticleCard(item, section, featured = false) {
   const ctaLabel = section.id === "italian-writing" ? "Apri →" : featured ? "Open article →" : "Read →";
   const showSummary = section.id !== "italian-writing";
   const showTop = section.id !== "italian-writing";
+  const pageHref = item.pageHref || item.href || item.url;
 
   return `
     <article class="${cardClass}">
@@ -263,7 +271,7 @@ function renderArticleCard(item, section, featured = false) {
         <h4>${escapeHtml(item.title)}</h4>
         ${showSummary ? `<p>${escapeHtml(item.summary)}</p>` : ""}
         <div class="post-cta">
-          <a class="post-link" href="${safeHref(item.href)}" ${linkAttrs(item.href)}>${ctaLabel}</a>
+          <a class="post-link" href="${safeHref(pageHref)}" ${linkAttrs(pageHref)}>${ctaLabel}</a>
         </div>
       </div>
     </article>
@@ -312,6 +320,7 @@ function renderSpotlightArticles() {
   const languageLabel = isItalian ? { it: "Italiano", en: "Inglese" } : { it: "Italian", en: "English" };
   const [primaryItem, secondaryOne, secondaryTwo] = spotlightItems;
   const secondaryItems = [secondaryOne, secondaryTwo].filter(Boolean);
+  const primaryHref = primaryItem?.pageHref || primaryItem?.href || primaryItem?.url;
 
   els.newsGrid.innerHTML = `
     <article class="news-card news-card-primary">
@@ -327,7 +336,7 @@ function renderSpotlightArticles() {
         <span>${escapeHtml(primaryItem?.meta || primaryItem?.source || "")}</span>
         <span>${primaryItem?.language === "it" ? languageLabel.it : languageLabel.en}</span>
       </div>
-      <a class="news-link" href="${safeHref(primaryItem?.href || primaryItem?.url)}" ${linkAttrs(primaryItem?.href || primaryItem?.url)}>${openLabel}</a>
+      <a class="news-link" href="${safeHref(primaryHref)}" ${linkAttrs(primaryHref)}>${openLabel}</a>
     </article>
 
     <div class="news-card-stack">
@@ -348,7 +357,7 @@ function renderSpotlightArticles() {
                   <span>${escapeHtml(item.meta || item.source || "")}</span>
                   <span>${item.language === "it" ? languageLabel.it : languageLabel.en}</span>
                 </div>
-                <a class="news-link" href="${safeHref(item.href || item.url)}" ${linkAttrs(item.href || item.url)}>${openLabel}</a>
+                <a class="news-link" href="${safeHref(item.pageHref || item.href || item.url)}" ${linkAttrs(item.pageHref || item.href || item.url)}>${openLabel}</a>
               </div>
             </article>
           `,
@@ -400,7 +409,10 @@ function linkAttrs(href) {
 }
 
 function isInternalHref(href) {
-  return typeof href === "string" && href.startsWith("#");
+  return (
+    typeof href === "string" &&
+    (href.startsWith("#") || href.startsWith("/") || href.startsWith("./") || href.startsWith("../"))
+  );
 }
 
 function safeSrc(src) {
@@ -509,11 +521,6 @@ function getBrowserLanguage() {
     if (typeof navigator.language === "string") {
       values.push(navigator.language);
     }
-  }
-
-  const pageLanguage = document.documentElement?.lang;
-  if (typeof pageLanguage === "string") {
-    values.push(pageLanguage);
   }
 
   const match = values
