@@ -371,10 +371,12 @@ html.theme-night .signal-stage::after {
   gap: 10px;
   padding: 13px;
   border-radius: 18px;
-  border: 1px solid rgba(74, 101, 129, 0.12);
+  border: 1px solid rgba(74, 101, 129, 0.18);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(241, 247, 252, 0.93));
-  box-shadow: 0 10px 22px rgba(53, 94, 132, 0.06);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(238, 245, 252, 0.96));
+  box-shadow:
+    0 14px 34px rgba(53, 94, 132, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
   transition:
     transform 160ms ease,
     border-color 160ms ease,
@@ -383,6 +385,9 @@ html.theme-night .signal-stage::after {
 
 .news-card-primary {
   min-height: 100%;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.995), rgba(231, 242, 251, 0.97)),
+    linear-gradient(135deg, rgba(76, 219, 255, 0.04), rgba(255, 255, 255, 0));
 }
 
 .news-card-stack {
@@ -399,7 +404,7 @@ html.theme-night .signal-stage::after {
 .news-card-inline-media {
   overflow: hidden;
   border-radius: 14px;
-  border: 1px solid rgba(74, 101, 129, 0.12);
+  border: 1px solid rgba(74, 101, 129, 0.18);
   aspect-ratio: 4 / 3;
 }
 
@@ -418,7 +423,7 @@ html.theme-night .signal-stage::after {
 .news-card-media {
   overflow: hidden;
   border-radius: 14px;
-  border: 1px solid rgba(74, 101, 129, 0.12);
+  border: 1px solid rgba(74, 101, 129, 0.18);
   aspect-ratio: 16 / 10;
 }
 
@@ -584,10 +589,12 @@ html.theme-night .post-meta span {
 .signal-card {
   padding: 10px 12px;
   border-radius: 16px;
-  border: 1px solid rgba(74, 101, 129, 0.14);
+  border: 1px solid rgba(74, 101, 129, 0.18);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(244, 249, 253, 0.86));
-  box-shadow: 0 10px 22px rgba(53, 94, 132, 0.06);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(239, 245, 251, 0.94));
+  box-shadow:
+    0 12px 28px rgba(53, 94, 132, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
   color: inherit;
   text-decoration: none;
   transition:
@@ -624,9 +631,9 @@ html.theme-night .signal-card {
 }
 
 .signal-card-accent {
-  border-color: rgba(76, 219, 255, 0.24);
+  border-color: rgba(76, 219, 255, 0.3);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(240, 247, 252, 0.88));
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(235, 245, 252, 0.93));
 }
 
 html.theme-night .signal-card-accent {
@@ -640,10 +647,12 @@ html.theme-night .signal-card-accent {
 
 .signal-card:hover {
   transform: translateY(-1px);
-  border-color: rgba(76, 219, 255, 0.42);
+  border-color: rgba(76, 219, 255, 0.5);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(239, 246, 251, 0.92));
-  box-shadow: 0 12px 26px rgba(53, 94, 132, 0.08);
+    linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(235, 244, 251, 0.96));
+  box-shadow:
+    0 14px 30px rgba(53, 94, 132, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .signal-card .eyebrow {
@@ -723,11 +732,6 @@ html.theme-night .signal-card-accent {
 .platform-orb-medium {
   color: #102238;
   background: linear-gradient(180deg, #f8fafc, #e9eef5);
-}
-
-.platform-orb-reddit {
-  color: #ff5b2e;
-  background: linear-gradient(180deg, #fff8f4, #fffefc);
 }
 
 .platform-orb-linkedin {
@@ -1140,9 +1144,12 @@ html.theme-night .nav-strip a:hover {
 .about-card {
   padding: 16px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(243, 248, 253, 0.9)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(236, 244, 251, 0.95)),
     linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
-  box-shadow: 0 10px 22px rgba(53, 94, 132, 0.06);
+  border-color: rgba(74, 101, 129, 0.16);
+  box-shadow:
+    0 14px 30px rgba(53, 94, 132, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.84);
 }
 
 .about-card h2 {
@@ -1512,11 +1519,11 @@ html.theme-night .post-media {
   padding: 18px 20px;
   margin: 10px 0 24px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(242, 248, 253, 0.94)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.995), rgba(236, 244, 251, 0.95)),
     linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
   box-shadow:
-    0 14px 36px rgba(53, 94, 132, 0.09),
-    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+    0 16px 38px rgba(53, 94, 132, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
 }
 
 html.theme-night .follow-panel {
@@ -1528,6 +1535,18 @@ html.theme-night .follow-panel {
 .follow-panel h2 {
   font-size: 1.35rem;
   line-height: 1.02;
+}
+
+.follow-panel .eyebrow {
+  margin-bottom: 4px;
+}
+
+.follow-links .action-button {
+  box-shadow: 0 8px 18px rgba(53, 94, 132, 0.08);
+}
+
+.follow-links .action-button:hover {
+  box-shadow: 0 12px 24px rgba(53, 94, 132, 0.12);
 }
 
 .follow-links {
@@ -1544,7 +1563,7 @@ html.theme-night .follow-panel {
 #posts,
 #medium,
 #x,
-#reddit,
+#linkedin,
 #follow {
   scroll-margin-top: 112px;
 }
