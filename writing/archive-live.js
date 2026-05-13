@@ -2,7 +2,8 @@
   const language = document.documentElement.lang.toLowerCase().startsWith("it") ? "it" : "en";
   const archiveList = document.querySelector(".archive-list");
   const sectionHead = document.querySelector(".archive-section-head h2");
-  const sectionLead = document.querySelector(".archive-section-head p");
+  const sectionEyebrow = document.querySelector(".archive-section-head .eyebrow");
+  const sectionLead = document.querySelector(".archive-section-head > div p:last-of-type");
 
   if (!archiveList) {
     return;
@@ -12,6 +13,34 @@
     en: {
       leadTitle: "Recent writing in English.",
       leadText: "Latest first, with direct links to the article pages and the original source.",
+      mediumItems: [
+        {
+          source: "medium",
+          badge: "Medium",
+          title: "Cronos App Is Not About Turning Everyone Into a Trader",
+          summary:
+            "A clearer market product is not a trading product. It is a trust product with better context and less noise.",
+          meta: "",
+          publishedAt: "2026-05-12T09:00:00+02:00",
+          href: "https://medium.com/@pieropasquariello/cronos-app-is-not-about-turning-everyone-into-a-trader-755d7d64136a",
+          pageHref: "/writing/cronos-app-is-not-about-turning-everyone-into-a-trader/",
+          image: "https://cdn-images-1.medium.com/max/1024/1*nMbmzHGRdCLWU9eX5U4CKQ.png",
+          imageAlt: "Cover image for Cronos App Is Not About Turning Everyone Into a Trader",
+        },
+        {
+          source: "medium",
+          badge: "Medium",
+          title: "Cronos App and the Problem of Too Many Financial Apps",
+          summary:
+            "Fragmented financial apps create hesitation. Simpler language and fewer moving parts help users build trust faster.",
+          meta: "",
+          publishedAt: "2026-05-05T09:00:00+02:00",
+          href: "https://medium.com/@pieropasquariello/cronos-app-and-the-problem-of-too-many-financial-apps-3f1f580260bc",
+          pageHref: "/writing/cronos-app-and-the-problem-of-too-many-financial-apps/",
+          image: "https://cdn-images-1.medium.com/max/1024/1*C9_pli7yGAxlNS6vuvKfvA.png",
+          imageAlt: "Cover image for Cronos App and the Problem of Too Many Financial Apps",
+        },
+      ],
       items: [
         {
           source: "linkedin",
@@ -19,7 +48,7 @@
           title: "247 Markets Need Better Mobile Experience",
           summary:
             "Tokenized markets need mobile-first clarity if they want normal users to trust what they see on screen.",
-          meta: "LinkedIn",
+          meta: "",
           publishedAt: "2026-05-01T09:00:00+02:00",
           href: "https://www.linkedin.com/pulse/247-markets-need-better-mobile-experience-piero-pasquariello-zsbfc/",
           pageHref: "/writing/247-markets-need-better-mobile-experience/",
@@ -32,7 +61,7 @@
           title: "Most crypto apps still feel like they were built for power users",
           summary:
             "Product clarity matters more than another technical feature drop when the goal is to attract normal users.",
-          meta: "LinkedIn",
+          meta: "",
           publishedAt: "2026-04-28T09:00:00+02:00",
           href: "https://www.linkedin.com/posts/piero-pasquariello-778a9212a_ugcPost-7458535000385179649-lnZV?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB_XAswBp4NxXA595vwNFcielzlAweCzWcs",
           pageHref: "/writing/most-crypto-apps-still-feel-like-built-for-power-users/",
@@ -44,6 +73,21 @@
     it: {
       leadTitle: "Scrittura recente in italiano.",
       leadText: "Dal più recente al più vecchio, con pagina interna e fonte originale per ogni pezzo.",
+      mediumItems: [
+        {
+          source: "medium",
+          badge: "Medium",
+          title: "Perché l’APY non è il vero punto della nuova proposta CRO",
+          summary:
+            "Il punto non è solo il rendimento: conta come si costruiscono incentivi, fiducia e sostenibilità.",
+          meta: "",
+          publishedAt: "2026-05-11T09:00:00+02:00",
+          href: "https://medium.com/@pieropasquariello/perch%C3%A9-lapy-non-%C3%A8-il-vero-punto-della-nuova-proposta-cro-022a26e97b92?source=rss-d7209a415961------2",
+          pageHref: "/writing/perche-lapy-non-e-il-vero-punto-della-nuova-proposta-cro/",
+          image: "https://cdn-images-1.medium.com/max/1024/1*dl7SGvr7YoelLdGY-AF8Hg.png",
+          imageAlt: "Cover image for the Italian Medium article about the new CRO proposal",
+        },
+      ],
       items: [
         {
           source: "linkedin",
@@ -51,7 +95,7 @@
           title: "Perché una UX chiara costruisce fiducia",
           summary:
             "Parole semplici e onboarding chiaro riducono il rumore e fanno sentire l'utente più sicuro.",
-          meta: "LinkedIn",
+          meta: "",
           publishedAt: "2026-05-09T09:00:00+02:00",
           href: "https://www.linkedin.com/pulse/247-markets-need-better-mobile-experience-piero-pasquariello-zsbfc/",
           pageHref: "/writing/perche-una-ux-chiara-costruisce-fiducia/",
@@ -64,7 +108,7 @@
           title: "Cronos funziona meglio quando è spiegato bene",
           summary:
             "Se il prodotto è buono, spiegare bene il suo valore fa parte del prodotto stesso.",
-          meta: "LinkedIn",
+          meta: "",
           publishedAt: "2026-05-08T09:00:00+02:00",
           href: "https://www.linkedin.com/posts/piero-pasquariello-778a9212a_ugcPost-7458536295452160000-2luA?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB_XAswBp4NxXA595vwNFcielzlAweCzWcs",
           pageHref: "/writing/cronos-funziona-meglio-quando-e-spiegato-bene/",
@@ -84,10 +128,14 @@
       "/writing/perche-lapy-non-e-il-vero-punto-della-nuova-proposta-cro/",
   };
 
-  const staticItems = config[language].items;
+  const staticItems = [...config[language].mediumItems, ...config[language].items];
 
   if (sectionHead) {
     sectionHead.textContent = config[language].leadTitle;
+  }
+
+  if (sectionEyebrow) {
+    sectionEyebrow.textContent = language === "it" ? "Archivio" : "Archive";
   }
 
   if (sectionLead) {
@@ -147,6 +195,9 @@
       .map((item) => {
         const pageHref = item.pageHref || item.href;
         const sourceHref = item.href;
+        const dateLabel = item.meta || formatPublishedLabel(item.publishedAt, language);
+        const readTime = estimateReadTime(item.summary || item.title || "", language);
+        const metaLabel = [dateLabel, readTime].filter(Boolean).join(" · ");
 
         return `
           <article class="archive-item">
@@ -156,7 +207,7 @@
             <div class="archive-item-copy">
               <div class="archive-item-meta">
                 <span>${escapeHtml(item.badge || (language === "it" ? "Medium IT" : "Medium"))}</span>
-                <span>${escapeHtml(language === "it" ? "Italiano" : "English")}</span>
+                <span>${escapeHtml(metaLabel)}</span>
               </div>
               <h3><a href="${safeHref(pageHref)}">${escapeHtml(item.title)}</a></h3>
               <p>${escapeHtml(item.summary || "")}</p>
@@ -189,6 +240,28 @@
       .replace(/[’']/g, "")
       .replace(/\s+/g, " ")
       .trim();
+  }
+
+  function formatPublishedLabel(value, lang) {
+    const parsed = Date.parse(value || "");
+    if (!Number.isFinite(parsed)) {
+      return "";
+    }
+
+    return new Intl.DateTimeFormat(lang === "it" ? "it-IT" : "en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }).format(new Date(parsed));
+  }
+
+  function estimateReadTime(text, lang) {
+    const words = String(text || "")
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean).length;
+    const minutes = Math.max(1, Math.round(words / 180));
+    return lang === "it" ? `${minutes} min` : `${minutes} min read`;
   }
 
   function safeHref(href) {

@@ -214,7 +214,7 @@ function renderWritingSections() {
 
   els.articleList.innerHTML = `${switcher}${sections
     .map((section) => {
-      const streamItems = getWritingItemsForSection(section);
+      const streamItems = getWritingItemsForSection(section).slice(0, 2);
       const sectionTitle =
         section.id === "global-writing" ? "English articles" : "Articoli italiani";
       const archiveLabel =
@@ -272,8 +272,11 @@ function renderArticleCard(item, section, featured = false) {
   const cardClass = featured ? "post-card post-card-featured" : "post-card post-card-compact";
   const ctaLabel = section.id === "italian-writing" ? "Apri →" : featured ? "Open article →" : "Read →";
   const showSummary = section.id !== "italian-writing";
-  const showTop = section.id !== "italian-writing";
+  const showTop = true;
   const pageHref = item.pageHref || item.href || item.url;
+  const publishedLabel = formatPublishedLabel(item.publishedAt || item.pubDate || item.date, section.language);
+  const readTimeLabel = estimateReadTime(item.summary || item.title || "", section.language);
+  const metaLabel = [publishedLabel, readTimeLabel].filter(Boolean).join(" · ");
 
   return `
     <article class="${cardClass}">
@@ -281,7 +284,7 @@ function renderArticleCard(item, section, featured = false) {
         <img src="${item.image}" alt="${escapeHtml(item.imageAlt)}" loading="lazy" />
       </div>
       <div class="post-body">
-        ${showTop ? `<div class="post-top"><span class="article-badge">${escapeHtml(item.badge || section.label)}</span><span class="post-meta-pill">${escapeHtml(item.meta)}</span></div>` : ""}
+        ${showTop ? `<div class="post-top"><span class="article-badge">${escapeHtml(item.badge || section.label)}</span><span class="post-meta-pill">${escapeHtml(metaLabel || item.meta || "")}</span></div>` : ""}
         <h4>${escapeHtml(item.title)}</h4>
         ${showSummary ? `<p>${escapeHtml(item.summary)}</p>` : ""}
         <div class="post-cta">
@@ -604,6 +607,28 @@ function getPublishedTime(item) {
   const publishedAt = item?.publishedAt || item?.pubDate || item?.date || "";
   const parsed = Date.parse(publishedAt);
   return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function formatPublishedLabel(value, language = "en") {
+  const parsed = Date.parse(value || "");
+  if (!Number.isFinite(parsed)) {
+    return "";
+  }
+
+  return new Intl.DateTimeFormat(language === "it" ? "it-IT" : "en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(parsed));
+}
+
+function estimateReadTime(text, language = "en") {
+  const words = String(text || "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length;
+  const minutes = Math.max(1, Math.round(words / 180));
+  return language === "it" ? `${minutes} min` : `${minutes} min read`;
 }
 
 function uniqueWritingItems(items) {
