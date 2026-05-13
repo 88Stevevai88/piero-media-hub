@@ -271,7 +271,7 @@ function getWritingSections() {
 function renderArticleCard(item, section, featured = false) {
   const cardClass = featured ? "post-card post-card-featured" : "post-card post-card-compact";
   const ctaLabel = section.id === "italian-writing" ? "Apri →" : featured ? "Open article →" : "Read →";
-  const showSummary = section.id !== "italian-writing";
+  const showSummary = featured;
   const showTop = true;
   const pageHref = item.pageHref || item.href || item.url;
   const publishedLabel = formatPublishedLabel(item.publishedAt || item.pubDate || item.date, section.language);
@@ -355,7 +355,7 @@ function renderSpotlightArticles() {
           const items = getSpotlightItemsForLanguage(language);
           const [primaryItem, secondaryItem] = items;
           return `
-            <section class="news-group panel">
+            <section class="news-group">
               <div class="news-group-head">
                 <div class="news-group-copy">
                   <p class="eyebrow">${escapeHtml(languageLabels[language].eyebrow)}</p>
