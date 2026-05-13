@@ -367,6 +367,41 @@ html.theme-night .signal-stage::after {
 
 .news-grid {
   display: grid;
+  gap: 12px;
+}
+
+.news-highlights {
+  display: grid;
+  gap: 12px;
+}
+
+.news-group {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+}
+
+.news-group-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.news-group-copy {
+  display: grid;
+  gap: 4px;
+}
+
+.news-group-copy h3 {
+  margin: 0;
+  max-width: 26ch;
+  font-size: 1.08rem;
+  line-height: 1.08;
+}
+
+.news-group-grid {
+  display: grid;
   grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
   align-items: start;
   gap: 12px;
@@ -405,6 +440,10 @@ html.theme-night .signal-stage::after {
   grid-template-columns: 144px minmax(0, 1fr);
   gap: 12px;
   align-items: start;
+}
+
+.news-group .news-card-compact {
+  min-height: 100%;
 }
 
 .news-card-inline-media {
@@ -2081,6 +2120,10 @@ html.theme-night .follow-panel {
   }
 
   .news-grid {
+    gap: 12px;
+  }
+
+  .news-group-grid {
     grid-template-columns: 1fr;
   }
 

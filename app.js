@@ -132,7 +132,6 @@ const mediumFeedState = {
 };
 
 const preferredWritingSectionId = getPreferredWritingSectionId();
-const spotlightItems = getSpotlightItems(getWritingSections(), getBrowserLanguage());
 
 const els = {
   bio: document.querySelector("#bio"),
@@ -249,7 +248,7 @@ function getWritingItemsForSection(section) {
   const mediumItems = liveMediumItems.length ? liveMediumItems : fallbackMediumItems;
   const combined = uniqueWritingItems([...mediumItems, ...linkedinItems]);
 
-  return sortWritingItems(combined).slice(0, 2);
+  return sortWritingItems(combined);
 }
 
 function getWritingSections() {
@@ -325,52 +324,80 @@ function renderSpotlightArticles() {
 
   const isItalian = getBrowserLanguage() === "it";
   const openLabel = isItalian ? "Leggi articolo →" : "Read article →";
-  const languageLabel = isItalian ? { it: "Italiano", en: "Inglese" } : { it: "Italian", en: "English" };
-  const [primaryItem, ...secondaryItems] = spotlightItems;
-  const primaryHref = primaryItem?.pageHref || primaryItem?.href || primaryItem?.url;
+  const languageOrder = isItalian ? ["it", "en"] : ["en", "it"];
+  const languageLabels = {
+    en: { eyebrow: "English highlights", heading: "Clarity, trust and product language.", link: "See English writing →" },
+    it: { eyebrow: "In primo piano", heading: "Chiarezza, fiducia e linguaggio di prodotto.", link: "Vedi scrittura italiana →" },
+  };
 
   els.newsGrid.innerHTML = `
-    <article class="news-card news-card-primary">
-      <div class="news-card-media">
-        <img src="${safeSrc(primaryItem?.image)}" alt="${escapeHtml(primaryItem?.imageAlt || primaryItem?.title || "")}" loading="lazy" />
-      </div>
-      <div class="news-card-top">
-        <span class="news-chip">${escapeHtml(primaryItem?.badge || primaryItem?.source || "")}</span>
-      </div>
-      <h3>${escapeHtml(primaryItem?.title || "")}</h3>
-      <p>${escapeHtml(primaryItem?.summary || primaryItem?.description || "")}</p>
-      <div class="news-card-meta">
-        <span>${escapeHtml(primaryItem?.meta || primaryItem?.source || "")}</span>
-        <span>${primaryItem?.language === "it" ? languageLabel.it : languageLabel.en}</span>
-      </div>
-      <a class="news-link" href="${safeHref(primaryHref)}" ${linkAttrs(primaryHref)}>${openLabel}</a>
-    </article>
-
-    <div class="news-card-stack">
-      ${secondaryItems
-        .map(
-          (item) => `
-            <article class="news-card news-card-compact">
-              <div class="news-card-inline-media">
-                <img src="${safeSrc(item.image)}" alt="${escapeHtml(item.imageAlt || item.title || "")}" loading="lazy" />
-              </div>
-              <div class="news-card-copy">
-                <div class="news-card-top">
-                  <span class="news-chip">${escapeHtml(item.badge || item.source || "")}</span>
+    <div class="news-highlights">
+      ${languageOrder
+        .map((language) => {
+          const items = getSpotlightItemsForLanguage(language);
+          const [primaryItem, secondaryItem] = items;
+          return `
+            <section class="news-group panel">
+              <div class="news-group-head">
+                <div class="news-group-copy">
+                  <p class="eyebrow">${escapeHtml(languageLabels[language].eyebrow)}</p>
+                  <h3>${escapeHtml(languageLabels[language].heading)}</h3>
                 </div>
-                <h3>${escapeHtml(item.title || "")}</h3>
-                <p>${escapeHtml(item.summary || item.description || "")}</p>
-                <div class="news-card-meta">
-                  <span>${escapeHtml(item.meta || item.source || "")}</span>
-                  <span>${item.language === "it" ? languageLabel.it : languageLabel.en}</span>
-                </div>
-                <a class="news-link" href="${safeHref(item.pageHref || item.href || item.url)}" ${linkAttrs(item.pageHref || item.href || item.url)}>${openLabel}</a>
+                <a class="section-link" href="/writing/#${language === "it" ? "italian" : "english"}">${escapeHtml(languageLabels[language].link)}</a>
               </div>
-            </article>
-          `,
-        )
+              <div class="news-group-grid">
+                ${renderNewsCard(primaryItem, true, openLabel)}
+                ${secondaryItem ? renderNewsCard(secondaryItem, false, openLabel) : ""}
+              </div>
+            </section>
+          `;
+        })
         .join("")}
     </div>
+  `;
+}
+
+function getSpotlightItemsForLanguage(language) {
+  const section = getWritingSections().find((entry) => entry.language === language);
+  const liveMediumItems = mediumFeedState.items.filter(
+    (item) => item.source === "medium" && item.language === language,
+  );
+  const fallbackMediumItems = section?.items.filter((item) => item.source === "medium") || [];
+  const linkedinItems = section?.items.filter((item) => item.source === "linkedin") || [];
+  const combined = uniqueWritingItems([
+    ...(liveMediumItems.length ? liveMediumItems : fallbackMediumItems),
+    ...linkedinItems,
+  ]);
+
+  return sortWritingItems(combined).slice(0, 2);
+}
+
+function renderNewsCard(item, featured = false, openLabel = "Read article →") {
+  if (!item) {
+    return "";
+  }
+
+  const href = item.pageHref || item.href || item.url;
+  const cardClass = featured ? "news-card news-card-primary" : "news-card news-card-compact";
+
+  return `
+    <article class="${cardClass}">
+      <div class="${featured ? "news-card-media" : "news-card-inline-media"}">
+        <img src="${safeSrc(item.image)}" alt="${escapeHtml(item.imageAlt || item.title || "")}" loading="lazy" />
+      </div>
+      <div class="news-card-copy">
+        <div class="news-card-top">
+          <span class="news-chip">${escapeHtml(item.badge || item.source || "")}</span>
+        </div>
+        <h3>${escapeHtml(item.title || "")}</h3>
+        <p>${escapeHtml(item.summary || item.description || "")}</p>
+        <div class="news-card-meta">
+          <span>${escapeHtml(item.meta || item.source || "")}</span>
+          <span>${escapeHtml(item.language === "it" ? "Italian" : "English")}</span>
+        </div>
+        <a class="news-link" href="${safeHref(href)}" ${linkAttrs(href)}>${openLabel}</a>
+      </div>
+    </article>
   `;
 }
 
@@ -497,16 +524,6 @@ function getPreferredWritingSectionId() {
   }
 
   return "global-writing";
-}
-
-function getSpotlightItems(sections, preferredLanguage) {
-  const allItems = uniqueWritingItems([
-    ...sections.flatMap((section) => section.items),
-    ...mediumFeedState.items,
-  ]);
-  const combined = sortWritingItems(allItems);
-
-  return combined.slice(0, 4);
 }
 
 function getBrowserLanguage() {
@@ -676,14 +693,14 @@ function renderFeaturedSectionCopy() {
 
   if (els.featuredHeading) {
     els.featuredHeading.textContent = isItalian
-      ? "Una selezione mirata dei miei ultimi contenuti."
-      : "A focused view of my latest writing.";
+      ? "Highlights in italiano e inglese, ordinati per pubblicazione."
+      : "English and Italian highlights, ordered by publication.";
   }
 
   if (els.featuredDescription) {
     els.featuredDescription.textContent = isItalian
-      ? "Articoli e post su Cronos, Web3 e finanza digitale, scelti per mostrare i temi su cui scrivo di più."
-      : "Articles and posts on Cronos, Web3 and digital finance, chosen to show the topics I write about most.";
+      ? "I contenuti più recenti sono divisi per lingua, così ogni lettore vede subito il blocco giusto."
+      : "The newest writing is split by language so each reader sees the right block first.";
   }
 
   if (els.featuredLink) {

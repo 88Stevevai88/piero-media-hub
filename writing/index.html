@@ -33,6 +33,41 @@
     />
     <meta name="twitter:image" content="https://pieropasquariello.com/io.png" />
     <link rel="stylesheet" href="../styles.css?v=20260513a" />
+    <script>
+      (function () {
+        function isItalianLocale() {
+          var values = [];
+          try {
+            if (Array.isArray(navigator.languages)) {
+              values.push.apply(values, navigator.languages);
+            }
+            if (typeof navigator.language === "string") {
+              values.push(navigator.language);
+            }
+            var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+            return (
+              values.some(function (value) {
+                return String(value).toLowerCase().startsWith("it");
+              }) || timeZone === "Europe/Rome"
+            );
+          } catch (error) {
+            return false;
+          }
+        }
+
+        if (!isItalianLocale()) {
+          return;
+        }
+
+        var archive = document.querySelector(".writing-archive");
+        var italian = document.getElementById("italian");
+        var english = document.getElementById("english");
+
+        if (archive && italian && english && english.parentNode === archive) {
+          archive.insertBefore(italian, english);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div class="bg-orb bg-orb-a"></div>
