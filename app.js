@@ -119,12 +119,16 @@ const mediumFeedState = {
 };
 
 const preferredWritingSectionId = getPreferredWritingSectionId();
-const spotlightItems = getSpotlightItems(getWritingSections());
+const spotlightItems = getSpotlightItems(getWritingSections(), getBrowserLanguage());
 
 const els = {
   bio: document.querySelector("#bio"),
   articleList: document.querySelector("#articleList"),
   newsGrid: document.querySelector("#newsGrid"),
+  featuredEyebrow: document.querySelector("#featuredEyebrow"),
+  featuredHeading: document.querySelector("#featuredHeading"),
+  featuredDescription: document.querySelector("#featuredDescription"),
+  featuredLink: document.querySelector("#featuredLink"),
   followX: document.querySelector('[data-link="x"]'),
   followLatest: document.querySelectorAll('[data-link="latest-article"]'),
   followMedium: document.querySelector('[data-link="medium"]'),
@@ -146,6 +150,7 @@ loadLiveMediumFeed();
 
 function render() {
   els.bio.textContent = site.bio;
+  renderFeaturedSectionCopy();
   renderSpotlightArticles();
   setLink(els.followX, site.xUrl);
   setLinks(els.followLatest, site.latestArticleUrl);
@@ -291,27 +296,55 @@ function renderSpotlightArticles() {
     return;
   }
 
-  els.newsGrid.innerHTML = spotlightItems
-    .map(
-      (item) => `
-        <article class="news-card">
-          <div class="news-card-media">
-            <img src="${safeSrc(item.image)}" alt="${escapeHtml(item.imageAlt || item.title)}" loading="lazy" />
-          </div>
-          <div class="news-card-top">
-            <span class="news-chip">${escapeHtml(item.badge || item.source)}</span>
-          </div>
-          <h3>${escapeHtml(item.title)}</h3>
-          <p>${escapeHtml(item.summary || item.description || "")}</p>
-          <div class="news-card-meta">
-            <span>${escapeHtml(item.meta || item.source || "")}</span>
-            <span>${item.language === "it" ? "Italian" : "English"}</span>
-          </div>
-          <a class="news-link" href="${safeHref(item.href || item.url)}" ${linkAttrs(item.href || item.url)}>Open article →</a>
-        </article>
-      `,
-    )
-    .join("");
+  const isItalian = getBrowserLanguage() === "it";
+  const openLabel = isItalian ? "Apri articolo →" : "Open article →";
+  const languageLabel = isItalian ? { it: "Italiano", en: "Inglese" } : { it: "Italian", en: "English" };
+  const [primaryItem, secondaryOne, secondaryTwo] = spotlightItems;
+  const secondaryItems = [secondaryOne, secondaryTwo].filter(Boolean);
+
+  els.newsGrid.innerHTML = `
+    <article class="news-card news-card-primary">
+      <div class="news-card-media">
+        <img src="${safeSrc(primaryItem?.image)}" alt="${escapeHtml(primaryItem?.imageAlt || primaryItem?.title || "")}" loading="lazy" />
+      </div>
+      <div class="news-card-top">
+        <span class="news-chip">${escapeHtml(primaryItem?.badge || primaryItem?.source || "")}</span>
+      </div>
+      <h3>${escapeHtml(primaryItem?.title || "")}</h3>
+      <p>${escapeHtml(primaryItem?.summary || primaryItem?.description || "")}</p>
+      <div class="news-card-meta">
+        <span>${escapeHtml(primaryItem?.meta || primaryItem?.source || "")}</span>
+        <span>${primaryItem?.language === "it" ? languageLabel.it : languageLabel.en}</span>
+      </div>
+      <a class="news-link" href="${safeHref(primaryItem?.href || primaryItem?.url)}" ${linkAttrs(primaryItem?.href || primaryItem?.url)}>${openLabel}</a>
+    </article>
+
+    <div class="news-card-stack">
+      ${secondaryItems
+        .map(
+          (item) => `
+            <article class="news-card news-card-compact">
+              <div class="news-card-inline-media">
+                <img src="${safeSrc(item.image)}" alt="${escapeHtml(item.imageAlt || item.title || "")}" loading="lazy" />
+              </div>
+              <div class="news-card-copy">
+                <div class="news-card-top">
+                  <span class="news-chip">${escapeHtml(item.badge || item.source || "")}</span>
+                </div>
+                <h3>${escapeHtml(item.title || "")}</h3>
+                <p>${escapeHtml(item.summary || item.description || "")}</p>
+                <div class="news-card-meta">
+                  <span>${escapeHtml(item.meta || item.source || "")}</span>
+                  <span>${item.language === "it" ? languageLabel.it : languageLabel.en}</span>
+                </div>
+                <a class="news-link" href="${safeHref(item.href || item.url)}" ${linkAttrs(item.href || item.url)}>${openLabel}</a>
+              </div>
+            </article>
+          `,
+        )
+        .join("")}
+    </div>
+  `;
 }
 
 function setLink(node, href) {
@@ -436,15 +469,16 @@ function getPreferredWritingSectionId() {
   return "global-writing";
 }
 
-function getSpotlightItems(sections) {
-  const primarySection = sections[0];
-  const secondarySection = sections[1];
-
+function getSpotlightItems(sections, preferredLanguage) {
+  const primarySection =
+    sections.find((section) => section.language === preferredLanguage) || sections[0];
   const primaryMedium = primarySection?.items.find((item) => item.source === "medium");
   const primaryLinkedIn = primarySection?.items.find((item) => item.source === "linkedin");
-  const secondaryMedium = secondarySection?.items.find((item) => item.source === "medium");
+  const remainingItems = primarySection?.items.filter(
+    (item) => item !== primaryMedium && item !== primaryLinkedIn,
+  );
 
-  return [primaryMedium, primaryLinkedIn, secondaryMedium].filter(Boolean);
+  return [primaryMedium, primaryLinkedIn, ...remainingItems].filter(Boolean).slice(0, 3);
 }
 
 function getBrowserLanguage() {
@@ -484,6 +518,34 @@ function getBrowserLanguage() {
 
 function getSectionById(id) {
   return site.sections.find((section) => section.id === id);
+}
+
+function renderFeaturedSectionCopy() {
+  const isItalian = getBrowserLanguage() === "it";
+
+  if (els.featuredEyebrow) {
+    els.featuredEyebrow.textContent = isItalian ? "In evidenza" : "Featured";
+  }
+
+  if (els.featuredHeading) {
+    els.featuredHeading.textContent = isItalian
+      ? "Articoli selezionati che mostrano il mio modo di scrivere."
+      : "Selected articles that show the range of my writing.";
+  }
+
+  if (els.featuredDescription) {
+    els.featuredDescription.textContent = isItalian
+      ? "Tre post reali da Medium e LinkedIn, scelti per portare subito dentro i contenuti."
+      : "Three real posts from Medium and LinkedIn, chosen to give visitors a fast path into the content.";
+  }
+
+  if (els.featuredLink) {
+    els.featuredLink.textContent = isItalian ? "Vedi tutto →" : "View all →";
+  }
+
+  if (els.newsGrid) {
+    els.newsGrid.setAttribute("aria-label", isItalian ? "Articoli in evidenza" : "Featured article cards");
+  }
 }
 
 function setupTimeBasedTheme() {
