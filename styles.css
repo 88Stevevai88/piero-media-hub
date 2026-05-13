@@ -202,6 +202,12 @@ html.theme-night .panel {
   transform: translateY(0);
 }
 
+.writing-archive .reveal,
+.article-shell .reveal {
+  opacity: 1;
+  transform: none;
+}
+
 .profile-shell {
   overflow: hidden;
   padding: 10px 0 0;
