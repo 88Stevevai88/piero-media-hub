@@ -140,45 +140,6 @@
         </div>
       </section>
 
-      <section class="social-section panel reveal" id="social">
-        <div class="social-section-head">
-          <p class="eyebrow" id="socialEyebrow">Where to find me</p>
-          <p id="socialDescription">Quick links to the platforms I use most.</p>
-        </div>
-        <div class="social-grid">
-          <a class="signal-card signal-card-accent where-card" id="x" data-link="x" href="https://x.com/PieroPasqiari88">
-            <span class="platform-orb platform-orb-x" aria-hidden="true">
-              <img src="https://cdn.simpleicons.org/x/FFFFFF?viewbox=auto" alt="" aria-hidden="true" />
-            </span>
-            <span class="where-copy">
-              <strong>X</strong>
-              <small>Daily Cronos takes and updates</small>
-            </span>
-            <span class="external-mark">↗</span>
-          </a>
-          <a class="signal-card where-card" id="medium" data-link="medium" href="https://medium.com/@pieropasquariello">
-            <span class="platform-orb platform-orb-medium" aria-hidden="true">
-              <img src="https://cdn.simpleicons.org/medium/111827?viewbox=auto" alt="" aria-hidden="true" />
-            </span>
-            <span class="where-copy">
-              <strong>Medium</strong>
-              <small>Long-form articles and deeper analysis</small>
-            </span>
-            <span class="external-mark">↗</span>
-          </a>
-          <a class="signal-card where-card" id="linkedin" data-link="linkedin" href="#follow">
-            <span class="platform-orb platform-orb-linkedin" aria-hidden="true">
-              <img src="https://cdn.simpleicons.org/linkedin/FFFFFF?viewbox=auto" alt="" aria-hidden="true" />
-            </span>
-            <span class="where-copy">
-              <strong>LinkedIn</strong>
-              <small>Short posts and article updates</small>
-            </span>
-            <span class="external-mark">↗</span>
-          </a>
-        </div>
-      </section>
-
       <section class="news-section panel reveal" id="news" aria-label="Featured articles">
         <div class="news-head">
           <div>
@@ -191,14 +152,70 @@
         <div class="news-grid" id="newsGrid" aria-label="Featured article cards"></div>
       </section>
 
-      <section class="posts-header reveal" id="posts">
-        <div>
-          <h2>Selected writing</h2>
-        </div>
-        <a class="section-link" id="postsArchiveLink" href="/writing/">View archive →</a>
-      </section>
+      <div class="home-layout">
+        <div class="home-main">
+          <section class="posts-header reveal" id="posts">
+            <div>
+              <h2>Selected writing</h2>
+            </div>
+            <a class="section-link" id="postsArchiveLink" href="/writing/">View archive →</a>
+          </section>
 
-      <section class="content-columns" id="articleList" aria-live="polite"></section>
+          <section class="content-columns" id="articleList" aria-live="polite"></section>
+        </div>
+
+        <aside class="home-rail" aria-label="Editorial sidebar">
+          <section class="social-section panel reveal" id="social">
+            <div class="social-section-head">
+              <p class="eyebrow" id="socialEyebrow">Where to find me</p>
+              <p id="socialDescription">Quick links to the platforms I use most.</p>
+            </div>
+            <div class="social-grid">
+              <a class="signal-card signal-card-accent where-card" id="x" data-link="x" href="https://x.com/PieroPasqiari88">
+                <span class="platform-orb platform-orb-x" aria-hidden="true">
+                  <img src="https://cdn.simpleicons.org/x/FFFFFF?viewbox=auto" alt="" aria-hidden="true" />
+                </span>
+                <span class="where-copy">
+                  <strong>X</strong>
+                  <small>Daily Cronos takes and updates</small>
+                </span>
+                <span class="external-mark">↗</span>
+              </a>
+              <a class="signal-card where-card" id="medium" data-link="medium" href="https://medium.com/@pieropasquariello">
+                <span class="platform-orb platform-orb-medium" aria-hidden="true">
+                  <img src="https://cdn.simpleicons.org/medium/111827?viewbox=auto" alt="" aria-hidden="true" />
+                </span>
+                <span class="where-copy">
+                  <strong>Medium</strong>
+                  <small>Long-form articles and deeper analysis</small>
+                </span>
+                <span class="external-mark">↗</span>
+              </a>
+              <a class="signal-card where-card" id="linkedin" data-link="linkedin" href="#follow">
+                <span class="platform-orb platform-orb-linkedin" aria-hidden="true">
+                  <img src="https://cdn.simpleicons.org/linkedin/FFFFFF?viewbox=auto" alt="" aria-hidden="true" />
+                </span>
+                <span class="where-copy">
+                  <strong>LinkedIn</strong>
+                  <small>Short posts and article updates</small>
+                </span>
+                <span class="external-mark">↗</span>
+              </a>
+            </div>
+          </section>
+
+          <section class="panel rail-panel reveal" id="topReads" aria-label="Top reads">
+            <div class="rail-panel-head">
+              <div>
+                <p class="eyebrow">Top reads</p>
+                <h2>Quick reads to open next.</h2>
+              </div>
+              <a class="section-link" id="railArchiveLink" href="/writing/">See archive →</a>
+            </div>
+            <div class="rail-list" id="topReadsList"></div>
+          </section>
+        </aside>
+      </div>
 
       <section class="panel follow-panel reveal" id="follow">
         <div>

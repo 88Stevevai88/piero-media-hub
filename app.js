@@ -141,6 +141,7 @@ const els = {
   featuredHeading: document.querySelector("#featuredHeading"),
   featuredDescription: document.querySelector("#featuredDescription"),
   featuredLink: document.querySelector("#featuredLink"),
+  railArchiveLink: document.querySelector("#railArchiveLink"),
   articlesLink: document.querySelector("#articlesLink"),
   heroTagline: document.querySelector("#heroTagline"),
   heroSupport: document.querySelector("#heroSupport"),
@@ -158,6 +159,7 @@ const els = {
   followLinkedIn2: document.querySelector('[data-link="linkedin-follow"]'),
   socialLinkedIn: document.querySelector('[data-link="linkedin"]'),
   postsArchiveLink: document.querySelector("#postsArchiveLink"),
+  topReadsList: document.querySelector("#topReadsList"),
 };
 
 let activeWritingSectionId = preferredWritingSectionId || site.sections[0]?.id || "medium";
@@ -180,6 +182,7 @@ function render() {
   const archiveHref = getWritingArchiveHref(getBrowserLanguage());
   setLink(els.articlesLink, archiveHref);
   setLink(els.postsArchiveLink, archiveHref);
+  setLink(els.railArchiveLink, archiveHref);
   setLink(els.followX, site.xUrl);
   setLinks(els.followLatest, site.latestArticleUrl);
   setLink(els.followMedium, site.mediumUrl);
@@ -189,6 +192,7 @@ function render() {
   setLink(els.socialLinkedIn, getPrimaryLinkedInUrl(getBrowserLanguage()));
 
   renderWritingSections();
+  renderTopReadsRail();
 }
 
 function renderWritingSections() {
@@ -223,7 +227,7 @@ function renderWritingSections() {
           : "Vai a tutti gli articoli →";
 
       return `
-        <section class="writing-section panel" id="${section.id}" data-platform="${section.id}" data-writing-id="${section.id}">
+        <section class="writing-section" id="${section.id}" data-platform="${section.id}" data-writing-id="${section.id}">
           <div class="writing-section-head">
             <h3>${escapeHtml(sectionTitle)}</h3>
             <a class="section-link" href="${safeHref(section.href)}" ${linkAttrs(section.href)}>${escapeHtml(
@@ -321,6 +325,8 @@ async function loadLiveMediumFeed() {
     }
 
     renderWritingSections();
+    renderSpotlightArticles();
+    renderTopReadsRail();
   } catch (error) {
     mediumFeedState.status = "error";
     mediumFeedState.error = error instanceof Error ? error.message : String(error);
@@ -333,48 +339,29 @@ function renderSpotlightArticles() {
   }
 
   const isItalian = getBrowserLanguage() === "it";
-  const openLabel = isItalian ? "Leggi articolo →" : "Read article →";
-  const languageOrder = isItalian ? ["it", "en"] : ["en", "it"];
-  const languageLabels = {
-    en: {
-      eyebrow: "English",
-      heading: "English articles",
-      link: "View all English articles →",
-    },
-    it: {
-      eyebrow: "Italiano",
-      heading: "Articoli italiani",
-      link: "Vai a tutti gli articoli →",
-    },
-  };
+  const items = getSpotlightItems().slice(0, 4);
 
   els.newsGrid.innerHTML = `
-    <div class="news-highlights">
-      ${languageOrder
-        .map((language) => {
-          const items = getSpotlightItemsForLanguage(language);
-          const [primaryItem, secondaryItem] = items;
-          return `
-            <section class="news-group">
-              <div class="news-group-head">
-                <div class="news-group-copy">
-                  <p class="eyebrow">${escapeHtml(languageLabels[language].eyebrow)}</p>
-                  <h3>${escapeHtml(languageLabels[language].heading)}</h3>
-                </div>
-                <a class="section-link" href="${safeHref(getWritingArchiveHref(language))}" ${linkAttrs(
-                  getWritingArchiveHref(language),
-                )}>${escapeHtml(languageLabels[language].link)}</a>
-              </div>
-              <div class="news-group-grid">
-                ${renderNewsCard(primaryItem, true, openLabel)}
-                ${secondaryItem ? renderNewsCard(secondaryItem, false, openLabel) : ""}
-              </div>
-            </section>
-          `;
-        })
-        .join("")}
+    <div class="spotlight-shell">
+      <div class="spotlight-track" data-spotlight-rail aria-label="Featured article carousel">
+        ${items.map((item, index) => renderSpotlightCard(item, index === 0)).join("")}
+      </div>
     </div>
   `;
+
+  setupSpotlightCarousel();
+}
+
+function getSpotlightItems() {
+  const sections = getWritingSections();
+  const orderedItems = sections.flatMap((section) =>
+    getSpotlightItemsForLanguage(section.language).slice(0, 2).map((item) => ({
+      ...item,
+      spotlightLanguage: section.language,
+    })),
+  );
+
+  return uniqueWritingItems(orderedItems);
 }
 
 function getSpotlightItemsForLanguage(language) {
@@ -392,33 +379,112 @@ function getSpotlightItemsForLanguage(language) {
   return sortWritingItems(combined).slice(0, 2);
 }
 
-function renderNewsCard(item, featured = false, openLabel = "Read article →") {
+function renderSpotlightCard(item, featured = false) {
   if (!item) {
     return "";
   }
 
   const href = item.pageHref || item.href || item.url;
-  const cardClass = featured ? "news-card news-card-primary" : "news-card news-card-compact";
+  const language = item.spotlightLanguage || item.language || "en";
+  const openLabel = language === "it" ? "Apri →" : "Open →";
+  const publishedLabel = formatPublishedLabel(item.publishedAt || item.pubDate || item.date, language);
+  const readTimeLabel = estimateReadTime(item.summary || item.title || "", language);
+  const metaLabel = [publishedLabel, readTimeLabel].filter(Boolean).join(" · ");
 
   return `
-    <article class="${cardClass}">
-      <div class="${featured ? "news-card-media" : "news-card-inline-media"}">
+    <article class="spotlight-card${featured ? " spotlight-card-featured" : ""}">
+      <div class="spotlight-card-media">
         <img src="${safeSrc(item.image)}" alt="${escapeHtml(item.imageAlt || item.title || "")}" loading="lazy" />
       </div>
-      <div class="news-card-copy">
-        <div class="news-card-top">
+      <div class="spotlight-card-copy">
+        <div class="spotlight-card-top">
           <span class="news-chip">${escapeHtml(item.badge || item.source || "")}</span>
+          <span class="spotlight-meta">${escapeHtml(metaLabel)}</span>
         </div>
         <h3>${escapeHtml(item.title || "")}</h3>
-        <p>${escapeHtml(item.summary || item.description || "")}</p>
-        <div class="news-card-meta">
-          <span>${escapeHtml(item.meta || item.source || "")}</span>
-          <span>${escapeHtml(item.language === "it" ? "Italian" : "English")}</span>
-        </div>
-        <a class="news-link" href="${safeHref(href)}" ${linkAttrs(href)}>${openLabel}</a>
+        <a class="spotlight-link" href="${safeHref(href)}" ${linkAttrs(href)}>${openLabel}</a>
       </div>
     </article>
   `;
+}
+
+function renderTopReadsRail() {
+  if (!els.topReadsList) {
+    return;
+  }
+
+  const items = sortWritingItems(
+    uniqueWritingItems(getWritingSections().flatMap((section) => getWritingItemsForSection(section))),
+  ).slice(0, 5);
+  const isItalian = getBrowserLanguage() === "it";
+  const archiveHref = getWritingArchiveHref(isItalian ? "it" : "en");
+  const linkLabel = isItalian ? "Vai all'archivio →" : "Browse archive →";
+
+  els.topReadsList.innerHTML = items
+    .map((item, index) => {
+      const href = item.pageHref || item.href || item.url;
+      const label = formatPublishedLabel(item.publishedAt || item.pubDate || item.date, item.language);
+      const readTimeLabel = estimateReadTime(item.summary || item.title || "", item.language);
+      const meta = [label, readTimeLabel].filter(Boolean).join(" · ");
+      return `
+        <a class="rail-item" href="${safeHref(href)}" ${linkAttrs(href)}>
+          <span class="rail-rank">${String(index + 1).padStart(2, "0")}</span>
+          <span class="rail-copy">
+            <strong>${escapeHtml(item.title || "")}</strong>
+            <span>${escapeHtml(meta)}</span>
+          </span>
+          <span class="rail-arrow">↗</span>
+        </a>
+      `;
+    })
+    .join("");
+
+  if (els.railArchiveLink) {
+    els.railArchiveLink.href = safeHref(archiveHref);
+    els.railArchiveLink.textContent = linkLabel;
+  }
+}
+
+function setupSpotlightCarousel() {
+  const rail = document.querySelector("[data-spotlight-rail]");
+  if (!(rail instanceof HTMLElement)) {
+    return;
+  }
+
+  if (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) {
+    return;
+  }
+
+  if (window.__spotlightCarouselTimer) {
+    window.clearInterval(window.__spotlightCarouselTimer);
+  }
+
+  const getStep = () => {
+    const card = rail.querySelector(".spotlight-card");
+    if (!(card instanceof HTMLElement)) {
+      return 320;
+    }
+
+    const gap = 12;
+    return card.getBoundingClientRect().width + gap;
+  };
+
+  const tick = () => {
+    const maxScrollLeft = Math.max(0, rail.scrollWidth - rail.clientWidth - 8);
+    if (maxScrollLeft <= 0) {
+      return;
+    }
+
+    const nextLeft = rail.scrollLeft + getStep();
+    if (nextLeft >= maxScrollLeft) {
+      rail.scrollTo({ left: 0, behavior: "smooth" });
+      return;
+    }
+
+    rail.scrollBy({ left: getStep(), behavior: "smooth" });
+  };
+
+  window.__spotlightCarouselTimer = window.setInterval(tick, 4500);
 }
 
 function setLink(node, href) {
@@ -744,8 +810,8 @@ function renderFeaturedSectionCopy() {
 
   if (els.featuredDescription) {
     els.featuredDescription.textContent = isItalian
-      ? "Una selezione dei contenuti più recenti."
-      : "A curated view of the latest writing.";
+      ? "Ultimi articoli, aggiornati live."
+      : "Latest articles, updated live.";
   }
 
   if (els.featuredLink) {
