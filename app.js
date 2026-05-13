@@ -217,14 +217,18 @@ function renderWritingSections() {
       const streamItems = getWritingItemsForSection(section);
       const sectionTitle =
         section.id === "global-writing" ? "English articles" : "Articoli italiani";
+      const archiveLabel =
+        section.id === "global-writing"
+          ? "View all English articles →"
+          : "Vai a tutti gli articoli →";
 
       return `
         <section class="writing-section panel" id="${section.id}" data-platform="${section.id}" data-writing-id="${section.id}">
           <div class="writing-section-head">
             <h3>${escapeHtml(sectionTitle)}</h3>
-            <a class="section-link" href="${safeHref(section.href)}" ${linkAttrs(section.href)}>${
-              section.id === "global-writing" ? "Open archive →" : "Apri archivio →"
-            }</a>
+            <a class="section-link" href="${safeHref(section.href)}" ${linkAttrs(section.href)}>${escapeHtml(
+              archiveLabel,
+            )}</a>
           </div>
           <div class="writing-grid">
             ${streamItems.map((item, index) => renderArticleCard(item, section, index === 0)).join("")}
@@ -329,8 +333,16 @@ function renderSpotlightArticles() {
   const openLabel = isItalian ? "Leggi articolo →" : "Read article →";
   const languageOrder = isItalian ? ["it", "en"] : ["en", "it"];
   const languageLabels = {
-    en: { eyebrow: "English writing", heading: "English articles", link: "Open archive →" },
-    it: { eyebrow: "Scrittura italiana", heading: "Articoli italiani", link: "Apri archivio →" },
+    en: {
+      eyebrow: "English",
+      heading: "English articles",
+      link: "View all English articles →",
+    },
+    it: {
+      eyebrow: "Italiano",
+      heading: "Articoli italiani",
+      link: "Vai a tutti gli articoli →",
+    },
   };
 
   els.newsGrid.innerHTML = `
@@ -713,7 +725,9 @@ function renderFeaturedSectionCopy() {
 
   if (els.featuredLink) {
     els.featuredLink.href = safeHref(archiveHref);
-    els.featuredLink.textContent = isItalian ? "Vedi archivio →" : "Browse archive →";
+    els.featuredLink.textContent = isItalian
+      ? "Vai a tutti gli articoli →"
+      : "View all English articles →";
   }
 
   if (els.newsGrid) {

@@ -23,7 +23,7 @@ module.exports = async function mediumFeedHandler(req, res) {
     }
 
     const xml = await response.text();
-    const items = parseMediumFeed(xml).slice(0, 8);
+    const items = parseMediumFeed(xml);
 
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/json; charset=utf-8");
