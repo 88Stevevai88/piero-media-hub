@@ -134,6 +134,8 @@ const els = {
   socialDescription: document.querySelector("#socialDescription"),
   followEyebrow: document.querySelector("#followEyebrow"),
   followHeading: document.querySelector("#followHeading"),
+  siteHeader: document.querySelector(".site-header"),
+  siteMenuToggle: document.querySelector("#siteMenuToggle"),
   followX: document.querySelector('[data-link="x"]'),
   followLatest: document.querySelectorAll('[data-link="latest-article"]'),
   followMedium: document.querySelector('[data-link="medium"]'),
@@ -150,6 +152,7 @@ let themeTimerId = null;
 render();
 setupReveal();
 setupActiveNav();
+setupMobileMenu();
 setupWritingSwitcher();
 setupTimeBasedTheme();
 loadLiveMediumFeed();
@@ -533,6 +536,52 @@ function getPrimaryLinkedInUrl(preferredLanguage) {
     getWritingSections().find((entry) => entry.language === preferredLanguage) || getWritingSections()[0];
   const linkedInItem = section?.items.find((item) => item.source === "linkedin");
   return linkedInItem?.href || site.mediumUrl;
+}
+
+function setupMobileMenu() {
+  if (!els.siteHeader || !els.siteMenuToggle) {
+    return;
+  }
+
+  const closeMenu = () => {
+    els.siteHeader.classList.remove("is-menu-open");
+    els.siteMenuToggle.setAttribute("aria-expanded", "false");
+  };
+
+  const openMenu = () => {
+    els.siteHeader.classList.add("is-menu-open");
+    els.siteMenuToggle.setAttribute("aria-expanded", "true");
+  };
+
+  els.siteMenuToggle.addEventListener("click", () => {
+    const isOpen = els.siteHeader?.classList.contains("is-menu-open");
+    if (isOpen) {
+      closeMenu();
+      return;
+    }
+
+    openMenu();
+  });
+
+  els.siteHeader.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      if (window.matchMedia("(max-width: 620px)").matches) {
+        closeMenu();
+      }
+    });
+  });
+
+  window.addEventListener("resize", () => {
+    if (!window.matchMedia("(max-width: 620px)").matches) {
+      closeMenu();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeMenu();
+    }
+  });
 }
 
 function renderLocalizedHeroCopy() {

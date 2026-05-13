@@ -801,6 +801,11 @@ html.theme-night .signal-card-accent {
 .profile-meta {
   min-width: 0;
   max-width: 620px;
+  padding: 12px 14px 14px;
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(248, 252, 255, 0.48));
+  backdrop-filter: blur(10px);
 }
 
 .profile-intro {
@@ -1064,6 +1069,63 @@ html.theme-night .trust-metrics span {
 .site-cta {
   flex: 0 0 auto;
   min-height: 40px;
+}
+
+.site-menu-toggle {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(10, 28, 50, 0.12);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 247, 252, 0.94));
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+  box-shadow: 0 10px 24px rgba(53, 94, 132, 0.08);
+}
+
+.site-menu-toggle-icon {
+  position: relative;
+  width: 16px;
+  height: 12px;
+  flex: 0 0 16px;
+}
+
+.site-menu-toggle-icon::before,
+.site-menu-toggle-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 16px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transition:
+    transform 180ms ease,
+    top 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.site-menu-toggle-icon::before {
+  top: 1px;
+  box-shadow: 0 4px 0 currentColor;
+}
+
+.site-menu-toggle-icon::after {
+  top: 9px;
+}
+
+.site-header.is-menu-open .site-menu-toggle-icon::before {
+  top: 5px;
+  box-shadow: none;
+  transform: rotate(45deg);
+}
+
+.site-header.is-menu-open .site-menu-toggle-icon::after {
+  top: 5px;
+  transform: rotate(-45deg);
 }
 
 .site-header .site-brand:hover,
@@ -1752,6 +1814,7 @@ html.theme-night .follow-panel {
   }
 
   .site-header {
+    align-items: center;
     gap: 10px;
     padding: 12px;
   }
@@ -1760,25 +1823,34 @@ html.theme-night .follow-panel {
     font-size: 0.92rem;
   }
 
+  .site-menu-toggle {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
   .site-nav {
-    gap: 8px;
-    padding-bottom: 2px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .site-nav::-webkit-scrollbar {
     display: none;
-  }
-
-  .site-nav a {
-    padding: 7px 10px;
-    font-size: 0.9rem;
+    width: 100%;
+    order: 3;
+    justify-content: flex-start;
+    gap: 8px;
+    padding-top: 6px;
   }
 
   .site-cta {
+    display: none;
     width: 100%;
     justify-content: center;
+    order: 4;
+  }
+
+  .site-header.is-menu-open {
+    align-items: flex-start;
+  }
+
+  .site-header.is-menu-open .site-nav,
+  .site-header.is-menu-open .site-cta {
+    display: flex;
   }
 
   .signal-stage {
@@ -1813,6 +1885,14 @@ html.theme-night .follow-panel {
     line-height: 1.12;
   }
 
+  .profile-meta {
+    padding: 12px;
+    border: 1px solid rgba(74, 101, 129, 0.14);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(249, 252, 255, 0.84));
+    box-shadow: 0 12px 26px rgba(53, 94, 132, 0.08);
+  }
+
   .about-card,
   .follow-panel {
     padding: 16px;
@@ -1837,13 +1917,13 @@ html.theme-night .follow-panel {
   }
 
   .signal-stage::before {
-    background-position: 90% 18%;
-    filter: contrast(1.03) saturate(0.94) brightness(0.8);
+    background-position: 84% 20%;
+    filter: contrast(0.95) saturate(0.9) brightness(0.58);
   }
 
   .signal-stage::after {
     background:
-      linear-gradient(90deg, rgba(248, 252, 255, 0.98) 0%, rgba(248, 252, 255, 0.92) 30%, rgba(248, 252, 255, 0.74) 55%, rgba(248, 252, 255, 0.26) 80%, rgba(248, 252, 255, 0.08) 100%),
+      linear-gradient(180deg, rgba(248, 252, 255, 0.98) 0%, rgba(248, 252, 255, 0.94) 32%, rgba(248, 252, 255, 0.78) 54%, rgba(248, 252, 255, 0.28) 80%, rgba(248, 252, 255, 0.08) 100%),
       radial-gradient(circle at 72% 28%, rgba(76, 219, 255, 0.08), transparent 24%),
       radial-gradient(circle at 84% 72%, rgba(0, 132, 255, 0.05), transparent 30%);
   }
@@ -1864,9 +1944,13 @@ html.theme-night .follow-panel {
     align-items: flex-start;
   }
 
+  .profile-actions {
+    flex-direction: column;
+  }
+
   .profile-actions .action-button {
-    flex: 1 1 100%;
     min-width: 0;
+    width: 100%;
   }
 
   .button-logo {
@@ -1886,6 +1970,10 @@ html.theme-night .follow-panel {
 
   .follow-links .action-button {
     flex: 1 1 0;
+  }
+
+  .site-menu-toggle {
+    width: auto;
   }
 
   .writing-section-head h3 {

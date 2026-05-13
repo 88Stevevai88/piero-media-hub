@@ -62,7 +62,17 @@
     <main class="app-shell" id="top">
       <header class="site-header nav-strip panel reveal" aria-label="Primary navigation">
         <a class="site-brand" href="#top">Piero Pasquariello</a>
-        <nav class="site-nav" aria-label="Site sections">
+        <button
+          class="site-menu-toggle"
+          id="siteMenuToggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="siteNavigation"
+        >
+          <span class="site-menu-toggle-icon" aria-hidden="true"></span>
+          <span class="site-menu-toggle-text">Menu</span>
+        </button>
+        <nav class="site-nav" id="siteNavigation" aria-label="Site sections">
           <a href="#posts">Posts</a>
           <a href="#news">Featured</a>
           <a href="#about">About</a>
