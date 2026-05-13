@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sito-web-piero.vercel.app/sitemap.xml
+Sitemap: https://pieropasquariello.com/sitemap.xml
