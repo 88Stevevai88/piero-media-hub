@@ -1919,12 +1919,12 @@ html.theme-night .follow-panel {
 
   .signal-stage::before {
     background-position: 84% 20%;
-    filter: contrast(1.04) saturate(0.96) brightness(0.82);
+    filter: contrast(1.04) saturate(0.96) brightness(0.88);
   }
 
   .signal-stage::after {
     background:
-      linear-gradient(180deg, rgba(248, 252, 255, 0.72) 0%, rgba(248, 252, 255, 0.56) 32%, rgba(248, 252, 255, 0.34) 54%, rgba(248, 252, 255, 0.14) 80%, rgba(248, 252, 255, 0.04) 100%),
+      linear-gradient(180deg, rgba(248, 252, 255, 0.5) 0%, rgba(248, 252, 255, 0.34) 32%, rgba(248, 252, 255, 0.18) 54%, rgba(248, 252, 255, 0.08) 80%, rgba(248, 252, 255, 0.02) 100%),
       radial-gradient(circle at 72% 28%, rgba(76, 219, 255, 0.08), transparent 24%),
       radial-gradient(circle at 84% 72%, rgba(0, 132, 255, 0.05), transparent 30%);
   }
@@ -1947,11 +1947,18 @@ html.theme-night .follow-panel {
 
   .profile-actions {
     flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 
   .profile-actions .action-button {
     min-width: 0;
-    width: 100%;
+    width: fit-content;
+    max-width: 100%;
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 0 12px;
+    font-size: 0.74rem;
   }
 
   .button-logo {
