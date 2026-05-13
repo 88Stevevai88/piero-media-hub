@@ -8,9 +8,9 @@ const site = {
   sections: [
     {
       id: "global-writing",
-      label: "EN / Global writing",
+      label: "English",
       description: "English Medium articles and LinkedIn posts about Cronos, Web3 and digital finance.",
-      href: "/writing/#english",
+      href: "/writing/english/",
       language: "en",
       items: [
         {
@@ -73,9 +73,9 @@ const site = {
     },
     {
       id: "italian-writing",
-      label: "IT / Cronos in italiano",
+      label: "Italiano",
       description: "Articoli Medium e note LinkedIn in italiano su Cronos, CRO e Web3.",
-      href: "/writing/#italian",
+      href: "/writing/italiano/",
       language: "it",
       items: [
         {
@@ -141,6 +141,7 @@ const els = {
   featuredHeading: document.querySelector("#featuredHeading"),
   featuredDescription: document.querySelector("#featuredDescription"),
   featuredLink: document.querySelector("#featuredLink"),
+  articlesLink: document.querySelector("#articlesLink"),
   heroTagline: document.querySelector("#heroTagline"),
   heroSupport: document.querySelector("#heroSupport"),
   socialEyebrow: document.querySelector("#socialEyebrow"),
@@ -156,6 +157,7 @@ const els = {
   followMedium2: document.querySelector('[data-link="medium-follow"]'),
   followLinkedIn2: document.querySelector('[data-link="linkedin-follow"]'),
   socialLinkedIn: document.querySelector('[data-link="linkedin"]'),
+  postsArchiveLink: document.querySelector("#postsArchiveLink"),
 };
 
 let activeWritingSectionId = preferredWritingSectionId || site.sections[0]?.id || "medium";
@@ -175,6 +177,9 @@ function render() {
   els.bio.textContent = site.bio;
   renderFeaturedSectionCopy();
   renderSpotlightArticles();
+  const archiveHref = getWritingArchiveHref(getBrowserLanguage());
+  setLink(els.articlesLink, archiveHref);
+  setLink(els.postsArchiveLink, archiveHref);
   setLink(els.followX, site.xUrl);
   setLinks(els.followLatest, site.latestArticleUrl);
   setLink(els.followMedium, site.mediumUrl);
@@ -211,16 +216,14 @@ function renderWritingSections() {
     .map((section) => {
       const streamItems = getWritingItemsForSection(section);
       const sectionTitle =
-        section.id === "global-writing"
-          ? "Medium articles and LinkedIn posts"
-          : "Cronos in italiano";
+        section.id === "global-writing" ? "English articles" : "Articoli italiani";
 
       return `
         <section class="writing-section panel" id="${section.id}" data-platform="${section.id}" data-writing-id="${section.id}">
           <div class="writing-section-head">
             <h3>${escapeHtml(sectionTitle)}</h3>
             <a class="section-link" href="${safeHref(section.href)}" ${linkAttrs(section.href)}>${
-              section.id === "global-writing" ? "See all →" : "Vai a Cronos →"
+              section.id === "global-writing" ? "Open archive →" : "Apri archivio →"
             }</a>
           </div>
           <div class="writing-grid">
@@ -326,8 +329,8 @@ function renderSpotlightArticles() {
   const openLabel = isItalian ? "Leggi articolo →" : "Read article →";
   const languageOrder = isItalian ? ["it", "en"] : ["en", "it"];
   const languageLabels = {
-    en: { eyebrow: "English highlights", heading: "Clarity, trust and product language.", link: "See English writing →" },
-    it: { eyebrow: "In primo piano", heading: "Chiarezza, fiducia e linguaggio di prodotto.", link: "Vedi scrittura italiana →" },
+    en: { eyebrow: "English writing", heading: "English articles", link: "Open archive →" },
+    it: { eyebrow: "Scrittura italiana", heading: "Articoli italiani", link: "Apri archivio →" },
   };
 
   els.newsGrid.innerHTML = `
@@ -343,7 +346,9 @@ function renderSpotlightArticles() {
                   <p class="eyebrow">${escapeHtml(languageLabels[language].eyebrow)}</p>
                   <h3>${escapeHtml(languageLabels[language].heading)}</h3>
                 </div>
-                <a class="section-link" href="/writing/#${language === "it" ? "italian" : "english"}">${escapeHtml(languageLabels[language].link)}</a>
+                <a class="section-link" href="${safeHref(getWritingArchiveHref(language))}" ${linkAttrs(
+                  getWritingArchiveHref(language),
+                )}>${escapeHtml(languageLabels[language].link)}</a>
               </div>
               <div class="news-group-grid">
                 ${renderNewsCard(primaryItem, true, openLabel)}
@@ -560,6 +565,10 @@ function getSectionById(id) {
   return site.sections.find((section) => section.id === id);
 }
 
+function getWritingArchiveHref(language) {
+  return language === "it" ? "/writing/italiano/" : "/writing/english/";
+}
+
 function getPrimaryLinkedInUrl(preferredLanguage) {
   const section =
     getWritingSections().find((entry) => entry.language === preferredLanguage) || getWritingSections()[0];
@@ -686,25 +695,25 @@ function renderLocalizedHeroCopy() {
 
 function renderFeaturedSectionCopy() {
   const isItalian = getBrowserLanguage() === "it";
+  const archiveHref = getWritingArchiveHref(isItalian ? "it" : "en");
 
   if (els.featuredEyebrow) {
-    els.featuredEyebrow.textContent = isItalian ? "In primo piano" : "Writing highlights";
+    els.featuredEyebrow.textContent = isItalian ? "In primo piano" : "Featured";
   }
 
   if (els.featuredHeading) {
-    els.featuredHeading.textContent = isItalian
-      ? "Highlights in italiano e inglese, ordinati per pubblicazione."
-      : "English and Italian highlights, ordered by publication.";
+    els.featuredHeading.textContent = "Highlights";
   }
 
   if (els.featuredDescription) {
     els.featuredDescription.textContent = isItalian
-      ? "I contenuti più recenti sono divisi per lingua, così ogni lettore vede subito il blocco giusto."
-      : "The newest writing is split by language so each reader sees the right block first.";
+      ? "Una selezione dei contenuti più recenti."
+      : "A curated view of the latest writing.";
   }
 
   if (els.featuredLink) {
-    els.featuredLink.textContent = isItalian ? "Vedi tutti gli articoli →" : "Browse all writing →";
+    els.featuredLink.href = safeHref(archiveHref);
+    els.featuredLink.textContent = isItalian ? "Vedi archivio →" : "Browse archive →";
   }
 
   if (els.newsGrid) {

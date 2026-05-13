@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="it">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,64 +10,29 @@
         document.documentElement.classList.toggle("theme-night", isNight);
       })();
     </script>
-    <title>Writing archive | Piero Pasquariello</title>
+    <title>Writing archives | Piero Pasquariello</title>
     <meta
       name="description"
-      content="All of Piero Pasquariello's articles and posts, grouped by English and Italian, with internal pages for each piece and source links to Medium or LinkedIn."
+      content="Choose between the English and Italian writing archives by Piero Pasquariello."
     />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="https://pieropasquariello.com/writing/" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Writing archive | Piero Pasquariello" />
+    <meta property="og:title" content="Writing archives | Piero Pasquariello" />
     <meta
       property="og:description"
-      content="All articles and posts by Piero Pasquariello, grouped by English and Italian."
+      content="Choose between the English and Italian writing archives by Piero Pasquariello."
     />
     <meta property="og:url" content="https://pieropasquariello.com/writing/" />
     <meta property="og:image" content="https://pieropasquariello.com/io.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Writing archive | Piero Pasquariello" />
+    <meta name="twitter:title" content="Writing archives | Piero Pasquariello" />
     <meta
       name="twitter:description"
-      content="All articles and posts by Piero Pasquariello, grouped by English and Italian."
+      content="Choose between the English and Italian writing archives by Piero Pasquariello."
     />
     <meta name="twitter:image" content="https://pieropasquariello.com/io.png" />
     <link rel="stylesheet" href="../styles.css?v=20260513a" />
-    <script>
-      (function () {
-        function isItalianLocale() {
-          var values = [];
-          try {
-            if (Array.isArray(navigator.languages)) {
-              values.push.apply(values, navigator.languages);
-            }
-            if (typeof navigator.language === "string") {
-              values.push(navigator.language);
-            }
-            var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
-            return (
-              values.some(function (value) {
-                return String(value).toLowerCase().startsWith("it");
-              }) || timeZone === "Europe/Rome"
-            );
-          } catch (error) {
-            return false;
-          }
-        }
-
-        if (!isItalianLocale()) {
-          return;
-        }
-
-        var archive = document.querySelector(".writing-archive");
-        var italian = document.getElementById("italian");
-        var english = document.getElementById("english");
-
-        if (archive && italian && english && english.parentNode === archive) {
-          archive.insertBefore(italian, english);
-        }
-      })();
-    </script>
   </head>
   <body>
     <div class="bg-orb bg-orb-a"></div>
@@ -84,8 +49,8 @@
         <a class="site-brand" href="/">Piero Pasquariello</a>
         <div class="archive-topbar-nav">
           <a class="section-link" href="/">Home</a>
-          <a class="section-link" href="#english">English</a>
-          <a class="section-link" href="#italian">Italiano</a>
+          <a class="section-link" href="/writing/english/">English</a>
+          <a class="section-link" href="/writing/italiano/">Italiano</a>
           <a
             class="action-button action-primary"
             data-link="x"
@@ -99,203 +64,54 @@
       </header>
 
       <section class="archive-hero panel reveal">
-        <p class="eyebrow">Articles</p>
-        <h1>Selected writing, now in one place.</h1>
+        <p class="eyebrow">Writing</p>
+        <h1>Two archives, one voice.</h1>
         <p>
-          Browse the full set of posts in English and Italian, then open each article page for a
-          short summary, context and a direct source link to Medium or LinkedIn.
+          Choose the archive you want to read, then open each article page for the full piece and
+          the original source.
         </p>
         <div class="archive-actions">
-          <a class="action-button action-primary" href="#english">Browse English</a>
-          <a class="action-button action-secondary" href="#italian">Leggi italiano</a>
+          <a class="action-button action-primary" href="/writing/english/">English archive</a>
+          <a class="action-button action-secondary" href="/writing/italiano/">Archivio italiano</a>
           <a class="action-button action-ghost" href="/">Back home</a>
         </div>
       </section>
 
-      <section class="archive-section panel reveal" id="english">
+      <section class="archive-section panel reveal">
         <div class="archive-section-head">
           <div>
-            <p class="eyebrow">English</p>
-            <h2>Cronos, Web3 and product clarity.</h2>
-            <p>
-              A compact set of English pieces focused on trust, mobile experience and clearer
-              crypto products.
-            </p>
+            <p class="eyebrow">Start here</p>
+            <h2>Pick the language.</h2>
+            <p>Each archive collects the full set of posts in a single language.</p>
           </div>
-          <a class="section-link" href="#top">Back to top →</a>
         </div>
 
-        <div class="archive-list">
-          <article class="archive-item">
-            <a class="archive-item-media" href="/writing/cronos-app-is-not-about-turning-everyone-into-a-trader/">
-              <img
-                src="https://cdn-images-1.medium.com/max/1024/1*nMbmzHGRdCLWU9eX5U4CKQ.png"
-                alt="Cover image for Cronos App Is Not About Turning Everyone Into a Trader"
-                loading="lazy"
-              />
-            </a>
+        <div class="archive-list archive-list-grid">
+          <article class="archive-item archive-item-compact">
             <div class="archive-item-copy">
               <div class="archive-item-meta">
-                <span>Medium</span>
                 <span>English</span>
+                <span>Medium + LinkedIn</span>
               </div>
-              <h3><a href="/writing/cronos-app-is-not-about-turning-everyone-into-a-trader/">Cronos App Is Not About Turning Everyone Into a Trader</a></h3>
-              <p>
-                A clearer market product is not a trading product. It is a trust product with
-                better context and less noise.
-              </p>
+              <h3><a href="/writing/english/">English archive</a></h3>
+              <p>Four pieces on Cronos, Web3 and product clarity.</p>
             </div>
             <div class="archive-item-actions">
-              <a class="section-link" href="/writing/cronos-app-is-not-about-turning-everyone-into-a-trader/">Open page →</a>
-              <a class="section-link" href="https://medium.com/@pieropasquariello/cronos-app-is-not-about-turning-everyone-into-a-trader-755d7d64136a" target="_blank" rel="noreferrer">Read source →</a>
+              <a class="section-link" href="/writing/english/">Open archive →</a>
             </div>
           </article>
 
-          <article class="archive-item">
-            <a class="archive-item-media" href="/writing/cronos-app-and-the-problem-of-too-many-financial-apps/">
-              <img
-                src="https://cdn-images-1.medium.com/max/1024/1*C9_pli7yGAxlNS6vuvKfvA.png"
-                alt="Cover image for Cronos App and the Problem of Too Many Financial Apps"
-                loading="lazy"
-              />
-            </a>
+          <article class="archive-item archive-item-compact">
             <div class="archive-item-copy">
               <div class="archive-item-meta">
-                <span>Cronos App</span>
-                <span>English</span>
-              </div>
-              <h3><a href="/writing/cronos-app-and-the-problem-of-too-many-financial-apps/">Cronos App and the Problem of Too Many Financial Apps</a></h3>
-              <p>
-                Fragmented financial apps create hesitation. Simpler language and fewer moving
-                parts help users build trust faster.
-              </p>
-            </div>
-            <div class="archive-item-actions">
-              <a class="section-link" href="/writing/cronos-app-and-the-problem-of-too-many-financial-apps/">Open page →</a>
-              <a class="section-link" href="https://medium.com/@pieropasquariello/cronos-app-and-the-problem-of-too-many-financial-apps-3f1f580260bc" target="_blank" rel="noreferrer">Read source →</a>
-            </div>
-          </article>
-
-          <article class="archive-item">
-            <a class="archive-item-media" href="/writing/247-markets-need-better-mobile-experience/">
-              <img src="../assets/ougo.png" alt="Cover image for 24/7 markets made understandable" loading="lazy" />
-            </a>
-            <div class="archive-item-copy">
-              <div class="archive-item-meta">
-                <span>LinkedIn</span>
-                <span>English</span>
-              </div>
-              <h3><a href="/writing/247-markets-need-better-mobile-experience/">247 Markets Need Better Mobile Experience</a></h3>
-              <p>
-                Tokenized markets need mobile-first clarity if they want normal users to trust what
-                they see on screen.
-              </p>
-            </div>
-            <div class="archive-item-actions">
-              <a class="section-link" href="/writing/247-markets-need-better-mobile-experience/">Open page →</a>
-              <a class="section-link" href="https://www.linkedin.com/pulse/247-markets-need-better-mobile-experience-piero-pasquariello-zsbfc/" target="_blank" rel="noreferrer">Read source →</a>
-            </div>
-          </article>
-
-          <article class="archive-item">
-            <a class="archive-item-media" href="/writing/most-crypto-apps-still-feel-like-built-for-power-users/">
-              <img src="../assets/ougo.png" alt="Cover image for Most crypto apps still feel like they were built for power users" loading="lazy" />
-            </a>
-            <div class="archive-item-copy">
-              <div class="archive-item-meta">
-                <span>LinkedIn</span>
-                <span>English</span>
-              </div>
-              <h3><a href="/writing/most-crypto-apps-still-feel-like-built-for-power-users/">Most crypto apps still feel like they were built for power users</a></h3>
-              <p>
-                Product clarity matters more than another technical feature drop when the goal is to
-                attract normal users.
-              </p>
-            </div>
-            <div class="archive-item-actions">
-              <a class="section-link" href="/writing/most-crypto-apps-still-feel-like-built-for-power-users/">Open page →</a>
-              <a class="section-link" href="https://www.linkedin.com/posts/piero-pasquariello-778a9212a_ugcPost-7458535000385179649-lnZV?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB_XAswBp4NxXA595vwNFcielzlAweCzWcs" target="_blank" rel="noreferrer">Read source →</a>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="archive-section panel reveal" id="italian">
-        <div class="archive-section-head">
-          <div>
-            <p class="eyebrow">Italiano</p>
-            <h2>Cronos spiegato in modo semplice.</h2>
-            <p>
-              Una raccolta di articoli e note in italiano su CRO, UX e chiarezza di prodotto.
-            </p>
-          </div>
-          <a class="section-link" href="#top">Torna su →</a>
-        </div>
-
-        <div class="archive-list">
-          <article class="archive-item">
-            <a class="archive-item-media" href="/writing/perche-lapy-non-e-il-vero-punto-della-nuova-proposta-cro/">
-              <img
-                src="https://cdn-images-1.medium.com/max/1024/1*dl7SGvr7YoelLdGY-AF8Hg.png"
-                alt="Cover image for the Italian article about the new CRO proposal"
-                loading="lazy"
-              />
-            </a>
-            <div class="archive-item-copy">
-              <div class="archive-item-meta">
-                <span>Medium</span>
                 <span>Italiano</span>
+                <span>Medium + LinkedIn</span>
               </div>
-              <h3><a href="/writing/perche-lapy-non-e-il-vero-punto-della-nuova-proposta-cro/">Perché l’APY non è il vero punto della nuova proposta CRO</a></h3>
-              <p>
-                Il punto non è solo il rendimento: conta come si costruiscono incentivi,
-                fiducia e sostenibilità.
-              </p>
+              <h3><a href="/writing/italiano/">Archivio italiano</a></h3>
+              <p>Tre contenuti su CRO, UX e chiarezza di prodotto.</p>
             </div>
             <div class="archive-item-actions">
-              <a class="section-link" href="/writing/perche-lapy-non-e-il-vero-punto-della-nuova-proposta-cro/">Apri pagina →</a>
-              <a class="section-link" href="https://medium.com/@pieropasquariello/perch%C3%A9-lapy-non-%C3%A8-il-vero-punto-della-nuova-proposta-cro-022a26e97b92?source=rss-d7209a415961------2" target="_blank" rel="noreferrer">Leggi fonte →</a>
-            </div>
-          </article>
-
-          <article class="archive-item">
-            <a class="archive-item-media" href="/writing/perche-una-ux-chiara-costruisce-fiducia/">
-              <img src="../assets/ougo.png" alt="Cover image for the Italian LinkedIn article about clear UX" loading="lazy" />
-            </a>
-            <div class="archive-item-copy">
-              <div class="archive-item-meta">
-                <span>LinkedIn</span>
-                <span>Italiano</span>
-              </div>
-              <h3><a href="/writing/perche-una-ux-chiara-costruisce-fiducia/">Perché una UX chiara costruisce fiducia</a></h3>
-              <p>
-                Parole semplici e onboarding chiaro riducono il rumore e fanno sentire l'utente più
-                sicuro.
-              </p>
-            </div>
-            <div class="archive-item-actions">
-              <a class="section-link" href="/writing/perche-una-ux-chiara-costruisce-fiducia/">Apri pagina →</a>
-              <a class="section-link" href="https://www.linkedin.com/pulse/247-markets-need-better-mobile-experience-piero-pasquariello-zsbfc/" target="_blank" rel="noreferrer">Leggi fonte →</a>
-            </div>
-          </article>
-
-          <article class="archive-item">
-            <a class="archive-item-media" href="/writing/cronos-funziona-meglio-quando-e-spiegato-bene/">
-              <img src="../assets/ougo.png" alt="Cover image for the Italian LinkedIn article about explaining Cronos" loading="lazy" />
-            </a>
-            <div class="archive-item-copy">
-              <div class="archive-item-meta">
-                <span>LinkedIn</span>
-                <span>Italiano</span>
-              </div>
-              <h3><a href="/writing/cronos-funziona-meglio-quando-e-spiegato-bene/">Cronos funziona meglio quando è spiegato bene</a></h3>
-              <p>
-                Se il prodotto è buono, spiegare bene il suo valore fa parte del prodotto stesso.
-              </p>
-            </div>
-            <div class="archive-item-actions">
-              <a class="section-link" href="/writing/cronos-funziona-meglio-quando-e-spiegato-bene/">Apri pagina →</a>
-              <a class="section-link" href="https://www.linkedin.com/posts/piero-pasquariello-778a9212a_ugcPost-7458536295452160000-2luA?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB_XAswBp4NxXA595vwNFcielzlAweCzWcs" target="_blank" rel="noreferrer">Leggi fonte →</a>
+              <a class="section-link" href="/writing/italiano/">Apri archivio →</a>
             </div>
           </article>
         </div>
