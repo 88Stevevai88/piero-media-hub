@@ -148,6 +148,7 @@ const els = {
   heroSupport: document.querySelector("#heroSupport"),
   socialEyebrow: document.querySelector("#socialEyebrow"),
   socialDescription: document.querySelector("#socialDescription"),
+  railHeading: document.querySelector("#railHeading"),
   followEyebrow: document.querySelector("#followEyebrow"),
   followHeading: document.querySelector("#followHeading"),
   siteHeader: document.querySelector(".site-header"),
@@ -929,7 +930,11 @@ function renderLocalizedHeroCopy() {
   if (els.socialDescription) {
     els.socialDescription.textContent = isItalian
       ? "Link rapidi alle piattaforme che uso di più."
-      : "Quick links to the platforms I use most.";
+      : "Quick links to my main platforms.";
+  }
+
+  if (els.railHeading) {
+    els.railHeading.textContent = isItalian ? "Letture rapide" : "Quick reads";
   }
 
   if (els.followEyebrow) {
