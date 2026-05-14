@@ -277,7 +277,7 @@ function renderArticleCard(item, section, featured = false) {
   const showTop = true;
   const pageHref = item.pageHref || item.href || item.url;
   const publishedLabel = formatPublishedLabel(item.publishedAt || item.pubDate || item.date, section.language);
-  const readTimeLabel = estimateReadTime(item.summary || item.title || "", section.language);
+  const readTimeLabel = formatReadTimeLabel(item, section.language);
   const metaLabel = [publishedLabel, readTimeLabel].filter(Boolean).join(" · ");
 
   return `
@@ -386,7 +386,7 @@ function renderSpotlightCard(item, featured = false) {
   const language = item.spotlightLanguage || item.language || "en";
   const openLabel = language === "it" ? "Apri →" : "Open →";
   const publishedLabel = formatPublishedLabel(item.publishedAt || item.pubDate || item.date, language);
-  const readTimeLabel = estimateReadTime(item.summary || item.title || "", language);
+  const readTimeLabel = formatReadTimeLabel(item, language);
   const metaLabel = [publishedLabel, readTimeLabel].filter(Boolean).join(" · ");
 
   return `
@@ -422,7 +422,7 @@ function renderTopReadsRail() {
     .map((item, index) => {
       const href = item.pageHref || item.href || item.url;
       const label = formatPublishedLabel(item.publishedAt || item.pubDate || item.date, item.language);
-      const readTimeLabel = estimateReadTime(item.summary || item.title || "", item.language);
+      const readTimeLabel = formatReadTimeLabel(item, item.language);
       const meta = [label, readTimeLabel].filter(Boolean).join(" · ");
       return `
         <a class="rail-item" href="${safeHref(href)}" ${linkAttrs(href)}>
@@ -691,8 +691,18 @@ function estimateReadTime(text, language = "en") {
     .trim()
     .split(/\s+/)
     .filter(Boolean).length;
-  const minutes = Math.max(1, Math.round(words / 180));
+  const minutes = Math.max(1, Math.ceil(words / 180));
   return language === "it" ? `${minutes} min` : `${minutes} min read`;
+}
+
+function formatReadTimeLabel(item, language = "en") {
+  const readingMinutes = Number(item?.readingMinutes);
+  if (Number.isFinite(readingMinutes) && readingMinutes > 0) {
+    return language === "it" ? `${Math.max(1, Math.ceil(readingMinutes))} min` : `${Math.max(1, Math.ceil(readingMinutes))} min read`;
+  }
+
+  const text = [item?.title, item?.summary].filter(Boolean).join(" ");
+  return estimateReadTime(text, language);
 }
 
 function uniqueWritingItems(items) {

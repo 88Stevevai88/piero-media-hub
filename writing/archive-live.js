@@ -196,7 +196,7 @@
         const pageHref = item.pageHref || item.href;
         const sourceHref = item.href;
         const dateLabel = item.meta || formatPublishedLabel(item.publishedAt, language);
-        const readTime = estimateReadTime(item.summary || item.title || "", language);
+        const readTime = formatReadTimeLabel(item, language);
         const metaLabel = [dateLabel, readTime].filter(Boolean).join(" · ");
 
         return `
@@ -260,8 +260,20 @@
       .trim()
       .split(/\s+/)
       .filter(Boolean).length;
-    const minutes = Math.max(1, Math.round(words / 180));
+    const minutes = Math.max(1, Math.ceil(words / 180));
     return lang === "it" ? `${minutes} min` : `${minutes} min read`;
+  }
+
+  function formatReadTimeLabel(item, lang) {
+    const readingMinutes = Number(item?.readingMinutes);
+    if (Number.isFinite(readingMinutes) && readingMinutes > 0) {
+      return lang === "it"
+        ? `${Math.max(1, Math.ceil(readingMinutes))} min`
+        : `${Math.max(1, Math.ceil(readingMinutes))} min read`;
+    }
+
+    const text = [item?.title, item?.summary].filter(Boolean).join(" ");
+    return estimateReadTime(text, lang);
   }
 
   function safeHref(href) {

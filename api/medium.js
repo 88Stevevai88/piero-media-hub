@@ -60,6 +60,7 @@ function parseMediumFeed(xml) {
 
       const language = detectLanguage(`${title} ${textContent}`);
       const summary = textContent ? truncate(textContent, 190) : "";
+      const readingMinutes = estimateReadTime(textContent);
 
       return {
         id: href,
@@ -73,6 +74,7 @@ function parseMediumFeed(xml) {
         image,
         imageAlt: `${title} cover image`,
         pubDate,
+        readingMinutes,
       };
     })
     .filter(Boolean)
@@ -103,6 +105,7 @@ function parseMediumFeed(xml) {
         imageAlt: item.imageAlt,
         pubDate: item.pubDate,
         publishedAt: item.pubDate,
+        readingMinutes: item.readingMinutes,
       };
     });
 }
@@ -179,6 +182,14 @@ function truncate(value, maxLength) {
   }
 
   return `${value.slice(0, maxLength - 1).trimEnd()}…`;
+}
+
+function estimateReadTime(text) {
+  const words = cleanText(text)
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 180));
 }
 
 function decodeEntities(value) {
