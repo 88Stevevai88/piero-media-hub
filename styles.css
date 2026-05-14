@@ -275,9 +275,9 @@ html.theme-night .signal-stage {
   position: absolute;
   inset: 0;
   background: url("./io.png") center 20% / cover no-repeat;
-  background-position: 86% 16%;
-  filter: contrast(1.06) saturate(1.02) brightness(0.98);
-  transform: scale(1.01);
+  background-position: 84% 10%;
+  filter: contrast(1.05) saturate(1.0) brightness(0.99);
+  transform: scale(1);
   pointer-events: none;
 }
 
@@ -1189,13 +1189,12 @@ h1 span {
 }
 
 .action-primary {
-  color: #ffffff;
-  background: linear-gradient(135deg, #0068ff 0%, #009dff 100%);
-  border-color: rgba(76, 219, 255, 0.72);
+  color: #0f3f63;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(238, 246, 252, 0.96));
+  border-color: rgba(76, 219, 255, 0.28);
   box-shadow:
-    0 0 0 1px rgba(76, 219, 255, 0.25),
-    0 0 28px rgba(0, 104, 255, 0.56),
-    0 16px 34px rgba(0, 104, 255, 0.32);
+    0 10px 22px rgba(53, 94, 132, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
 }
 
 .action-secondary {
