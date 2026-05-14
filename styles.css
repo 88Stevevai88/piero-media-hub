@@ -2037,8 +2037,8 @@ html.theme-night .writing-section {
 }
 
 .writing-archive .archive-list:not(.archive-list-grid) {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .archive-list-grid {
@@ -2060,21 +2060,23 @@ html.theme-night .writing-section {
 
 .archive-item {
   display: grid;
-  grid-template-columns: 140px minmax(0, 1fr) auto;
-  gap: 14px;
+  grid-template-columns: 1fr;
+  gap: 12px;
   align-items: start;
   padding: 12px;
-  border-radius: 18px;
+  border-radius: 22px;
   border: 1px solid rgba(74, 101, 129, 0.12);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(241, 247, 252, 0.92));
   box-shadow: 0 12px 26px rgba(53, 94, 132, 0.06);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .writing-archive .archive-list:not(.archive-list-grid) > .archive-item {
-  grid-template-columns: 1fr;
-  gap: 12px;
-  padding: 12px;
-  border-radius: 22px;
+  gap: 10px;
+  padding: 10px;
   align-content: start;
 }
 
@@ -2084,22 +2086,28 @@ html.theme-night .writing-section {
 }
 
 .writing-archive .archive-list:not(.archive-list-grid) > .archive-item .archive-item-copy {
-  gap: 10px;
+  gap: 8px;
 }
 
 .writing-archive .archive-list:not(.archive-list-grid) > .archive-item .archive-item-copy h3 {
-  font-size: 1.05rem;
-  line-height: 1.16;
+  font-size: 0.98rem;
+  line-height: 1.18;
 }
 
 .writing-archive .archive-list:not(.archive-list-grid) > .archive-item .archive-item-copy p {
-  font-size: 0.86rem;
-  line-height: 1.58;
+  font-size: 0.8rem;
+  line-height: 1.52;
 }
 
 .writing-archive .archive-list:not(.archive-list-grid) > .archive-item .archive-item-actions {
   justify-content: flex-start;
   align-self: start;
+}
+
+.writing-archive .archive-list:not(.archive-list-grid) > .archive-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(76, 219, 255, 0.18);
+  box-shadow: 0 16px 30px rgba(53, 94, 132, 0.1);
 }
 
 html.theme-night .archive-item {
@@ -2135,6 +2143,7 @@ html.theme-night .archive-item-media {
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 220ms ease, filter 220ms ease;
 }
 
 .archive-item-copy {
@@ -2153,6 +2162,16 @@ html.theme-night .archive-item-media {
 .archive-item-copy h3 {
   font-size: 1rem;
   line-height: 1.18;
+}
+
+.archive-item-copy h3 a {
+  color: var(--text);
+  transition: color 180ms ease;
+}
+
+.archive-item:hover .archive-item-copy h3 a,
+.archive-item-copy h3 a:hover {
+  color: var(--accent);
 }
 
 .archive-item-copy p,
@@ -2197,6 +2216,10 @@ html.theme-night .archive-item-media {
 .archive-item .section-link,
 .archive-item .post-link {
   white-space: nowrap;
+}
+
+.archive-item:hover .archive-item-media img {
+  transform: scale(1.03);
 }
 
 .article-shell {
@@ -2579,6 +2602,10 @@ html.theme-night .follow-panel {
   .writing-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .writing-archive .archive-list:not(.archive-list-grid) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 920px) {
@@ -2587,6 +2614,10 @@ html.theme-night .follow-panel {
   }
 
   .archive-list-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .writing-archive .archive-list:not(.archive-list-grid) {
     grid-template-columns: 1fr;
   }
 
@@ -2621,10 +2652,6 @@ html.theme-night .follow-panel {
   }
 
   .writing-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .writing-archive .archive-list:not(.archive-list-grid) {
     grid-template-columns: 1fr;
   }
 
