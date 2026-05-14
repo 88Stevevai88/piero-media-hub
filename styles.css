@@ -1755,10 +1755,21 @@ html.theme-night .writing-section {
 .post-title-link {
   color: var(--text);
   font-weight: 500;
+  transition: color 160ms ease;
 }
 
 .post-title-link:hover {
   color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: rgba(74, 118, 223, 0.35);
+  text-underline-offset: 0.12em;
+}
+
+.post-card:hover .post-title-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: rgba(74, 118, 223, 0.35);
+  text-underline-offset: 0.12em;
 }
 
 .post-footer {
