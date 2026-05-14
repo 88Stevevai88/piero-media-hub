@@ -2155,7 +2155,7 @@ html.theme-night .archive-item-media {
 .article-hero h1 {
   margin: 0;
   font-family: var(--font-body);
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: -0.03em;
 }
 
@@ -2202,7 +2202,7 @@ html.theme-night .archive-item-media {
   background: linear-gradient(180deg, rgba(250, 253, 255, 0.94), rgba(239, 245, 251, 0.9));
   color: var(--muted-strong);
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .archive-item-actions {
@@ -2344,6 +2344,7 @@ html.theme-night .article-prose blockquote {
   font-family: var(--font-body);
   font-size: 1.02rem;
   line-height: 1.18;
+  font-weight: 600;
 }
 
 .article-note p {
@@ -2374,6 +2375,7 @@ html.theme-night .article-related a {
 .article-related a strong {
   font-size: 0.88rem;
   line-height: 1.22;
+  font-weight: 600;
 }
 
 .article-related a span {
