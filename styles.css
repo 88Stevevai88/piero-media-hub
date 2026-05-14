@@ -380,7 +380,7 @@ html.theme-night .signal-stage::after {
 .spotlight-track {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(208px, 244px);
+  grid-auto-columns: minmax(220px, calc((100% - 24px) / 4));
   gap: 8px;
   overflow-x: auto;
   padding: 2px 2px 6px;
@@ -394,18 +394,22 @@ html.theme-night .signal-stage::after {
 
 .spotlight-card {
   display: grid;
-  gap: 6px;
-  padding: 8px;
-  border-radius: 16px;
-  border: 1px solid rgba(74, 101, 129, 0.06);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(243, 247, 251, 0.96));
-  box-shadow: 0 10px 20px rgba(53, 73, 102, 0.05);
+  gap: 0;
+  padding: 0;
+  border-radius: 22px;
+  border: 1px solid rgba(12, 31, 53, 0.08);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 10px 24px rgba(53, 94, 132, 0.07);
   scroll-snap-align: start;
   transition:
     transform 160ms ease,
     border-color 160ms ease,
     box-shadow 160ms ease;
+}
+
+.spotlight-card-featured {
+  min-width: 0;
 }
 
 html.theme-night .spotlight-card {
@@ -415,15 +419,16 @@ html.theme-night .spotlight-card {
 
 .spotlight-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(96, 215, 255, 0.24);
-  box-shadow: 0 14px 28px rgba(53, 73, 102, 0.1);
+  border-color: rgba(76, 219, 255, 0.16);
+  box-shadow: 0 14px 28px rgba(53, 94, 132, 0.1);
 }
 
 .spotlight-card-media {
   overflow: hidden;
-  border-radius: 14px;
   aspect-ratio: 16 / 9;
-  border: 1px solid rgba(10, 28, 50, 0.04);
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(180deg, rgba(231, 239, 247, 0.9), rgba(216, 227, 239, 0.94));
 }
 
 html.theme-night .spotlight-card-media {
@@ -439,13 +444,15 @@ html.theme-night .spotlight-card-media {
 
 .spotlight-card-copy {
   display: grid;
-  gap: 6px;
+  gap: 10px;
+  padding: 18px 18px 16px;
+  background: #fff;
 }
 
 .spotlight-card-top {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
 }
 
@@ -459,14 +466,15 @@ html.theme-night .spotlight-card-media {
 .spotlight-card h3 {
   margin: 0;
   color: var(--text);
-  font-size: 0.85rem;
-  line-height: 1.18;
-  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.26;
+  font-weight: 500;
+  letter-spacing: -0.02em;
 }
 
 .spotlight-link {
   color: var(--accent);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 600;
 }
 
