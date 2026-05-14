@@ -218,7 +218,7 @@ function renderWritingSections() {
 
   els.articleList.innerHTML = `${switcher}${sections
     .map((section) => {
-      const streamItems = getWritingItemsForSection(section).slice(0, 2);
+      const streamItems = getWritingItemsForSection(section).slice(0, 3);
       const sectionTitle =
         section.id === "global-writing" ? "English articles" : "Articoli italiani";
       const archiveLabel =
@@ -235,7 +235,7 @@ function renderWritingSections() {
             )}</a>
           </div>
           <div class="writing-grid">
-            ${streamItems.map((item, index) => renderArticleCard(item, section, index === 0)).join("")}
+            ${streamItems.map((item) => renderArticleCard(item, section, false)).join("")}
           </div>
         </section>
       `;
@@ -274,8 +274,8 @@ function getWritingSections() {
 
 function renderArticleCard(item, section, featured = false) {
   const cardClass = featured ? "post-card post-card-featured" : "post-card post-card-compact";
-  const ctaLabel = section.id === "italian-writing" ? "Apri →" : featured ? "Open article →" : "Read →";
-  const showSummary = featured;
+  const ctaLabel = section.id === "italian-writing" ? "Apri →" : "Read →";
+  const showSummary = false;
   const showTop = true;
   const pageHref = item.pageHref || item.href || item.url;
   const publishedLabel = formatPublishedLabel(item.publishedAt || item.pubDate || item.date, section.language);
