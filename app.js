@@ -415,7 +415,7 @@ function renderTopReadsRail() {
 
   const items = sortWritingItems(
     uniqueWritingItems(getWritingSections().flatMap((section) => getWritingItemsForSection(section))),
-  ).slice(0, 5);
+  ).slice(0, 4);
   const isItalian = getBrowserLanguage() === "it";
   const archiveHref = getWritingArchiveHref(isItalian ? "it" : "en");
   const linkLabel = isItalian ? "Vai all'archivio →" : "Browse archive →";
