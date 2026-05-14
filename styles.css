@@ -254,13 +254,13 @@ html.theme-night .panel {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 14px;
-  padding: 12px 14px 14px;
-  min-height: 432px;
+  padding: 10px 12px 12px;
+  min-height: 400px;
   align-items: start;
   overflow: hidden;
   border-radius: 28px;
   background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(251, 253, 255, 0.72) 22%, rgba(248, 252, 255, 0.14) 50%, rgba(248, 252, 255, 0.03) 72%, rgba(248, 252, 255, 0.015) 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.94) 0%, rgba(251, 253, 255, 0.82) 18%, rgba(248, 252, 255, 0.2) 44%, rgba(248, 252, 255, 0.045) 68%, rgba(248, 252, 255, 0.015) 100%),
     linear-gradient(180deg, rgba(76, 219, 255, 0.04), rgba(255, 255, 255, 0.02));
 }
 
@@ -275,9 +275,9 @@ html.theme-night .signal-stage {
   position: absolute;
   inset: 0;
   background: url("./io.png") center 20% / cover no-repeat;
-  background-position: 84% 16%;
-  filter: contrast(1.08) saturate(1.04) brightness(0.92);
-  transform: scale(1.015);
+  background-position: 86% 16%;
+  filter: contrast(1.06) saturate(1.02) brightness(0.98);
+  transform: scale(1.01);
   pointer-events: none;
 }
 
@@ -290,7 +290,7 @@ html.theme-night .signal-stage::before {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0%, rgba(252, 253, 255, 0.3) 20%, rgba(248, 252, 255, 0.08) 46%, rgba(248, 252, 255, 0.02) 70%, rgba(248, 252, 255, 0.015) 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.62) 0%, rgba(252, 253, 255, 0.38) 18%, rgba(248, 252, 255, 0.12) 42%, rgba(248, 252, 255, 0.03) 68%, rgba(248, 252, 255, 0.015) 100%),
     radial-gradient(circle at 72% 28%, rgba(76, 219, 255, 0.06), transparent 24%),
     radial-gradient(circle at 84% 72%, rgba(0, 132, 255, 0.04), transparent 30%);
   pointer-events: none;
@@ -1084,12 +1084,12 @@ html.theme-night .signal-card-accent {
 
 .profile-meta {
   min-width: 0;
-  max-width: 620px;
-  padding: 12px 14px 14px;
-  border-radius: 22px;
+  max-width: 560px;
+  padding: 10px 12px 12px;
+  border-radius: 24px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(248, 252, 255, 0.48));
-  backdrop-filter: blur(10px);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(248, 252, 255, 0.56));
+  backdrop-filter: blur(12px);
 }
 
 .profile-intro {
@@ -1123,9 +1123,9 @@ h2 {
 }
 
 h1 {
-  max-width: 620px;
-  font-size: clamp(2.05rem, 3.2vw, 3.28rem);
-  line-height: 0.96;
+  max-width: 560px;
+  font-size: clamp(1.9rem, 3vw, 3rem);
+  line-height: 0.94;
   letter-spacing: 0;
 }
 
@@ -1140,20 +1140,20 @@ h1 span {
 }
 
 .tagline-line {
-  margin-top: 10px;
+  margin-top: 8px;
   color: #2d78db;
   font-family: var(--font-body);
-  font-size: clamp(0.98rem, 1.22vw, 1.06rem);
+  font-size: clamp(0.94rem, 1.15vw, 1.02rem);
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.18;
 }
 
 .hero-support {
-  margin: 8px 0 0;
+  margin: 6px 0 0;
   max-width: 50ch;
   color: var(--muted);
-  line-height: 1.48;
-  font-size: 0.84rem;
+  line-height: 1.42;
+  font-size: 0.8rem;
 }
 
 .profile-actions {
@@ -1161,7 +1161,7 @@ h1 span {
   gap: 10px;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin-top: 14px;
+  margin-top: 12px;
 }
 
 .action-button {
@@ -1322,9 +1322,9 @@ html.theme-night .trust-metrics span {
 .site-header {
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
   margin: 0 0 12px;
-  padding: 12px 14px;
+  padding: 10px 12px;
   overflow-x: visible;
 }
 
@@ -1347,13 +1347,13 @@ html.theme-night .trust-metrics span {
   display: flex;
   flex: 1 1 auto;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .site-cta {
   flex: 0 0 auto;
-  min-height: 40px;
+  min-height: 38px;
 }
 
 .site-menu-toggle {
@@ -1429,9 +1429,10 @@ html.theme-night .trust-metrics span {
 .nav-strip a {
   white-space: nowrap;
   color: var(--muted-strong);
-  padding: 8px 13px;
+  padding: 7px 11px;
   border-radius: 999px;
   border: 1px solid transparent;
+  font-size: 0.86rem;
 }
 
 html.theme-night .nav-strip {
