@@ -1942,6 +1942,14 @@ html.theme-night .writing-section {
   padding: 14px 18px;
 }
 
+.article-topbar {
+  position: sticky;
+  top: 12px;
+  z-index: 20;
+  backdrop-filter: blur(18px) saturate(1.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(246, 249, 253, 0.74));
+}
+
 .article-topbar .site-brand {
   font-size: 0.95rem;
 }
@@ -2162,15 +2170,16 @@ html.theme-night .archive-item-media {
 
 .article-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
-  gap: 18px;
-  align-items: center;
+  gap: 14px;
+  align-items: start;
 }
 
 .article-hero-copy {
   display: grid;
   gap: 12px;
   align-content: start;
+  max-width: 62ch;
+  padding: 2px 2px 6px;
 }
 
 .article-hero-copy .eyebrow {
@@ -2178,21 +2187,27 @@ html.theme-night .archive-item-media {
 }
 
 .article-hero h1 {
-  font-size: clamp(2rem, 4.4vw, 4.3rem);
-  line-height: 0.98;
+  max-width: 12ch;
+  font-size: clamp(2.1rem, 4.3vw, 4rem);
+  line-height: 0.95;
 }
 
 .article-lede {
   margin: 0;
-  max-width: 58ch;
-  font-size: 0.98rem;
+  max-width: 54ch;
+  font-size: 1rem;
+  line-height: 1.72;
 }
 
 .article-hero-media {
+  order: -1;
   overflow: hidden;
-  border-radius: 20px;
-  aspect-ratio: 4 / 3;
+  border-radius: 24px;
+  aspect-ratio: 21 / 9;
   border: 1px solid rgba(10, 28, 50, 0.08);
+  box-shadow:
+    0 18px 42px rgba(53, 94, 132, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
 }
 
 html.theme-night .article-hero-media {
@@ -2208,36 +2223,38 @@ html.theme-night .article-hero-media {
 
 .article-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.6fr);
-  gap: 16px;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+  gap: 18px;
   align-items: start;
 }
 
 .article-prose {
   display: grid;
-  gap: 16px;
+  gap: 18px;
+  padding: 24px 22px 26px;
 }
 
 .article-prose h2 {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 1.15rem;
-  line-height: 1.16;
+  font-size: 1.08rem;
+  line-height: 1.18;
 }
 
 .article-prose p {
   margin: 0;
-  font-size: 0.96rem;
+  font-size: 0.98rem;
+  line-height: 1.78;
 }
 
 .article-prose blockquote {
   margin: 0;
-  padding: 14px 16px;
+  padding: 16px 18px;
   border-left: 3px solid rgba(76, 219, 255, 0.5);
-  border-radius: 16px;
+  border-radius: 18px;
   background: rgba(255, 255, 255, 0.56);
   color: var(--text);
-  font-size: 0.98rem;
+  font-size: 1rem;
   line-height: 1.6;
 }
 
@@ -2253,11 +2270,11 @@ html.theme-night .article-prose blockquote {
 
 .article-sidenotes {
   position: sticky;
-  top: 18px;
+  top: 88px;
 }
 
 .article-note {
-  padding: 16px;
+  padding: 18px;
   display: grid;
   gap: 10px;
 }
@@ -2265,27 +2282,27 @@ html.theme-night .article-prose blockquote {
 .article-note h3 {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 0.96rem;
+  font-size: 1.02rem;
   line-height: 1.18;
 }
 
 .article-note p {
   margin: 0;
   color: var(--muted-strong);
-  font-size: 0.86rem;
+  font-size: 0.88rem;
   line-height: 1.55;
 }
 
 .article-related {
   display: grid;
-  gap: 8px;
+  gap: 10px;
 }
 
 .article-related a {
   display: grid;
   gap: 4px;
-  padding: 10px 12px;
-  border-radius: 14px;
+  padding: 12px 13px;
+  border-radius: 16px;
   border: 1px solid rgba(74, 101, 129, 0.12);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(241, 247, 252, 0.88));
 }
@@ -2295,14 +2312,33 @@ html.theme-night .article-related a {
 }
 
 .article-related a strong {
-  font-size: 0.84rem;
+  font-size: 0.88rem;
   line-height: 1.22;
 }
 
 .article-related a span {
   color: var(--muted);
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   line-height: 1.35;
+}
+
+.article-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 40;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.36);
+  pointer-events: none;
+}
+
+.article-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, rgba(76, 219, 255, 0.95), rgba(47, 110, 230, 0.98));
+  box-shadow: 0 0 18px rgba(76, 219, 255, 0.38);
 }
 
 .writing-section.is-hidden-mobile {
