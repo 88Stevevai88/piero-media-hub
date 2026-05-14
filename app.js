@@ -164,14 +164,12 @@ const els = {
 
 let activeWritingSectionId = preferredWritingSectionId || site.sections[0]?.id || "medium";
 let writingSwitcherBound = false;
-let themeTimerId = null;
 
 render();
 setupReveal();
 setupActiveNav();
 setupMobileMenu();
 setupWritingSwitcher();
-setupTimeBasedTheme();
 loadLiveMediumFeed();
 
 function render() {
@@ -824,64 +822,6 @@ function renderFeaturedSectionCopy() {
   if (els.newsGrid) {
     els.newsGrid.setAttribute("aria-label", isItalian ? "Articoli in evidenza" : "Featured article cards");
   }
-}
-
-function setupTimeBasedTheme() {
-  const NIGHT_START = 18;
-  const DAY_START = 7;
-
-  const isNightTime = (date = new Date()) => {
-    const hour = date.getHours();
-    return hour >= NIGHT_START || hour < DAY_START;
-  };
-
-  const nextThemeBoundary = (date = new Date()) => {
-    const next = new Date(date);
-    const hour = date.getHours();
-    const night = isNightTime(date);
-
-    if (night && hour >= NIGHT_START) {
-      next.setDate(next.getDate() + 1);
-      next.setHours(DAY_START, 0, 0, 0);
-    } else if (night) {
-      next.setHours(DAY_START, 0, 0, 0);
-    } else {
-      next.setHours(NIGHT_START, 0, 0, 0);
-    }
-
-    return next;
-  };
-
-  const applyTheme = () => {
-    const night = isNightTime();
-    document.documentElement.classList.toggle("theme-night", night);
-    document.body.classList.toggle("theme-night", night);
-  };
-
-  const schedule = () => {
-    if (themeTimerId) {
-      window.clearTimeout(themeTimerId);
-    }
-
-    const now = new Date();
-    const nextBoundary = nextThemeBoundary(now);
-    const delay = Math.max(nextBoundary.getTime() - now.getTime(), 60_000);
-
-    themeTimerId = window.setTimeout(() => {
-      applyTheme();
-      schedule();
-    }, delay);
-  };
-
-  applyTheme();
-  schedule();
-
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") {
-      applyTheme();
-      schedule();
-    }
-  });
 }
 
 function syncWritingSwitcherState() {
