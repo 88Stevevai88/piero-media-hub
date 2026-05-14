@@ -1084,7 +1084,7 @@ html.theme-night .signal-card-accent {
 
 .profile-meta {
   min-width: 0;
-  max-width: 560px;
+  max-width: 520px;
   padding: 10px 12px 12px;
   border-radius: 24px;
   background:
@@ -1123,8 +1123,8 @@ h2 {
 }
 
 h1 {
-  max-width: 560px;
-  font-size: clamp(1.9rem, 3vw, 3rem);
+  max-width: 520px;
+  font-size: clamp(1.82rem, 2.9vw, 2.86rem);
   line-height: 0.94;
   letter-spacing: 0;
 }
@@ -1140,20 +1140,20 @@ h1 span {
 }
 
 .tagline-line {
-  margin-top: 8px;
+  margin-top: 7px;
   color: #2d78db;
   font-family: var(--font-body);
-  font-size: clamp(0.94rem, 1.15vw, 1.02rem);
+  font-size: clamp(0.92rem, 1.08vw, 0.98rem);
   font-weight: 600;
   line-height: 1.18;
 }
 
 .hero-support {
-  margin: 6px 0 0;
-  max-width: 50ch;
+  margin: 5px 0 0;
+  max-width: 46ch;
   color: var(--muted);
-  line-height: 1.42;
-  font-size: 0.8rem;
+  line-height: 1.4;
+  font-size: 0.78rem;
 }
 
 .profile-actions {
@@ -1161,7 +1161,7 @@ h1 span {
   gap: 10px;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin-top: 12px;
+  margin-top: 11px;
 }
 
 .action-button {
