@@ -132,6 +132,7 @@ const mediumFeedState = {
 };
 
 const preferredWritingSectionId = getPreferredWritingSectionId();
+const likedPostIds = loadLikedPostIds();
 
 const els = {
   bio: document.querySelector("#bio"),
@@ -170,6 +171,7 @@ setupReveal();
 setupActiveNav();
 setupMobileMenu();
 setupWritingSwitcher();
+setupPostCardActions();
 loadLiveMediumFeed();
 
 function render() {
@@ -272,25 +274,47 @@ function getWritingSections() {
 
 function renderArticleCard(item, section, featured = false) {
   const cardClass = featured ? "post-card post-card-featured" : "post-card post-card-compact";
-  const ctaLabel = section.id === "italian-writing" ? "Apri →" : "Read →";
-  const showSummary = false;
-  const showTop = true;
   const pageHref = item.pageHref || item.href || item.url;
   const publishedLabel = formatPublishedLabel(item.publishedAt || item.pubDate || item.date, section.language);
   const readTimeLabel = formatReadTimeLabel(item, section.language);
   const metaLabel = [publishedLabel, readTimeLabel].filter(Boolean).join(" · ");
+  const likeId = getPostLikeId(item, section);
+  const isLiked = likedPostIds.has(likeId);
+  const shareUrl = resolveShareUrl(pageHref);
+  const isItalian = section.language === "it";
+  const shareLabel = isItalian ? "Condividi" : "Share";
+  const likeLabel = isItalian ? "Mi piace" : "Like";
 
   return `
-    <article class="${cardClass}">
-      <div class="post-media">
+    <article class="${cardClass}" data-post-id="${escapeHtml(likeId)}">
+      <a class="post-media post-media-link" href="${safeHref(pageHref)}" ${linkAttrs(pageHref)}>
         <img src="${item.image}" alt="${escapeHtml(item.imageAlt)}" loading="lazy" />
-      </div>
+      </a>
       <div class="post-body">
-        ${showTop ? `<div class="post-top"><span class="article-badge">${escapeHtml(item.badge || section.label)}</span><span class="post-meta-pill">${escapeHtml(metaLabel || item.meta || "")}</span></div>` : ""}
-        <h4>${escapeHtml(item.title)}</h4>
-        ${showSummary ? `<p>${escapeHtml(item.summary)}</p>` : ""}
-        <div class="post-cta">
-          <a class="post-link" href="${safeHref(pageHref)}" ${linkAttrs(pageHref)}>${ctaLabel}</a>
+        <div class="post-top">
+          <span class="article-badge">${escapeHtml(item.badge || section.label)}</span>
+        </div>
+        <h4><a class="post-title-link" href="${safeHref(pageHref)}" ${linkAttrs(pageHref)}>${escapeHtml(item.title)}</a></h4>
+        <div class="post-footer">
+          <span class="post-meta-pill">${escapeHtml(metaLabel || item.meta || "")}</span>
+          <div class="post-actions">
+            <button
+              type="button"
+              class="post-action-button post-share-button"
+              data-share-url="${escapeHtml(shareUrl)}"
+              data-share-title="${escapeHtml(item.title || "")}"
+            >
+              ${shareLabel}
+            </button>
+            <button
+              type="button"
+              class="post-action-button post-like-button${isLiked ? " is-liked" : ""}"
+              data-like-id="${escapeHtml(likeId)}"
+              aria-pressed="${isLiked ? "true" : "false"}"
+            >
+              ${likeLabel}
+            </button>
+          </div>
         </div>
       </div>
     </article>
@@ -601,6 +625,27 @@ function setupWritingSwitcher() {
   syncWritingSwitcherState();
 }
 
+function setupPostCardActions() {
+  if (!els.articleList) {
+    return;
+  }
+
+  els.articleList.addEventListener("click", async (event) => {
+    const shareButton = event.target.closest("[data-share-url]");
+    if (shareButton instanceof HTMLElement) {
+      event.preventDefault();
+      await handleShareButton(shareButton);
+      return;
+    }
+
+    const likeButton = event.target.closest("[data-like-id]");
+    if (likeButton instanceof HTMLElement) {
+      event.preventDefault();
+      toggleLikeButton(likeButton);
+    }
+  });
+}
+
 function getPreferredWritingSectionId() {
   const preferredLanguage = getBrowserLanguage();
   if (preferredLanguage === "it") {
@@ -703,6 +748,100 @@ function formatReadTimeLabel(item, language = "en") {
 
   const text = [item?.title, item?.summary].filter(Boolean).join(" ");
   return estimateReadTime(text, language);
+}
+
+function getPostLikeId(item, section) {
+  return String(item?.pageHref || item?.href || item?.url || `${section?.id || "post"}::${item?.title || ""}`);
+}
+
+function resolveShareUrl(pathOrUrl) {
+  try {
+    return new URL(pathOrUrl, window.location.origin).href;
+  } catch {
+    return String(pathOrUrl || window.location.href);
+  }
+}
+
+async function handleShareButton(button) {
+  const title = button?.dataset?.shareTitle || document.title;
+  const url = button?.dataset?.shareUrl || window.location.href;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ title, url });
+      flashButton(button, "Inviato");
+      return;
+    } catch {
+      // continue to clipboard fallback
+    }
+  }
+
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(url);
+      flashButton(button, "Copiato");
+      return;
+    }
+  } catch {
+    // continue to prompt fallback
+  }
+
+  window.prompt("Copia il link", url);
+}
+
+function toggleLikeButton(button) {
+  const likeId = button?.dataset?.likeId;
+  if (!likeId) {
+    return;
+  }
+
+  if (likedPostIds.has(likeId)) {
+    likedPostIds.delete(likeId);
+    button.classList.remove("is-liked");
+    button.setAttribute("aria-pressed", "false");
+  } else {
+    likedPostIds.add(likeId);
+    button.classList.add("is-liked");
+    button.setAttribute("aria-pressed", "true");
+  }
+
+  saveLikedPostIds();
+}
+
+function flashButton(button, label) {
+  if (!button) {
+    return;
+  }
+
+  const previousLabel = button.textContent;
+  button.textContent = label;
+  button.classList.add("is-flashed");
+  window.setTimeout(() => {
+    button.textContent = previousLabel;
+    button.classList.remove("is-flashed");
+  }, 1200);
+}
+
+function loadLikedPostIds() {
+  try {
+    const raw = window.localStorage.getItem("piero-liked-posts");
+    if (!raw) {
+      return new Set();
+    }
+
+    const values = JSON.parse(raw);
+    return new Set(Array.isArray(values) ? values.filter(Boolean).map(String) : []);
+  } catch {
+    return new Set();
+  }
+}
+
+function saveLikedPostIds() {
+  try {
+    window.localStorage.setItem("piero-liked-posts", JSON.stringify(Array.from(likedPostIds)));
+  } catch {
+    // Ignore storage failures.
+  }
 }
 
 function uniqueWritingItems(items) {
