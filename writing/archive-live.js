@@ -288,7 +288,7 @@
     }
 
     const footer = document.createElement("footer");
-    footer.className = "site-footer panel reveal";
+    footer.className = "site-footer panel reveal is-visible";
     footer.innerHTML = `
       <div class="site-footer-grid">
         <div class="site-footer-copyblock">
