@@ -521,10 +521,20 @@ html.theme-night .spotlight-card-media {
 }
 
 .today-market-date {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(74, 101, 129, 0.12);
+  background: rgba(255, 255, 255, 0.82);
   color: var(--muted-strong);
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .today-market-grid {
@@ -599,6 +609,12 @@ html.theme-night .today-market-skeleton {
 
 html.theme-night .today-market-skeleton {
   color: rgba(208, 223, 236, 0.72);
+}
+
+html.theme-night .today-market-date {
+  border-color: rgba(119, 176, 217, 0.14);
+  background: rgba(12, 22, 34, 0.88);
+  color: rgba(224, 236, 247, 0.82);
 }
 
 .rail-panel {
@@ -2686,6 +2702,12 @@ html.theme-night .follow-panel {
 
   .today-market-grid {
     gap: 6px;
+  }
+
+  .today-market-date {
+    min-height: 26px;
+    padding-inline: 8px;
+    font-size: 0.68rem;
   }
 
   .today-market-item,

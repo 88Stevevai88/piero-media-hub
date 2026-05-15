@@ -971,6 +971,7 @@ function renderTodayMarketCopy() {
 function formatTodayLabel(language = "en") {
   try {
     return new Intl.DateTimeFormat(language === "it" ? "it-IT" : "en-GB", {
+      weekday: "short",
       day: "2-digit",
       month: "short",
       year: "numeric",
