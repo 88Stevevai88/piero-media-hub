@@ -1517,6 +1517,72 @@ html.theme-night .nav-strip a:hover {
   margin-top: 6px;
 }
 
+.about-page {
+  display: grid;
+  gap: 16px;
+  padding-bottom: 28px;
+}
+
+.about-page .about-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+  gap: 16px;
+  align-items: stretch;
+  padding: 18px;
+}
+
+.about-page .about-hero-copy {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  max-width: 62ch;
+  padding: 6px 2px 6px 4px;
+}
+
+.about-page .about-hero h1 {
+  margin: 0;
+  max-width: 10ch;
+  font-family: var(--font-body);
+  font-size: clamp(2.4rem, 5vw, 4.3rem);
+  line-height: 0.94;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+}
+
+.about-page .about-hero-media {
+  overflow: hidden;
+  border-radius: 28px;
+  aspect-ratio: 4 / 5;
+  border: 1px solid rgba(10, 28, 50, 0.08);
+  box-shadow:
+    0 18px 42px rgba(53, 94, 132, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88);
+}
+
+.about-page .about-hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.about-page .about-social-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.about-page .about-social-grid .where-card {
+  min-height: 58px;
+}
+
+.about-page .about-social-grid .where-card small {
+  font-size: 0.72rem;
+}
+
+.about-page .archive-section {
+  gap: 16px;
+}
+
 .about-card {
   padding: 16px;
   background:
@@ -3000,6 +3066,19 @@ html.theme-night .follow-panel {
   .article-hero-media {
     aspect-ratio: 16 / 10;
     border-radius: 16px;
+  }
+
+  .about-page .about-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .about-page .about-hero-media {
+    aspect-ratio: 16 / 11;
+    border-radius: 20px;
+  }
+
+  .about-page .about-social-grid {
+    grid-template-columns: 1fr;
   }
 
   .article-actions,
