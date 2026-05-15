@@ -542,6 +542,14 @@ html.theme-night .spotlight-card-media {
   gap: 8px;
 }
 
+.today-market-disclaimer {
+  margin: -2px 2px 0;
+  color: var(--muted-strong);
+  font-size: 0.68rem;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+
 .today-market-item,
 .today-market-skeleton {
   display: flex;
@@ -609,6 +617,10 @@ html.theme-night .today-market-skeleton {
 
 html.theme-night .today-market-skeleton {
   color: rgba(208, 223, 236, 0.72);
+}
+
+html.theme-night .today-market-disclaimer {
+  color: rgba(208, 223, 236, 0.68);
 }
 
 html.theme-night .today-market-date {
@@ -2702,6 +2714,11 @@ html.theme-night .follow-panel {
 
   .today-market-grid {
     gap: 6px;
+  }
+
+  .today-market-disclaimer {
+    margin-top: 0;
+    font-size: 0.64rem;
   }
 
   .today-market-date {

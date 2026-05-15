@@ -152,6 +152,7 @@ const els = {
   todayMarketHeading: document.querySelector("#todayMarketHeading"),
   todayDate: document.querySelector("#todayDate"),
   todayMarketGrid: document.querySelector("#todayMarketGrid"),
+  todayMarketDisclaimer: document.querySelector("#todayMarketDisclaimer"),
   railHeading: document.querySelector("#railHeading"),
   followEyebrow: document.querySelector("#followEyebrow"),
   followHeading: document.querySelector("#followHeading"),
@@ -965,6 +966,13 @@ function renderLocalizedHeroCopy() {
 function renderTodayMarketCopy() {
   if (els.todayDate) {
     els.todayDate.textContent = formatTodayLabel(getBrowserLanguage());
+  }
+
+  if (els.todayMarketDisclaimer) {
+    els.todayMarketDisclaimer.textContent =
+      getBrowserLanguage() === "it"
+        ? "I dati di mercato sono solo informativi e non costituiscono consulenza finanziaria."
+        : "Market data is for context only and does not constitute financial advice.";
   }
 }
 
