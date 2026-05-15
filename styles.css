@@ -2992,17 +2992,20 @@ html.theme-night .follow-panel {
 
   .site-header {
     align-items: center;
-    gap: 10px;
-    padding: 12px;
+    gap: 8px;
+    padding: 10px;
   }
 
   .site-brand {
-    font-size: 0.92rem;
+    font-size: 0.88rem;
   }
 
   .site-menu-toggle {
     display: inline-flex;
     margin-left: auto;
+    min-height: 34px;
+    padding: 0 10px;
+    gap: 8px;
   }
 
   .site-nav {
@@ -3011,8 +3014,8 @@ html.theme-night .follow-panel {
     order: 3;
     justify-content: flex-start;
     flex-direction: column;
-    gap: 8px;
-    padding-top: 8px;
+    gap: 6px;
+    padding-top: 6px;
   }
 
   .site-cta {
@@ -3032,8 +3035,8 @@ html.theme-night .follow-panel {
   }
 
   .signal-stage {
-    padding-top: 12px;
-    gap: 12px;
+    padding-top: 8px;
+    gap: 8px;
   }
 
   .social-section {
@@ -3068,11 +3071,11 @@ html.theme-night .follow-panel {
   }
 
   .profile-meta {
-    padding: 12px;
+    padding: 10px 10px 11px;
     border: 1px solid rgba(74, 101, 129, 0.14);
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(249, 252, 255, 0.5));
-    box-shadow: 0 12px 26px rgba(53, 94, 132, 0.08);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(249, 252, 255, 0.42));
+    box-shadow: 0 10px 22px rgba(53, 94, 132, 0.07);
   }
 
   .about-card,
@@ -3090,12 +3093,12 @@ html.theme-night .follow-panel {
   }
 
   .signal-topline {
-    padding-bottom: 10px;
+    padding-bottom: 8px;
   }
 
   .signal-stage {
-    padding: 10px;
-    border-radius: 22px;
+    padding: 8px;
+    border-radius: 20px;
     min-height: 0;
   }
 
@@ -3127,18 +3130,28 @@ html.theme-night .follow-panel {
     align-items: flex-start;
   }
 
-  .hero-support {
+  .name-line {
+    line-height: 1.02;
+  }
+
+  .tagline-line {
     margin-top: 4px;
+    font-size: 0.88rem;
+    line-height: 1.14;
+  }
+
+  .hero-support {
+    margin-top: 3px;
     max-width: 100%;
-    font-size: 0.74rem;
-    line-height: 1.38;
+    font-size: 0.7rem;
+    line-height: 1.28;
   }
 
   .profile-actions {
     flex-direction: column;
     align-items: flex-start;
-    gap: 7px;
-    margin-top: 9px;
+    gap: 6px;
+    margin-top: 8px;
   }
 
   .profile-actions .action-button {
@@ -3146,9 +3159,9 @@ html.theme-night .follow-panel {
     width: fit-content;
     max-width: 100%;
     flex: 0 0 auto;
-    min-height: 36px;
-    padding: 0 11px;
-    font-size: 0.72rem;
+    min-height: 34px;
+    padding: 0 10px;
+    font-size: 0.69rem;
   }
 
   .button-logo {
@@ -3200,8 +3213,8 @@ html.theme-night .follow-panel {
   }
 
   .news-section {
-    gap: 8px;
-    padding: 12px;
+    gap: 7px;
+    padding: 11px;
   }
 
   .news-head {
@@ -3209,11 +3222,11 @@ html.theme-night .follow-panel {
   }
 
   .news-head h2 {
-    font-size: 1rem;
+    font-size: 0.96rem;
   }
 
   .news-head p:last-child {
-    font-size: 0.78rem;
+    font-size: 0.74rem;
   }
 
   .news-card {
@@ -3314,7 +3327,7 @@ html.theme-night .follow-panel {
   }
 
   .writing-section-head h3 {
-    font-size: 0.9rem;
+    font-size: 0.86rem;
   }
 
   .post-card {
@@ -3332,22 +3345,22 @@ html.theme-night .follow-panel {
   }
 
   .post-body {
-    padding: 12px 12px 11px;
-    gap: 8px;
+    padding: 11px 11px 10px;
+    gap: 7px;
   }
 
   .post-card h4 {
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     line-height: 1.22;
   }
 
   .post-card p {
-    font-size: 0.8rem;
+    font-size: 0.76rem;
   }
 
   .post-footer {
-    gap: 6px;
-    padding-top: 7px;
+    gap: 5px;
+    padding-top: 6px;
     margin-top: 4px;
   }
 
@@ -3356,9 +3369,9 @@ html.theme-night .follow-panel {
   }
 
   .post-action-button {
-    min-height: 28px;
-    padding: 0 9px;
-    font-size: 0.62rem;
+    min-height: 26px;
+    padding: 0 8px;
+    font-size: 0.6rem;
   }
 
   .post-card-compact p {
@@ -3375,5 +3388,47 @@ html.theme-night .follow-panel {
 
   .spotlight-track {
     grid-auto-columns: minmax(190px, 80vw);
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-meta {
+    padding: 9px 9px 10px;
+  }
+
+  .hero-support {
+    display: none;
+  }
+
+  .proof-strip {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    margin-top: 6px;
+  }
+
+  .proof-strip span {
+    padding: 5px 8px;
+    font-size: 0.68rem;
+  }
+
+  .proof-strip span:nth-child(3) {
+    grid-column: auto;
+  }
+
+  .news-card,
+  .archive-item {
+    padding: 9px;
+  }
+
+  .post-body {
+    padding: 10px 10px 9px;
+  }
+
+  .post-card h4 {
+    font-size: 0.84rem;
+  }
+
+  .post-card p {
+    font-size: 0.74rem;
   }
 }
