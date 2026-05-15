@@ -516,6 +516,91 @@ html.theme-night .spotlight-card-media {
   min-height: 48px;
 }
 
+.today-market-panel {
+  gap: 10px;
+}
+
+.today-market-date {
+  color: var(--muted-strong);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.today-market-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.today-market-item,
+.today-market-skeleton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(74, 101, 129, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(239, 245, 251, 0.94));
+  box-shadow:
+    0 10px 24px rgba(53, 94, 132, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.84);
+}
+
+.today-market-item strong {
+  display: block;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+}
+
+.today-market-item span {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted-strong);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.today-market-change {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--muted-strong);
+  white-space: nowrap;
+}
+
+.today-market-change.is-positive {
+  color: #167f4a;
+}
+
+.today-market-change.is-negative {
+  color: #c0392b;
+}
+
+.today-market-skeleton {
+  justify-content: center;
+  color: var(--muted-strong);
+  font-size: 0.78rem;
+}
+
+.today-market-error {
+  border-style: dashed;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+html.theme-night .today-market-item,
+html.theme-night .today-market-skeleton {
+  background:
+    linear-gradient(180deg, rgba(13, 24, 37, 0.92), rgba(8, 16, 26, 0.88));
+  border-color: rgba(119, 176, 217, 0.1);
+}
+
+html.theme-night .today-market-skeleton {
+  color: rgba(208, 223, 236, 0.72);
+}
+
 .rail-panel {
   display: grid;
   gap: 8px;
@@ -2597,6 +2682,16 @@ html.theme-night .follow-panel {
   .follow-panel {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .today-market-grid {
+    gap: 6px;
+  }
+
+  .today-market-item,
+  .today-market-skeleton {
+    min-height: 44px;
+    padding: 9px 10px;
   }
 
   .site-header {

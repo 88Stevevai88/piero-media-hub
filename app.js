@@ -148,6 +148,10 @@ const els = {
   heroSupport: document.querySelector("#heroSupport"),
   socialEyebrow: document.querySelector("#socialEyebrow"),
   socialDescription: document.querySelector("#socialDescription"),
+  todayMarketEyebrow: document.querySelector("#todayMarketEyebrow"),
+  todayMarketHeading: document.querySelector("#todayMarketHeading"),
+  todayDate: document.querySelector("#todayDate"),
+  todayMarketGrid: document.querySelector("#todayMarketGrid"),
   railHeading: document.querySelector("#railHeading"),
   followEyebrow: document.querySelector("#followEyebrow"),
   followHeading: document.querySelector("#followHeading"),
@@ -174,6 +178,8 @@ setupMobileMenu();
 setupWritingSwitcher();
 setupPostCardActions();
 loadLiveMediumFeed();
+renderTodayMarketCopy();
+loadMarketSnapshot();
 
 function render() {
   renderLocalizedHeroCopy();
@@ -933,6 +939,14 @@ function renderLocalizedHeroCopy() {
       : "Quick links to my main platforms.";
   }
 
+  if (els.todayMarketEyebrow) {
+    els.todayMarketEyebrow.textContent = isItalian ? "Oggi" : "Today";
+  }
+
+  if (els.todayMarketHeading) {
+    els.todayMarketHeading.textContent = isItalian ? "Snapshot mercato" : "Market snapshot";
+  }
+
   if (els.railHeading) {
     els.railHeading.textContent = isItalian ? "Letture rapide" : "Quick reads";
   }
@@ -945,6 +959,111 @@ function renderLocalizedHeroCopy() {
     els.followHeading.textContent = isItalian
       ? "Leggi gli articoli, poi seguimi dove pubblico."
       : "Read the articles, then follow the platforms where I publish.";
+  }
+}
+
+function renderTodayMarketCopy() {
+  if (els.todayDate) {
+    els.todayDate.textContent = formatTodayLabel(getBrowserLanguage());
+  }
+}
+
+function formatTodayLabel(language = "en") {
+  try {
+    return new Intl.DateTimeFormat(language === "it" ? "it-IT" : "en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }).format(new Date());
+  } catch {
+    return new Date().toLocaleDateString();
+  }
+}
+
+function formatMarketPrice(value, language = "en") {
+  const numericValue = Number(value);
+  if (!Number.isFinite(numericValue)) {
+    return "—";
+  }
+
+  return new Intl.NumberFormat(language === "it" ? "it-IT" : "en-GB", {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: numericValue >= 1000 ? 0 : 2,
+  }).format(numericValue);
+}
+
+function formatMarketChange(value) {
+  const numericValue = Number(value);
+  if (!Number.isFinite(numericValue)) {
+    return null;
+  }
+
+  return `${numericValue >= 0 ? "+" : ""}${numericValue.toFixed(1)}% 24h`;
+}
+
+function renderMarketSnapshot(data) {
+  if (!els.todayMarketGrid) {
+    return;
+  }
+
+  const isItalian = getBrowserLanguage() === "it";
+  const items = [
+    {
+      label: "BTC",
+      value: data?.bitcoin?.eur,
+      change: data?.bitcoin?.eur_24h_change,
+    },
+    {
+      label: "CRO",
+      value: data?.["crypto-com-chain"]?.eur,
+      change: data?.["crypto-com-chain"]?.eur_24h_change,
+    },
+  ];
+
+  els.todayMarketGrid.innerHTML = items
+    .map((item) => {
+      const change = formatMarketChange(item.change);
+      const changeClass =
+        Number(item.change) >= 0 ? "today-market-change is-positive" : "today-market-change is-negative";
+
+      return `
+        <div class="today-market-item">
+          <div>
+            <strong>${escapeHtml(item.label)}</strong>
+            <span>${escapeHtml(formatMarketPrice(item.value, isItalian ? "it" : "en"))}</span>
+          </div>
+          <div class="${changeClass}">
+            ${change ? escapeHtml(change) : "—"}
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+async function loadMarketSnapshot() {
+  if (!els.todayMarketGrid) {
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,crypto-com-chain&vs_currencies=eur&include_24hr_change=true",
+    );
+
+    if (!response.ok) {
+      throw new Error(`Market request failed with ${response.status}`);
+    }
+
+    const data = await response.json();
+    renderMarketSnapshot(data);
+  } catch {
+    els.todayMarketGrid.innerHTML = `
+      <div class="today-market-skeleton today-market-error">
+        Market data unavailable
+      </div>
+    `;
   }
 }
 
