@@ -145,6 +145,7 @@
   renderLoadingState(language);
 
   loadArchiveItems();
+  appendSiteFooter(language);
 
   async function loadArchiveItems() {
     try {
@@ -278,6 +279,42 @@
 
   function safeHref(href) {
     return href || "#top";
+  }
+
+  function appendSiteFooter(activeLanguage) {
+    const main = document.querySelector("main.app-shell");
+    if (!main || main.querySelector(".site-footer")) {
+      return;
+    }
+
+    const footer = document.createElement("footer");
+    footer.className = "site-footer panel reveal";
+    footer.innerHTML = `
+      <div class="site-footer-grid">
+        <div class="site-footer-copyblock">
+          <p class="eyebrow">Footer</p>
+          <p class="site-footer-copy">
+            © 2026 Piero Pasquariello. ${activeLanguage === "it" ? "Tutti i diritti riservati." : "All rights reserved."}
+          </p>
+          <p class="site-footer-legal">
+            ${
+              activeLanguage === "it"
+                ? "I contenuti hanno finalità informative e non costituiscono consulenza finanziaria."
+                : "Content is for informational purposes only and does not constitute financial advice."
+            }
+          </p>
+        </div>
+        <div class="site-footer-links" aria-label="${activeLanguage === "it" ? "Link rapidi" : "Quick links"}">
+          <a href="/">${activeLanguage === "it" ? "Home" : "Home"}</a>
+          <a href="/writing/">${activeLanguage === "it" ? "Archivi" : "Archives"}</a>
+          <a href="/about/">${activeLanguage === "it" ? "About" : "About"}</a>
+          <a href="https://x.com/PieroPasqiari88" target="_blank" rel="noreferrer">X</a>
+          <a href="https://medium.com/@pieropasquariello" target="_blank" rel="noreferrer">Medium</a>
+        </div>
+      </div>
+    `;
+
+    main.appendChild(footer);
   }
 
   function escapeHtml(value) {
