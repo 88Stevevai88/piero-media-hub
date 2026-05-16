@@ -4,7 +4,7 @@ const site = {
   latestArticleUrl:
     "https://medium.com/@pieropasquariello/cronos-app-is-not-about-turning-everyone-into-a-trader-755d7d64136a",
   bio:
-    "I write editorial articles and notes on Cronos, Web3 and digital finance in English and Italian. Cronos Ambassador.",
+    "I publish editorial essays and notes on Cronos, Web3 and digital finance in English and Italian. Cronos Ambassador.",
   sections: [
     {
       id: "global-writing",
@@ -958,14 +958,14 @@ function renderLocalizedHeroCopy() {
 
   if (els.heroTagline) {
     els.heroTagline.textContent = isItalian
-      ? "Scrivo articoli e note editoriali su Cronos, Web3 e finanza digitale."
-      : "I write editorial articles and notes on Cronos, Web3 and digital finance.";
+      ? "Pubblico saggi editoriali e note su Cronos, Web3 e finanza digitale."
+      : "I publish editorial essays and notes on Cronos, Web3 and digital finance.";
   }
 
   if (els.heroSupport) {
     els.heroSupport.textContent = isItalian
-      ? "Leggi gli ultimi articoli e apri le piattaforme dove pubblico."
-      : "Read the latest articles and open the platforms where I publish.";
+      ? "Leggi gli ultimi saggi e apri le piattaforme dove pubblico."
+      : "Read the latest essays and open the platforms where I publish.";
   }
 
   const navLabels = isItalian
@@ -1034,7 +1034,7 @@ function renderLocalizedHeroCopy() {
 function getLocalizedBio() {
   const isItalian = getBrowserLanguage() === "it";
   return isItalian
-    ? "Scrivo articoli e note editoriali su Cronos, Web3 e finanza digitale in italiano e inglese. Cronos Ambassador."
+    ? "Pubblico saggi editoriali e note su Cronos, Web3 e finanza digitale in italiano e inglese. Cronos Ambassador."
     : site.bio;
 }
 
