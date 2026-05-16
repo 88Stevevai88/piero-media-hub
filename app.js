@@ -133,6 +133,7 @@ const mediumFeedState = {
 
 const preferredWritingSectionId = getPreferredWritingSectionId();
 const likedPostIds = loadLikedPostIds();
+rememberLanguagePreference(getBrowserLanguage());
 
 const els = {
   bio: document.querySelector("#bio"),
@@ -627,6 +628,7 @@ function setupWritingSwitcher() {
       }
 
       activeWritingSectionId = nextId;
+      rememberLanguagePreference(nextId === "italian-writing" ? "it" : "en");
       syncWritingSwitcherState();
 
       const targetSection = document.querySelector(
@@ -671,6 +673,11 @@ function getPreferredWritingSectionId() {
 }
 
 function getBrowserLanguage() {
+  const storedLanguage = loadPreferredLanguage();
+  if (storedLanguage) {
+    return storedLanguage;
+  }
+
   const values = [];
   const timeZone = (() => {
     try {
@@ -698,6 +705,28 @@ function getBrowserLanguage() {
   }
 
   return "en";
+}
+
+function loadPreferredLanguage() {
+  try {
+    const raw = window.localStorage.getItem("piero-preferred-language");
+    if (raw === "it" || raw === "en") {
+      return raw;
+    }
+  } catch {
+    // Ignore storage failures.
+  }
+
+  return "";
+}
+
+function rememberLanguagePreference(language) {
+  const normalized = language === "it" ? "it" : "en";
+  try {
+    window.localStorage.setItem("piero-preferred-language", normalized);
+  } catch {
+    // Ignore storage failures.
+  }
 }
 
 function getSectionById(id) {

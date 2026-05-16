@@ -4,10 +4,17 @@
   const sectionHead = document.querySelector(".archive-section-head h2");
   const sectionEyebrow = document.querySelector(".archive-section-head .eyebrow");
   const sectionLead = document.querySelector(".archive-section-head > div p:last-of-type");
+  const archiveState = {
+    items: [],
+    filter: "all",
+    query: "",
+  };
 
   if (!archiveList) {
     return;
   }
+
+  rememberLanguagePreference(language);
 
   const config = {
     en: {
@@ -142,6 +149,7 @@
     sectionLead.textContent = config[language].leadText;
   }
 
+  renderArchiveControls();
   renderLoadingState(language);
 
   loadArchiveItems();
@@ -171,10 +179,57 @@
         imageAlt: item.imageAlt || `${item.title} cover image`,
       }));
 
-      renderArchive(sortItems([...mappedMedium, ...staticItems]));
+      archiveState.items = sortItems([...mappedMedium, ...staticItems]);
+      renderArchive();
     } catch (error) {
-      renderArchive(sortItems(staticItems));
+      archiveState.items = sortItems(staticItems);
+      renderArchive();
     }
+  }
+
+  function renderArchiveControls() {
+    if (document.querySelector(".archive-controls")) {
+      return;
+    }
+
+    const controls = document.createElement("div");
+    controls.className = "archive-controls";
+    controls.innerHTML = `
+      <label class="archive-search" aria-label="${language === "it" ? "Cerca articoli" : "Search articles"}">
+        <span>${language === "it" ? "Cerca" : "Search"}</span>
+        <input
+          type="search"
+          inputmode="search"
+          placeholder="${language === "it" ? "Cerca per titolo, tag o piattaforma" : "Search by title, tag or platform"}"
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </label>
+      <div class="archive-filters" role="tablist" aria-label="${language === "it" ? "Filtri archivio" : "Archive filters"}">
+        <button type="button" class="archive-filter-btn is-active" data-archive-filter="all">${language === "it" ? "Tutti" : "All"}</button>
+        <button type="button" class="archive-filter-btn" data-archive-filter="medium">Medium</button>
+        <button type="button" class="archive-filter-btn" data-archive-filter="linkedin">LinkedIn</button>
+      </div>
+    `;
+
+    archiveList.before(controls);
+
+    const input = controls.querySelector('input[type="search"]');
+    const buttons = controls.querySelectorAll("[data-archive-filter]");
+
+    input?.addEventListener("input", () => {
+      archiveState.query = String(input.value || "").trim().toLowerCase();
+      renderArchive();
+    });
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const nextFilter = button.getAttribute("data-archive-filter") || "all";
+        archiveState.filter = nextFilter;
+        buttons.forEach((node) => node.classList.toggle("is-active", node === button));
+        renderArchive();
+      });
+    });
   }
 
   function renderLoadingState(activeLanguage) {
@@ -191,7 +246,19 @@
     `;
   }
 
-  function renderArchive(items) {
+  function renderArchive() {
+    const items = applyArchiveFilters(archiveState.items);
+
+    if (!items.length) {
+      archiveList.innerHTML = `
+        <div class="archive-loading panel">
+          <p class="eyebrow">${language === "it" ? "Archivio" : "Archive"}</p>
+          <h3>${language === "it" ? "Nessun articolo corrisponde ai filtri." : "No articles match the current filters."}</h3>
+        </div>
+      `;
+      return;
+    }
+
     archiveList.innerHTML = items
       .map((item) => {
         const pageHref = item.pageHref || item.href;
@@ -217,10 +284,37 @@
               <a class="section-link" href="${safeHref(pageHref)}">${language === "it" ? "Apri pagina →" : "Open page →"}</a>
               <a class="section-link" href="${safeHref(sourceHref)}" target="_blank" rel="noreferrer">${language === "it" ? "Leggi fonte →" : "Read source →"}</a>
             </div>
-          </article>
+        </article>
         `;
       })
       .join("");
+  }
+
+  function applyArchiveFilters(items) {
+    return items.filter((item) => {
+      const matchesFilter =
+        archiveState.filter === "all" || String(item.source || "").toLowerCase() === archiveState.filter;
+      if (!matchesFilter) {
+        return false;
+      }
+
+      if (!archiveState.query) {
+        return true;
+      }
+
+      const haystack = [
+        item.title,
+        item.summary,
+        item.badge,
+        item.meta,
+        item.source,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      return haystack.includes(archiveState.query);
+    });
   }
 
   function sortItems(items) {
@@ -324,5 +418,14 @@
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#39;");
+  }
+
+  function rememberLanguagePreference(nextLanguage) {
+    const normalized = nextLanguage === "it" ? "it" : "en";
+    try {
+      window.localStorage.setItem("piero-preferred-language", normalized);
+    } catch {
+      // Ignore storage failures.
+    }
   }
 })();

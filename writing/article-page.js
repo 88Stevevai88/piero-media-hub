@@ -4,6 +4,9 @@
     return;
   }
 
+  const language = document.documentElement.lang.toLowerCase().startsWith("it") ? "it" : "en";
+  rememberLanguagePreference(language);
+
   const progress = document.createElement("div");
   progress.className = "article-progress";
   progress.innerHTML = "<span></span>";
@@ -21,7 +24,49 @@
   window.addEventListener("resize", updateProgress);
   updateProgress();
 
+  setupArticleToc();
   appendSiteFooter();
+
+  function setupArticleToc() {
+    const prose = shell.querySelector(".article-prose");
+    const sidenotes = shell.querySelector(".article-sidenotes");
+    if (!(prose instanceof HTMLElement) || !(sidenotes instanceof HTMLElement)) {
+      return;
+    }
+
+    const headings = Array.from(prose.querySelectorAll("h2"));
+    if (!headings.length) {
+      return;
+    }
+
+    const toc = document.createElement("article");
+    toc.className = "article-note panel reveal is-visible article-toc";
+    toc.innerHTML = `
+      <p class="eyebrow">${language === "it" ? "In questa pagina" : "On this page"}</p>
+      <h3>${language === "it" ? "Vai alle sezioni" : "Jump to sections"}</h3>
+      <nav class="article-toc-list" aria-label="${language === "it" ? "Indice della pagina" : "Page contents"}"></nav>
+    `;
+
+    const tocList = toc.querySelector(".article-toc-list");
+    headings.forEach((heading, index) => {
+      const text = heading.textContent?.trim() || "";
+      const id = heading.id || slugify(text) || `section-${index + 1}`;
+      heading.id = id;
+
+      const link = document.createElement("a");
+      link.href = `#${id}`;
+      link.textContent = text;
+      tocList?.appendChild(link);
+    });
+
+    const referenceNode = sidenotes.querySelector(".article-note");
+    if (referenceNode?.nextSibling) {
+      sidenotes.insertBefore(toc, referenceNode.nextSibling);
+      return;
+    }
+
+    sidenotes.prepend(toc);
+  }
 
   function appendSiteFooter() {
     if (shell.querySelector(".site-footer")) {
@@ -57,5 +102,24 @@
     `;
 
     shell.appendChild(footer);
+  }
+
+  function slugify(value) {
+    return String(value || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[’']/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
+  function rememberLanguagePreference(nextLanguage) {
+    const normalized = nextLanguage === "it" ? "it" : "en";
+    try {
+      window.localStorage.setItem("piero-preferred-language", normalized);
+    } catch {
+      // Ignore storage failures.
+    }
   }
 })();
