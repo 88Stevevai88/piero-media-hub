@@ -699,11 +699,6 @@ function getPreferredWritingSectionId() {
 }
 
 function getBrowserLanguage() {
-  const storedLanguage = loadPreferredLanguage();
-  if (storedLanguage) {
-    return storedLanguage;
-  }
-
   const values = [];
   const localeValues = [];
   const timeZone = (() => {
@@ -762,6 +757,11 @@ function getBrowserLanguage() {
 
   if (isItalianTimeZone(timeZone)) {
     return "it";
+  }
+
+  const storedLanguage = loadPreferredLanguage();
+  if (storedLanguage) {
+    return storedLanguage;
   }
 
   return "en";
