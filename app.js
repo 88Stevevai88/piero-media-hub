@@ -392,7 +392,7 @@ function getSpotlightItems() {
     })),
   );
 
-  return uniqueWritingItems(orderedItems);
+  return sortWritingItemsChronological(uniqueWritingItems(orderedItems));
 }
 
 function getSpotlightItemsForLanguage(language) {
@@ -715,6 +715,18 @@ function sortWritingItems(items) {
     const timeB = getPublishedTime(b);
     if (timeA !== timeB) {
       return timeB - timeA;
+    }
+
+    return String(a.title || "").localeCompare(String(b.title || ""));
+  });
+}
+
+function sortWritingItemsChronological(items) {
+  return [...items].sort((a, b) => {
+    const timeA = getPublishedTime(a);
+    const timeB = getPublishedTime(b);
+    if (timeA !== timeB) {
+      return timeA - timeB;
     }
 
     return String(a.title || "").localeCompare(String(b.title || ""));
