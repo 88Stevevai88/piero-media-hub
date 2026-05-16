@@ -190,7 +190,9 @@ renderSiteFooter();
 
 function render() {
   renderLocalizedHeroCopy();
-  els.bio.textContent = site.bio;
+  if (els.bio) {
+    els.bio.textContent = getLocalizedBio();
+  }
   renderFeaturedSectionCopy();
   renderSpotlightArticles();
   const archiveHref = getWritingArchiveHref(getBrowserLanguage());
@@ -1023,6 +1025,17 @@ function renderLocalizedHeroCopy() {
       span.textContent = ctaLabel;
     }
   });
+
+  if (els.bio) {
+    els.bio.textContent = getLocalizedBio();
+  }
+}
+
+function getLocalizedBio() {
+  const isItalian = getBrowserLanguage() === "it";
+  return isItalian
+    ? "Pubblico articoli semplici e chiari su Cronos, Web3 e finanza digitale in italiano e inglese."
+    : site.bio;
 }
 
 function renderTodayMarketCopy() {
