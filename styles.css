@@ -308,6 +308,26 @@ html.theme-night .signal-stage::after {
   z-index: 1;
 }
 
+.hero-mobile-photo {
+  display: none;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 22px;
+  aspect-ratio: 16 / 11;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(240, 246, 252, 0.92));
+  box-shadow:
+    0 12px 28px rgba(53, 94, 132, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.hero-mobile-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 72% 18%;
+  display: block;
+}
+
 .social-section {
   display: grid;
   gap: 8px;
@@ -3130,6 +3150,15 @@ html.theme-night .follow-panel {
     align-items: flex-start;
   }
 
+  .hero-mobile-photo {
+    display: block;
+  }
+
+  .signal-stage::before,
+  .signal-stage::after {
+    content: none;
+  }
+
   .name-line {
     line-height: 1.02;
   }
@@ -3394,6 +3423,11 @@ html.theme-night .follow-panel {
 @media (max-width: 480px) {
   .profile-meta {
     padding: 9px 9px 10px;
+  }
+
+  .hero-mobile-photo {
+    aspect-ratio: 16 / 12.5;
+    border-radius: 18px;
   }
 
   .hero-support {
