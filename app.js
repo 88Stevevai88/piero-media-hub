@@ -420,7 +420,6 @@ function renderSpotlightCard(item, featured = false) {
   const openLabel = language === "it" ? "Apri →" : "Open →";
   const publishedLabel = formatPublishedLabel(item.publishedAt || item.pubDate || item.date, language);
   const readTimeLabel = formatReadTimeLabel(item, language);
-  const metaLabel = [publishedLabel, readTimeLabel].filter(Boolean).join(" · ");
 
   return `
     <article class="spotlight-card${featured ? " spotlight-card-featured" : ""}">
@@ -430,7 +429,10 @@ function renderSpotlightCard(item, featured = false) {
       <div class="spotlight-card-copy">
         <div class="spotlight-card-top">
           <span class="news-chip">${escapeHtml(item.badge || item.source || "")}</span>
-          <span class="spotlight-meta">${escapeHtml(metaLabel)}</span>
+          <div class="spotlight-meta-row" aria-label="${language === "it" ? "Data e tempo di lettura" : "Published date and reading time"}">
+            ${publishedLabel ? `<span class="spotlight-meta-pill">${escapeHtml(publishedLabel)}</span>` : ""}
+            ${readTimeLabel ? `<span class="spotlight-meta-pill">${escapeHtml(readTimeLabel)}</span>` : ""}
+          </div>
         </div>
         <h3>${escapeHtml(item.title || "")}</h3>
         <a class="spotlight-link" href="${safeHref(href)}" ${linkAttrs(href)}>${openLabel}</a>
