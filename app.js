@@ -681,6 +681,7 @@ function getBrowserLanguage() {
   }
 
   const values = [];
+  const localeValues = [];
   const timeZone = (() => {
     try {
       return Intl.DateTimeFormat().resolvedOptions().timeZone || "";
@@ -696,17 +697,65 @@ function getBrowserLanguage() {
     if (typeof navigator.language === "string") {
       values.push(navigator.language);
     }
+    if (typeof navigator.userLanguage === "string") {
+      values.push(navigator.userLanguage);
+    }
   }
 
-  const match = values
-    .map((value) => String(value).toLowerCase())
-    .find((value) => value.startsWith("it"));
+  const resolvedLocale = (() => {
+    try {
+      return Intl.DateTimeFormat().resolvedOptions().locale || "";
+    } catch {
+      return "";
+    }
+  })();
 
-  if (match || timeZone === "Europe/Rome") {
+  const numberFormatLocale = (() => {
+    try {
+      return Intl.NumberFormat().resolvedOptions().locale || "";
+    } catch {
+      return "";
+    }
+  })();
+
+  if (resolvedLocale) {
+    localeValues.push(resolvedLocale);
+  }
+
+  if (numberFormatLocale) {
+    localeValues.push(numberFormatLocale);
+  }
+
+  const hasItalianLocale = [...values, ...localeValues].some(isItalianLocaleValue);
+  const hasItalianTimeZone = isItalianTimeZone(timeZone);
+
+  if (hasItalianLocale || hasItalianTimeZone) {
     return "it";
   }
 
   return "en";
+}
+
+function isItalianLocaleValue(value) {
+  const normalized = String(value || "")
+    .toLowerCase()
+    .replace(/_/g, "-");
+  if (!normalized) {
+    return false;
+  }
+
+  return (
+    normalized === "it" ||
+    normalized.startsWith("it-") ||
+    normalized.includes("-it-") ||
+    normalized.endsWith("-it") ||
+    normalized.includes("it-it")
+  );
+}
+
+function isItalianTimeZone(value) {
+  const normalized = String(value || "").toLowerCase();
+  return normalized === "europe/rome" || normalized === "europe/san_marino" || normalized === "europe/vatican";
 }
 
 function loadPreferredLanguage() {
