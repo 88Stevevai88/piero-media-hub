@@ -699,8 +699,6 @@ function getPreferredWritingSectionId() {
 }
 
 function getBrowserLanguage() {
-  const values = [];
-  const localeValues = [];
   const timeZone = (() => {
     try {
       return Intl.DateTimeFormat().resolvedOptions().timeZone || "";
@@ -709,19 +707,7 @@ function getBrowserLanguage() {
     }
   })();
 
-  if (typeof navigator !== "undefined") {
-    if (Array.isArray(navigator.languages)) {
-      values.push(...navigator.languages);
-    }
-    if (typeof navigator.language === "string") {
-      values.push(navigator.language);
-    }
-    if (typeof navigator.userLanguage === "string") {
-      values.push(navigator.userLanguage);
-    }
-  }
-
-  const resolvedLocale = (() => {
+  const systemLocale = (() => {
     try {
       return Intl.DateTimeFormat().resolvedOptions().locale || "";
     } catch {
@@ -737,22 +723,36 @@ function getBrowserLanguage() {
     }
   })();
 
-  if (resolvedLocale) {
-    localeValues.push(resolvedLocale);
+  const browserLocales = [];
+  if (typeof navigator !== "undefined") {
+    if (Array.isArray(navigator.languages)) {
+      browserLocales.push(...navigator.languages);
+    }
+    if (typeof navigator.language === "string") {
+      browserLocales.push(navigator.language);
+    }
+    if (typeof navigator.userLanguage === "string") {
+      browserLocales.push(navigator.userLanguage);
+    }
   }
 
-  if (numberFormatLocale) {
-    localeValues.push(numberFormatLocale);
+  const systemLocaleCandidates = [systemLocale, numberFormatLocale].filter(Boolean);
+  if (systemLocaleCandidates.some(isItalianLocaleValue)) {
+    return "it";
   }
 
-  const hasEnglishLocale = [...values, ...localeValues].some(isEnglishLocaleValue);
-  if (hasEnglishLocale) {
+  if (systemLocaleCandidates.some(isEnglishLocaleValue)) {
     return "en";
   }
 
-  const hasItalianLocale = [...values, ...localeValues].some(isItalianLocaleValue);
+  const hasItalianLocale = browserLocales.some(isItalianLocaleValue);
   if (hasItalianLocale) {
     return "it";
+  }
+
+  const hasEnglishLocale = browserLocales.some(isEnglishLocaleValue);
+  if (hasEnglishLocale) {
+    return "en";
   }
 
   if (isItalianTimeZone(timeZone)) {
@@ -1067,8 +1067,8 @@ function renderLocalizedHeroCopy() {
   }
 
   const navLabels = isItalian
-    ? ["Articoli", "In primo piano", "About", "Prova", "Social", "Seguimi"]
-    : ["Articles", "Featured", "About", "Proof", "Social", "Follow"];
+    ? ["Articoli", "In primo piano", "Mane City", "About", "Prova", "Social", "Seguimi"]
+    : ["Articles", "Featured", "Mane City", "About", "Proof", "Social", "Follow"];
   const navLinks = document.querySelectorAll(".site-nav a");
   navLinks.forEach((link, index) => {
     if (navLabels[index]) {
@@ -1115,6 +1115,14 @@ function renderLocalizedHeroCopy() {
       ? "Leggi gli articoli, poi seguimi dove pubblico."
       : "Read the articles, then follow the platforms where I publish.";
   }
+
+  const maneCityLabel = "Mane City Journal";
+  document.querySelectorAll('[data-link="mane-city"]').forEach((node) => {
+    const span = node.querySelector("span");
+    if (span) {
+      span.textContent = maneCityLabel;
+    }
+  });
 
   const ctaLabel = isItalian ? "Leggi ultimo articolo" : "Read latest";
   document.querySelectorAll('[data-link="latest-article"]').forEach((node) => {
@@ -1274,6 +1282,7 @@ function renderSiteFooter() {
       <div class="site-footer-links" aria-label="${isItalian ? "Link rapidi" : "Quick links"}">
         <a href="/">${isItalian ? "Home" : "Home"}</a>
         <a href="/writing/">${isItalian ? "Archivi" : "Archives"}</a>
+        <a href="/mane-city/">${isItalian ? "Mane City" : "Mane City"}</a>
         <a href="/about/">${isItalian ? "About" : "About"}</a>
         <a href="https://x.com/PieroPasqiari88" target="_blank" rel="noreferrer">X</a>
         <a href="https://medium.com/@pieropasquariello" target="_blank" rel="noreferrer">Medium</a>
