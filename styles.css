@@ -3055,8 +3055,8 @@ html.theme-night .follow-panel {
   }
 
   .signal-stage {
-    padding-top: 8px;
-    gap: 8px;
+    padding-top: 7px;
+    gap: 7px;
   }
 
   .social-section {
@@ -3091,7 +3091,7 @@ html.theme-night .follow-panel {
   }
 
   .profile-meta {
-    padding: 10px 10px 11px;
+    padding: 9px 9px 10px;
     border: 1px solid rgba(74, 101, 129, 0.14);
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(249, 252, 255, 0.42));
@@ -3152,6 +3152,8 @@ html.theme-night .follow-panel {
 
   .hero-mobile-photo {
     display: block;
+    aspect-ratio: 16 / 10.8;
+    border-radius: 18px;
   }
 
   .signal-stage::before,
@@ -3180,7 +3182,7 @@ html.theme-night .follow-panel {
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
-    margin-top: 8px;
+    margin-top: 6px;
   }
 
   .profile-actions .action-button {
@@ -3242,12 +3244,12 @@ html.theme-night .follow-panel {
   }
 
   .news-section {
-    gap: 7px;
-    padding: 11px;
+    gap: 6px;
+    padding: 10px;
   }
 
   .news-head {
-    gap: 10px;
+    gap: 8px;
   }
 
   .news-head h2 {
@@ -3374,8 +3376,8 @@ html.theme-night .follow-panel {
   }
 
   .post-body {
-    padding: 11px 11px 10px;
-    gap: 7px;
+    padding: 10px 10px 9px;
+    gap: 6px;
   }
 
   .post-card h4 {
@@ -3389,7 +3391,7 @@ html.theme-night .follow-panel {
 
   .post-footer {
     gap: 5px;
-    padding-top: 6px;
+    padding-top: 5px;
     margin-top: 4px;
   }
 
@@ -3398,8 +3400,8 @@ html.theme-night .follow-panel {
   }
 
   .post-action-button {
-    min-height: 26px;
-    padding: 0 8px;
+    min-height: 24px;
+    padding: 0 7px;
     font-size: 0.6rem;
   }
 
@@ -3416,18 +3418,18 @@ html.theme-night .follow-panel {
   }
 
   .spotlight-track {
-    grid-auto-columns: minmax(190px, 80vw);
+    grid-auto-columns: minmax(180px, 76vw);
   }
 }
 
 @media (max-width: 480px) {
   .profile-meta {
-    padding: 9px 9px 10px;
+    padding: 8px 8px 9px;
   }
 
   .hero-mobile-photo {
-    aspect-ratio: 16 / 12.5;
-    border-radius: 18px;
+    aspect-ratio: 16 / 10.6;
+    border-radius: 16px;
   }
 
   .hero-support {
@@ -3455,7 +3457,7 @@ html.theme-night .follow-panel {
   }
 
   .post-body {
-    padding: 10px 10px 9px;
+    padding: 9px 9px 8px;
   }
 
   .post-card h4 {
