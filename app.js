@@ -15,6 +15,21 @@ const site = {
       items: [
         {
           language: "en",
+          source: "linkedin",
+          badge: "LinkedIn EN",
+          title: "What WolfSwap Shows About the Cronos Ecosystem",
+          summary:
+            "A useful product can reveal how an ecosystem grows through clearer entry points, better layers and practical utility.",
+          meta: "LinkedIn article",
+          publishedAt: "2026-05-16T16:51:46+00:00",
+          href: "https://www.linkedin.com/pulse/what-wolfswap-shows-cronos-ecosystem-piero-pasquariello-mbetf",
+          pageHref: "/writing/what-wolfswap-shows-about-the-cronos-ecosystem/",
+          image:
+            "https://media.licdn.com/dms/image/v2/D4D12AQHANmEYwUz28w/article-cover_image-shrink_720_1280/B4DZ4xqvttHgAQ-/0/1778949755461?e=2147483647&v=beta&t=zzk3YzsI_ZR6bosbB5gPfI2i3yI4QWSCxUHPDuIyhu4",
+          imageAlt: "LinkedIn cover about the Cronos ecosystem and WolfSwap",
+        },
+        {
+          language: "en",
           source: "medium",
           badge: "Medium",
           title: "Cronos App Is Not About Turning Everyone Into a Trader",
@@ -134,6 +149,7 @@ const mediumFeedState = {
 const preferredWritingSectionId = getPreferredWritingSectionId();
 const likedPostIds = loadLikedPostIds();
 rememberLanguagePreference(getBrowserLanguage());
+site.latestArticleUrl = getLatestWritingUrl();
 
 const els = {
   bio: document.querySelector("#bio"),
@@ -288,6 +304,14 @@ function getWritingSections() {
   return sections;
 }
 
+function getLatestWritingUrl() {
+  const latestItem = sortWritingItems(
+    uniqueWritingItems(getWritingSections().flatMap((section) => getWritingItemsForSection(section))),
+  )[0];
+
+  return latestItem?.href || site.mediumUrl;
+}
+
 function renderArticleCard(item, section, featured = false) {
   const cardClass = featured ? "post-card post-card-featured" : "post-card post-card-compact";
   const pageHref = item.pageHref || item.href || item.url;
@@ -357,8 +381,8 @@ async function loadLiveMediumFeed() {
     mediumFeedState.status = "ready";
     mediumFeedState.error = null;
 
-    if (items.length && typeof items[0]?.href === "string") {
-      site.latestArticleUrl = items[0].href;
+    if (items.length) {
+      site.latestArticleUrl = getLatestWritingUrl();
       setLinks(els.followLatest, site.latestArticleUrl);
     }
 

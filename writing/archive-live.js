@@ -52,6 +52,20 @@
         {
           source: "linkedin",
           badge: "LinkedIn",
+          title: "What WolfSwap Shows About the Cronos Ecosystem",
+          summary:
+            "A useful product can reveal how an ecosystem grows through clearer entry points, better layers and practical utility.",
+          meta: "",
+          publishedAt: "2026-05-16T16:51:46+00:00",
+          href: "https://www.linkedin.com/pulse/what-wolfswap-shows-cronos-ecosystem-piero-pasquariello-mbetf",
+          pageHref: "/writing/what-wolfswap-shows-about-the-cronos-ecosystem/",
+          image:
+            "https://media.licdn.com/dms/image/v2/D4D12AQHANmEYwUz28w/article-cover_image-shrink_720_1280/B4DZ4xqvttHgAQ-/0/1778949755461?e=2147483647&v=beta&t=zzk3YzsI_ZR6bosbB5gPfI2i3yI4QWSCxUHPDuIyhu4",
+          imageAlt: "LinkedIn cover about the Cronos ecosystem and WolfSwap",
+        },
+        {
+          source: "linkedin",
+          badge: "LinkedIn",
           title: "247 Markets Need Better Mobile Experience",
           summary:
             "Tokenized markets need mobile-first clarity if they want normal users to trust what they see on screen.",
