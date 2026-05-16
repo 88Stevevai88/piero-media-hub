@@ -726,14 +726,39 @@ function getBrowserLanguage() {
     localeValues.push(numberFormatLocale);
   }
 
-  const hasItalianLocale = [...values, ...localeValues].some(isItalianLocaleValue);
-  const hasItalianTimeZone = isItalianTimeZone(timeZone);
+  const hasEnglishLocale = [...values, ...localeValues].some(isEnglishLocaleValue);
+  if (hasEnglishLocale) {
+    return "en";
+  }
 
-  if (hasItalianLocale || hasItalianTimeZone) {
+  const hasItalianLocale = [...values, ...localeValues].some(isItalianLocaleValue);
+  if (hasItalianLocale) {
+    return "it";
+  }
+
+  if (isItalianTimeZone(timeZone)) {
     return "it";
   }
 
   return "en";
+}
+
+function isEnglishLocaleValue(value) {
+  const normalized = String(value || "")
+    .toLowerCase()
+    .replace(/_/g, "-");
+  if (!normalized) {
+    return false;
+  }
+
+  return (
+    normalized === "en" ||
+    normalized.startsWith("en-") ||
+    normalized.includes("-en-") ||
+    normalized.endsWith("-en") ||
+    normalized.includes("en-us") ||
+    normalized.includes("en-gb")
+  );
 }
 
 function isItalianLocaleValue(value) {
