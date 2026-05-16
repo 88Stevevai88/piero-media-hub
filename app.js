@@ -144,6 +144,7 @@ const els = {
   featuredLink: document.querySelector("#featuredLink"),
   railArchiveLink: document.querySelector("#railArchiveLink"),
   articlesLink: document.querySelector("#articlesLink"),
+  siteMenuToggleText: document.querySelector("#siteMenuToggleText"),
   heroTagline: document.querySelector("#heroTagline"),
   heroSupport: document.querySelector("#heroSupport"),
   socialEyebrow: document.querySelector("#socialEyebrow"),
@@ -936,6 +937,24 @@ function renderLocalizedHeroCopy() {
       : "Read the latest articles and open the platforms where I publish.";
   }
 
+  const navLabels = isItalian
+    ? ["Articoli", "In primo piano", "About", "Prova", "Social", "Seguimi"]
+    : ["Articles", "Featured", "About", "Proof", "Social", "Follow"];
+  const navLinks = document.querySelectorAll(".site-nav a");
+  navLinks.forEach((link, index) => {
+    if (navLabels[index]) {
+      link.textContent = navLabels[index];
+    }
+  });
+
+  if (els.siteMenuToggleText) {
+    els.siteMenuToggleText.textContent = isItalian ? "Menu" : "Menu";
+  }
+
+  if (els.siteMenuToggle) {
+    els.siteMenuToggle.setAttribute("aria-label", isItalian ? "Apri menu" : "Open menu");
+  }
+
   if (els.socialEyebrow) {
     els.socialEyebrow.textContent = isItalian ? "Dove trovarmi" : "Where to find me";
   }
@@ -967,6 +986,14 @@ function renderLocalizedHeroCopy() {
       ? "Leggi gli articoli, poi seguimi dove pubblico."
       : "Read the articles, then follow the platforms where I publish.";
   }
+
+  const ctaLabel = isItalian ? "Leggi ultimo articolo" : "Read latest";
+  document.querySelectorAll('[data-link="latest-article"]').forEach((node) => {
+    const span = node.querySelector("span:nth-of-type(1)");
+    if (span) {
+      span.textContent = ctaLabel;
+    }
+  });
 }
 
 function renderTodayMarketCopy() {
