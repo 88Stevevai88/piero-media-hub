@@ -181,6 +181,9 @@ setupPostCardActions();
 loadLiveMediumFeed();
 renderTodayMarketCopy();
 loadMarketSnapshot();
+window.setInterval(() => {
+  void loadMarketSnapshot();
+}, 30 * 60 * 1000);
 renderSiteFooter();
 
 function render() {
@@ -392,7 +395,7 @@ function getSpotlightItems() {
     })),
   );
 
-  return sortWritingItemsChronological(uniqueWritingItems(orderedItems));
+  return sortWritingItems(uniqueWritingItems(orderedItems));
 }
 
 function getSpotlightItemsForLanguage(language) {
@@ -717,18 +720,6 @@ function sortWritingItems(items) {
     const timeB = getPublishedTime(b);
     if (timeA !== timeB) {
       return timeB - timeA;
-    }
-
-    return String(a.title || "").localeCompare(String(b.title || ""));
-  });
-}
-
-function sortWritingItemsChronological(items) {
-  return [...items].sort((a, b) => {
-    const timeA = getPublishedTime(a);
-    const timeB = getPublishedTime(b);
-    if (timeA !== timeB) {
-      return timeA - timeB;
     }
 
     return String(a.title || "").localeCompare(String(b.title || ""));
