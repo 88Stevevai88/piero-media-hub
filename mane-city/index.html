@@ -79,6 +79,8 @@
       .mane-city-hero {
         position: relative;
         overflow: hidden;
+        display: grid;
+        gap: 0;
       }
 
       .mane-city-hero::before {
@@ -96,48 +98,25 @@
         z-index: 1;
       }
 
-      .mane-city-hero {
-        position: relative;
-        overflow: hidden;
-        min-height: clamp(560px, 92vw, 760px);
-        display: flex;
-        align-items: flex-end;
-        background:
-          linear-gradient(180deg, rgba(247, 249, 255, 0.14) 0%, rgba(7, 12, 26, 0.1) 100%),
-          linear-gradient(135deg, rgba(76, 219, 255, 0.04), rgba(255, 255, 255, 0.02)),
-          url("assets/triyfkv.avif");
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
+      .mane-city-hero-media {
+        padding: 16px 16px 0;
       }
 
-      .mane-city-hero::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(6, 12, 24, 0.08) 100%),
-          radial-gradient(circle at top left, rgba(255, 255, 255, 0.34), transparent 38%),
-          linear-gradient(135deg, rgba(76, 219, 255, 0.08), transparent 36%);
-        pointer-events: none;
-      }
-
-      .mane-city-hero > * {
-        position: relative;
-        z-index: 1;
+      .mane-city-hero-media img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        object-position: center top;
+        border-radius: 22px;
+        box-shadow: 0 18px 42px rgba(40, 65, 92, 0.14);
+        background: rgba(76, 219, 255, 0.08);
       }
 
       .mane-city-hero-content {
-        width: min(760px, 100%);
         display: grid;
         gap: 14px;
-        padding: 18px;
-        margin: 14px;
-        border-radius: 26px;
-        border: 1px solid rgba(255, 255, 255, 0.48);
-        background: rgba(255, 255, 255, 0.82);
-        box-shadow: 0 18px 42px rgba(40, 65, 92, 0.14);
-        backdrop-filter: blur(18px);
+        padding: 16px;
       }
 
       .mane-city-kicker {
@@ -321,9 +300,12 @@
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
+        .mane-city-hero-media {
+          padding: 20px 20px 0;
+        }
+
         .mane-city-hero-content {
-          margin: 20px;
-          padding: 22px;
+          padding: 20px;
         }
       }
 
@@ -333,7 +315,11 @@
         }
 
         .mane-city-hero {
-          min-height: 700px;
+          gap: 0;
+        }
+
+        .mane-city-hero-media img {
+          aspect-ratio: 21 / 7;
         }
 
         .mane-city-grid {
@@ -364,6 +350,16 @@
       </header>
 
       <section class="panel reveal mane-city-hero" aria-labelledby="mane-city-title">
+        <div class="mane-city-hero-media">
+          <img
+            src="assets/triyfkv.avif"
+            alt="Mane City visual banner"
+            width="1200"
+            height="514"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
         <div class="mane-city-hero-content">
           <p class="mane-city-kicker">
             <span class="status-dot" aria-hidden="true"></span>
