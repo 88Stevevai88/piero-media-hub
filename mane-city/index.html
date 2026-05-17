@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mane City Gameplay Journal | Beginner Guides and Strategy</title>
+    <meta
+      name="description"
+      content="Simple English and Italian guides, gameplay notes and strategy articles for Loaded Lions: Mane City players."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#eefcff" />
+    <link rel="canonical" href="https://pieropasquariello.com/mane-city/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mane City Gameplay Journal" />
+    <meta
+      property="og:description"
+      content="Beginner-friendly Mane City guides, gameplay notes and strategy articles in English and Italian."
+    />
+    <meta property="og:url" content="https://pieropasquariello.com/mane-city/" />
+    <meta property="og:image" content="https://pieropasquariello.com/og-home.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Mane City Gameplay Journal" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mane City Gameplay Journal" />
+    <meta
+      name="twitter:description"
+      content="Beginner-friendly Mane City guides, gameplay notes and strategy articles in English and Italian."
+    />
+    <meta name="twitter:image" content="https://pieropasquariello.com/og-home.png" />
+    <link rel="stylesheet" href="../styles.css?v=20260514a" />
+    <style>
+      .mane-city-shell {
+        display: grid;
+        gap: 18px;
+        padding-bottom: 28px;
+      }
+
+      .mane-city-topbar,
+      .mane-city-hero,
+      .mane-city-section,
+      .mane-city-disclaimer {
+        padding: 16px;
+      }
+
+      .mane-city-topbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .mane-city-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .mane-city-nav a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 42px;
+        padding: 0 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(12, 31, 53, 0.1);
+        background: rgba(255, 255, 255, 0.88);
+        color: var(--text);
+        font-size: 0.92rem;
+        font-weight: 600;
+      }
+
+      .mane-city-nav a[aria-current="page"] {
+        border-color: rgba(76, 219, 255, 0.55);
+        background: rgba(76, 219, 255, 0.12);
+      }
+
+      .mane-city-hero {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .mane-city-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at top right, rgba(76, 219, 255, 0.18), transparent 30%),
+          linear-gradient(135deg, rgba(76, 219, 255, 0.07), transparent 44%);
+        pointer-events: none;
+      }
+
+      .mane-city-hero > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .mane-city-hero {
+        position: relative;
+        overflow: hidden;
+        min-height: clamp(560px, 92vw, 760px);
+        display: flex;
+        align-items: flex-end;
+        background:
+          linear-gradient(180deg, rgba(247, 249, 255, 0.14) 0%, rgba(7, 12, 26, 0.1) 100%),
+          linear-gradient(135deg, rgba(76, 219, 255, 0.04), rgba(255, 255, 255, 0.02)),
+          url("assets/triyfkv.avif");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      .mane-city-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(6, 12, 24, 0.08) 100%),
+          radial-gradient(circle at top left, rgba(255, 255, 255, 0.34), transparent 38%),
+          linear-gradient(135deg, rgba(76, 219, 255, 0.08), transparent 36%);
+        pointer-events: none;
+      }
+
+      .mane-city-hero > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .mane-city-hero-content {
+        width: min(760px, 100%);
+        display: grid;
+        gap: 14px;
+        padding: 18px;
+        margin: 14px;
+        border-radius: 26px;
+        border: 1px solid rgba(255, 255, 255, 0.48);
+        background: rgba(255, 255, 255, 0.82);
+        box-shadow: 0 18px 42px rgba(40, 65, 92, 0.14);
+        backdrop-filter: blur(18px);
+      }
+
+      .mane-city-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: fit-content;
+        border-radius: 999px;
+        border: 1px solid rgba(76, 219, 255, 0.35);
+        background: rgba(76, 219, 255, 0.1);
+        padding: 8px 12px;
+        color: #0c5772;
+        font-size: 0.88rem;
+        font-weight: 600;
+      }
+
+      .mane-city-hero h1 {
+        margin: 0;
+        font-size: clamp(2.2rem, 8vw, 4.4rem);
+        line-height: 0.98;
+        letter-spacing: -0.05em;
+      }
+
+      .mane-city-lede {
+        margin: 0;
+        max-width: 58ch;
+        font-size: 1.03rem;
+        line-height: 1.75;
+        color: var(--muted-strong);
+      }
+
+      .mane-city-lede + .mane-city-lede {
+        margin-top: 10px;
+      }
+
+      .mane-city-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .mane-city-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .mane-city-language-switch {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .mane-city-language-switch a,
+      .mane-city-language-switch span {
+        display: inline-flex;
+        align-items: center;
+        min-height: 42px;
+        padding: 0 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(12, 31, 53, 0.1);
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--text);
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+
+      .mane-city-language-switch .is-active {
+        border-color: rgba(76, 219, 255, 0.55);
+        background: rgba(76, 219, 255, 0.14);
+        color: #0c5772;
+      }
+
+      .mane-city-badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        padding: 0 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(12, 31, 53, 0.08);
+        background: rgba(255, 255, 255, 0.84);
+        color: var(--muted-strong);
+        font-size: 0.86rem;
+        font-weight: 600;
+      }
+
+      .mane-city-grid {
+        display: grid;
+        gap: 12px;
+      }
+
+      .mane-city-card {
+        display: grid;
+        gap: 10px;
+        padding: 18px;
+        border-radius: 22px;
+        border: 1px solid rgba(12, 31, 53, 0.08);
+        background: rgba(255, 255, 255, 0.94);
+        box-shadow: 0 10px 26px rgba(53, 94, 132, 0.07);
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          border-color 180ms ease;
+      }
+
+      .mane-city-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(76, 219, 255, 0.28);
+        box-shadow: 0 16px 34px rgba(53, 94, 132, 0.1);
+      }
+
+      .mane-city-card h3 {
+        margin: 0;
+        font-size: 1.15rem;
+        line-height: 1.18;
+      }
+
+      .mane-city-card p {
+        margin: 0;
+        color: var(--muted-strong);
+        font-size: 0.98rem;
+        line-height: 1.7;
+      }
+
+      .mane-city-card .small-link {
+        font-size: 0.94rem;
+        font-weight: 700;
+        color: #0c5772;
+      }
+
+      .mane-city-card .meta {
+        display: inline-flex;
+        width: fit-content;
+        align-items: center;
+        min-height: 28px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: rgba(76, 219, 255, 0.14);
+        color: #0c5772;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .mane-city-pair {
+        display: grid;
+        gap: 12px;
+      }
+
+      .mane-city-section-note {
+        margin: 0;
+        max-width: 64ch;
+        color: var(--muted-strong);
+        font-size: 1rem;
+        line-height: 1.72;
+      }
+
+      .mane-city-disclaimer {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+
+      @media (min-width: 700px) {
+        .mane-city-shell {
+          gap: 22px;
+        }
+
+        .mane-city-topbar,
+        .mane-city-hero,
+        .mane-city-section,
+        .mane-city-disclaimer {
+          padding: 20px;
+        }
+
+        .mane-city-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .mane-city-pair {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .mane-city-hero-content {
+          margin: 20px;
+          padding: 22px;
+        }
+      }
+
+      @media (min-width: 980px) {
+        .mane-city-hero h1 {
+          max-width: 10ch;
+        }
+
+        .mane-city-hero {
+          min-height: 700px;
+        }
+
+        .mane-city-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-orb bg-orb-a"></div>
+    <div class="bg-orb bg-orb-b"></div>
+    <div class="signal-backdrop" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="bg-noise"></div>
+
+    <main class="app-shell mane-city-shell" id="top">
+      <header class="panel reveal mane-city-topbar" aria-label="Primary navigation">
+        <a class="site-brand" href="/">Piero Pasquariello</a>
+        <nav class="mane-city-nav" aria-label="Site sections">
+          <a href="/">Home</a>
+          <a href="/writing/">Writing</a>
+          <a href="/mane-city/" aria-current="page">Mane City</a>
+          <a href="/about/">About</a>
+        </nav>
+      </header>
+
+      <section class="panel reveal mane-city-hero" aria-labelledby="mane-city-title">
+        <div class="mane-city-hero-content">
+          <p class="mane-city-kicker">
+            <span class="status-dot" aria-hidden="true"></span>
+            Independent community gameplay journal
+          </p>
+          <h1 id="mane-city-title">Mane City Gameplay Journal</h1>
+          <p class="mane-city-lede">
+            Simple English and Italian guides, gameplay notes and strategy articles to help new
+            players understand Mane City without getting lost between resources, upgrades and
+            Web3.
+          </p>
+          <p class="mane-city-lede">
+            Guide semplici, appunti di gameplay e strategie per aiutare i nuovi giocatori a
+            capire Mane City senza perdersi tra risorse, upgrade e Web3.
+          </p>
+          <div class="mane-city-actions">
+            <a class="action-button action-primary" href="#english-guides">English Guides</a>
+            <a class="action-button action-secondary" href="#guide-italiane">Guide Italiane</a>
+            <a class="action-button action-ghost" href="https://learn.mane.city/" target="_blank" rel="noreferrer">Official Playbook</a>
+            <a class="action-button action-ghost" href="https://mane.city/" target="_blank" rel="noreferrer">Official website</a>
+          </div>
+          <div class="mane-city-language-switch" aria-label="Language switch">
+            <a class="is-active" href="/mane-city/mane-city-beginner-guide/" aria-current="page">English Guides</a>
+            <a href="/mane-city/guida-mane-city-per-iniziare/">Guide Italiane</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel reveal mane-city-section" id="english-guides">
+        <p class="eyebrow">English Guides</p>
+        <h2>English Guides</h2>
+        <p class="mane-city-section-note">
+          Simple English guides for players who want a clean first read.
+        </p>
+        <div class="mane-city-grid" style="margin-top: 16px">
+          <a class="mane-city-card" href="/mane-city/mane-city-beginner-guide/">
+            <span class="meta">Beginner Guide</span>
+            <h3>Mane City Beginner Guide</h3>
+            <p>A simple first step for players who want to understand the basics without rushing.</p>
+            <span class="small-link">Read English guide →</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="panel reveal mane-city-section" id="guide-italiane">
+        <p class="eyebrow">Guide Italiane</p>
+        <h2>Guide Italiane</h2>
+        <p class="mane-city-section-note">
+          Note semplici in italiano per chi preferisce leggere nella propria lingua.
+        </p>
+        <div class="mane-city-grid" style="margin-top: 16px">
+          <a class="mane-city-card" href="/mane-city/guida-mane-city-per-iniziare/">
+            <span class="meta">Guida per iniziare</span>
+            <h3>Guida Mane City per iniziare</h3>
+            <p>Un punto di partenza semplice per capire Mane City senza complicarsi la vita.</p>
+            <span class="small-link">Leggi la guida italiana →</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="panel reveal mane-city-section">
+        <p class="eyebrow">Why this journal exists / Perché nasce questo journal</p>
+        <div class="mane-city-pair">
+          <div class="mane-city-card">
+            <span class="meta">EN</span>
+            <h3>Clear notes, not a complicated manual</h3>
+            <p>Most players do not need another complicated Web3 manual. They need clear explanations, practical examples and honest notes from someone actually learning the game.</p>
+          </div>
+          <div class="mane-city-card">
+            <span class="meta">IT</span>
+            <h3>Spiegazioni semplici, da giocatore a giocatore</h3>
+            <p>La maggior parte dei nuovi giocatori non ha bisogno di un altro manuale Web3 complicato. Ha bisogno di spiegazioni chiare, esempi pratici e appunti sinceri da qualcuno che sta davvero giocando e imparando.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel reveal mane-city-section">
+        <p class="eyebrow">Official links</p>
+        <div class="mane-city-pair">
+          <a class="mane-city-card" href="https://learn.mane.city/" target="_blank" rel="noreferrer">
+            <span class="meta">Playbook</span>
+            <h3>https://learn.mane.city/</h3>
+            <p>Use the official Playbook for the latest mechanics and updates.</p>
+          </a>
+          <a class="mane-city-card" href="https://mane.city/" target="_blank" rel="noreferrer">
+            <span class="meta">Website</span>
+            <h3>https://mane.city/</h3>
+            <p>Official Mane City website.</p>
+          </a>
+        </div>
+      </section>
+
+      <footer class="mane-city-disclaimer panel reveal">
+        <p>
+          This is an independent community gameplay journal and is not affiliated with or
+          officially endorsed by Loaded Lions or Mane City. Always refer to the official Playbook
+          for the latest mechanics and updates.
+        </p>
+        <p>
+          Questo è un gameplay journal indipendente della community e non è affiliato né approvato
+          ufficialmente da Loaded Lions o Mane City. Fai sempre riferimento al Playbook ufficiale
+          per le meccaniche e gli aggiornamenti più recenti.
+        </p>
+      </footer>
+    </main>
+    <script>
+      (function () {
+        document.querySelectorAll(".reveal").forEach((element) => {
+          element.classList.add("is-visible");
+        });
+      })();
+    </script>
+  </body>
+</html>

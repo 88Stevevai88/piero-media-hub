@@ -94,6 +94,7 @@
         <div class="site-footer-links" aria-label="${isItalian ? "Link rapidi" : "Quick links"}">
           <a href="/">${isItalian ? "Home" : "Home"}</a>
           <a href="/writing/">${isItalian ? "Archivi" : "Archives"}</a>
+          <a href="/mane-city/">${isItalian ? "Mane City" : "Mane City"}</a>
           <a href="/about/">${isItalian ? "About" : "About"}</a>
           <a href="https://x.com/PieroPasqiari88" target="_blank" rel="noreferrer">X</a>
           <a href="https://medium.com/@pieropasquariello" target="_blank" rel="noreferrer">Medium</a>
