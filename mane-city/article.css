@@ -454,22 +454,10 @@
     width: min(760px, calc(100vw - 40px));
   }
 
-  .mane-city-article-featured img,
-  .mane-city-article-inline-media img {
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-  }
-
 }
 
 @media (min-width: 980px) {
   .mane-city-article {
     gap: 24px;
-  }
-
-  .mane-city-article-featured img,
-  .mane-city-article-inline-media img {
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
   }
 }
