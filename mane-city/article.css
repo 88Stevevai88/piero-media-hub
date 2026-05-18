@@ -139,7 +139,7 @@
 .mane-city-article-inline-media {
   display: grid;
   gap: 10px;
-  margin: 2px 0 6px;
+  margin: 18px 0 22px;
 }
 
 .mane-city-article-inline-media img {
@@ -195,7 +195,7 @@
 .mane-city-article-prose section {
   display: grid;
   gap: 12px;
-  padding-top: 22px;
+  padding-top: 24px;
   border-top: 1px solid rgba(12, 31, 53, 0.08);
 }
 
