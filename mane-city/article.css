@@ -153,6 +153,18 @@
   background: rgba(76, 219, 255, 0.08);
 }
 
+.mane-city-article-inline-media--portrait {
+  justify-items: center;
+}
+
+.mane-city-article-inline-media--portrait img {
+  width: min(420px, 100%);
+  aspect-ratio: auto;
+  height: auto;
+  object-fit: contain;
+  background: transparent;
+}
+
 .mane-city-article-inline-media figcaption {
   font-size: 0.88rem;
   line-height: 1.65;
