@@ -39,7 +39,14 @@
 
 .mane-city-article {
   display: grid;
-  gap: 18px;
+  gap: 22px;
+  justify-items: center;
+}
+
+.mane-city-article-inner {
+  width: min(760px, calc(100vw - 24px));
+  display: grid;
+  gap: 22px;
 }
 
 .mane-city-article-featured,
@@ -52,6 +59,10 @@
 
 .mane-city-article-featured {
   overflow: hidden;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .mane-city-article-featured img {
@@ -59,13 +70,20 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border-radius: 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(12, 31, 53, 0.08);
+  box-shadow: 0 12px 28px rgba(53, 94, 132, 0.08);
   background: rgba(76, 219, 255, 0.08);
 }
 
 .mane-city-article-hero {
   position: relative;
   overflow: hidden;
+  padding: 6px 0 0;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 .mane-city-article-hero::before {
@@ -99,57 +117,57 @@
 
 .mane-city-article-hero h1 {
   margin: 0;
-  max-width: 14ch;
-  font-size: clamp(2.3rem, 8vw, 4.25rem);
-  line-height: 0.98;
-  letter-spacing: -0.05em;
+  max-width: 16ch;
+  font-size: clamp(2.2rem, 7vw, 3.85rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
 }
 
 .mane-city-article-subtitle {
   margin: 0;
-  max-width: 58ch;
-  font-size: 1.05rem;
+  max-width: 60ch;
+  font-size: 1rem;
   line-height: 1.75;
   color: var(--muted-strong);
 }
 
 .mane-city-article-body {
   display: grid;
-  gap: 18px;
+  gap: 24px;
 }
 
 .mane-city-article-intro {
   display: grid;
   gap: 12px;
-  padding: 16px;
-  border-radius: 24px;
-  border: 1px solid rgba(12, 31, 53, 0.08);
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 10px 26px rgba(53, 94, 132, 0.07);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .mane-city-article-intro p {
   margin: 0;
-  font-size: 1rem;
-  line-height: 1.8;
+  font-size: 1.05rem;
+  line-height: 1.85;
   color: var(--muted-strong);
 }
 
 .mane-city-article-prose {
   display: grid;
-  gap: 20px;
+  gap: 26px;
 }
 
 .mane-city-article-prose section {
   display: grid;
   gap: 12px;
-  padding-top: 2px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(12, 31, 53, 0.08);
 }
 
 .mane-city-article-prose h2 {
   margin: 0;
-  font-size: 1.55rem;
-  line-height: 1.12;
+  font-size: 1.35rem;
+  line-height: 1.2;
   letter-spacing: -0.03em;
 }
 
@@ -164,7 +182,7 @@
 .mane-city-article-prose ul,
 .mane-city-article-prose ol {
   margin: 0;
-  padding-left: 1.2rem;
+  padding-left: 1.25rem;
   display: grid;
   gap: 10px;
 }
@@ -294,16 +312,40 @@
 }
 
 .mane-city-article-quote {
-  padding: 16px;
-  border-radius: 22px;
+  padding: 16px 18px;
+  border-radius: 18px;
   border: 1px solid rgba(76, 219, 255, 0.28);
   background: rgba(76, 219, 255, 0.08);
   color: #0c5772;
+  line-height: 1.75;
 }
 
 .mane-city-article-source,
 .mane-city-article-disclaimer {
-  padding: 16px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.mane-city-article-source,
+.mane-city-article-disclaimer {
+  width: min(760px, calc(100vw - 24px));
+  margin: 0 auto;
+}
+
+.mane-city-article-source {
+  display: grid;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(12, 31, 53, 0.1);
+}
+
+.mane-city-article-disclaimer {
+  display: grid;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(12, 31, 53, 0.1);
 }
 
 .mane-city-article-source-link {
@@ -339,35 +381,18 @@
   }
 
   .mane-city-article-topbar,
-  .mane-city-article-featured,
-  .mane-city-article-hero,
-  .mane-city-article-section,
   .mane-city-article-source,
   .mane-city-article-disclaimer {
     padding: 20px;
   }
 
-  .mane-city-article-intro {
-    padding: 20px;
-  }
-
-  .mane-city-article-box {
-    padding: 20px;
+  .mane-city-article-inner {
+    width: min(760px, calc(100vw - 40px));
   }
 }
 
 @media (min-width: 980px) {
   .mane-city-article {
-    gap: 22px;
-  }
-
-  .mane-city-article-lang-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-  }
-
-  .mane-city-article-lang + .mane-city-article-lang {
-    margin-top: 0;
+    gap: 24px;
   }
 }
