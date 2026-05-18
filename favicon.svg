@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Piero Pasquariello</title>
+  <desc id="desc">Monogram favicon with a cyan accent</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0c172a" />
+      <stop offset="100%" stop-color="#14315c" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#4cdbff" />
+      <stop offset="100%" stop-color="#9cf0ff" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#bg)" />
+  <circle cx="32" cy="32" r="21" fill="none" stroke="url(#accent)" stroke-width="3.5" />
+  <path d="M28 19h12.2c4.3 0 7.8 3.5 7.8 7.8 0 4.2-3.4 7.7-7.7 7.7H32.4V45H28V19zm4.4 11.8h7.1c2.1 0 3.9-1.7 3.9-3.9 0-2.2-1.7-3.9-3.9-3.9h-7.1v7.8z" fill="#f7fbff"/>
+  <path d="M19 45V19h4.4v26H19z" fill="#f7fbff" opacity=".92"/>
+  <path d="M17 16.5 47.5 47" fill="none" stroke="url(#accent)" stroke-linecap="round" stroke-width="2.4" opacity=".65"/>
+</svg>
