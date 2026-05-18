@@ -42,11 +42,25 @@
   gap: 18px;
 }
 
+.mane-city-article-featured,
 .mane-city-article-hero,
 .mane-city-article-section,
 .mane-city-article-source,
 .mane-city-article-disclaimer {
   padding: 16px;
+}
+
+.mane-city-article-featured {
+  overflow: hidden;
+}
+
+.mane-city-article-featured img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 18px;
+  background: rgba(76, 219, 255, 0.08);
 }
 
 .mane-city-article-hero {
@@ -97,6 +111,66 @@
   font-size: 1.05rem;
   line-height: 1.75;
   color: var(--muted-strong);
+}
+
+.mane-city-article-body {
+  display: grid;
+  gap: 18px;
+}
+
+.mane-city-article-intro {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 24px;
+  border: 1px solid rgba(12, 31, 53, 0.08);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 26px rgba(53, 94, 132, 0.07);
+}
+
+.mane-city-article-intro p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--muted-strong);
+}
+
+.mane-city-article-prose {
+  display: grid;
+  gap: 20px;
+}
+
+.mane-city-article-prose section {
+  display: grid;
+  gap: 12px;
+  padding-top: 2px;
+}
+
+.mane-city-article-prose h2 {
+  margin: 0;
+  font-size: 1.55rem;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
+.mane-city-article-prose p,
+.mane-city-article-prose li {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--muted-strong);
+}
+
+.mane-city-article-prose ul,
+.mane-city-article-prose ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 10px;
+}
+
+.mane-city-article-prose li strong {
+  color: var(--text);
 }
 
 .mane-city-article-meta {
@@ -219,6 +293,14 @@
   color: var(--muted-strong);
 }
 
+.mane-city-article-quote {
+  padding: 16px;
+  border-radius: 22px;
+  border: 1px solid rgba(76, 219, 255, 0.28);
+  background: rgba(76, 219, 255, 0.08);
+  color: #0c5772;
+}
+
 .mane-city-article-source,
 .mane-city-article-disclaimer {
   padding: 16px;
@@ -257,10 +339,15 @@
   }
 
   .mane-city-article-topbar,
+  .mane-city-article-featured,
   .mane-city-article-hero,
   .mane-city-article-section,
   .mane-city-article-source,
   .mane-city-article-disclaimer {
+    padding: 20px;
+  }
+
+  .mane-city-article-intro {
     padding: 20px;
   }
 
