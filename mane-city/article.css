@@ -60,6 +60,7 @@
 .mane-city-article-featured {
   overflow: hidden;
   padding: 0;
+  margin: 6px 0 20px;
   border: 0;
   background: transparent;
   box-shadow: none;
@@ -139,7 +140,7 @@
 .mane-city-article-inline-media {
   display: grid;
   gap: 10px;
-  margin: 18px 0 22px;
+  margin: 6px 0 28px;
 }
 
 .mane-city-article-inline-media img {
