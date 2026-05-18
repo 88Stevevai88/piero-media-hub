@@ -136,6 +136,29 @@
   gap: 24px;
 }
 
+.mane-city-article-inline-media {
+  display: grid;
+  gap: 10px;
+  margin: 2px 0 6px;
+}
+
+.mane-city-article-inline-media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 22px;
+  border: 1px solid rgba(12, 31, 53, 0.08);
+  box-shadow: 0 12px 28px rgba(53, 94, 132, 0.08);
+  background: rgba(76, 219, 255, 0.08);
+}
+
+.mane-city-article-inline-media figcaption {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
 .mane-city-article-intro {
   display: grid;
   gap: 12px;
