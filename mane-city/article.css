@@ -355,6 +355,31 @@
   line-height: 1.75;
 }
 
+.mane-city-article-takeaway {
+  display: grid;
+  gap: 10px;
+  padding: 16px 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(76, 219, 255, 0.28);
+  background: linear-gradient(180deg, rgba(76, 219, 255, 0.12), rgba(255, 255, 255, 0.92));
+  box-shadow: 0 12px 28px rgba(53, 94, 132, 0.06);
+}
+
+.mane-city-article-takeaway h3 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.mane-city-article-takeaway p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--muted-strong);
+}
+
 .mane-city-article-source,
 .mane-city-article-disclaimer {
   padding: 0;
