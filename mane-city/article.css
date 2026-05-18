@@ -69,8 +69,9 @@
 .mane-city-article-featured img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
   border-radius: 22px;
   border: 1px solid rgba(12, 31, 53, 0.08);
   box-shadow: 0 12px 28px rgba(53, 94, 132, 0.08);
@@ -147,8 +148,9 @@
 .mane-city-article-inline-media img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
   border-radius: 22px;
   border: 1px solid rgba(12, 31, 53, 0.08);
   box-shadow: 0 12px 28px rgba(53, 94, 132, 0.08);
@@ -452,10 +454,22 @@
     width: min(760px, calc(100vw - 40px));
   }
 
+  .mane-city-article-featured img,
+  .mane-city-article-inline-media img {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
 }
 
 @media (min-width: 980px) {
   .mane-city-article {
     gap: 24px;
+  }
+
+  .mane-city-article-featured img,
+  .mane-city-article-inline-media img {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
   }
 }
