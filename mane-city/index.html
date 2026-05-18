@@ -105,7 +105,7 @@
       .mane-city-hero-media img {
         display: block;
         width: 100%;
-        aspect-ratio: 16 / 9;
+        aspect-ratio: 4 / 3;
         object-fit: cover;
         object-position: center top;
         border-radius: 22px;
@@ -235,6 +235,7 @@
         margin: 0;
         font-size: 1.15rem;
         line-height: 1.18;
+        overflow-wrap: anywhere;
       }
 
       .mane-city-card p {
@@ -306,6 +307,10 @@
           padding: 20px 20px 0;
         }
 
+        .mane-city-hero-media img {
+          aspect-ratio: 16 / 9;
+        }
+
         .mane-city-hero-content {
           width: min(980px, calc(100% - 40px));
           padding: 20px 22px 22px;
@@ -324,6 +329,10 @@
 
         .mane-city-hero-media img {
           aspect-ratio: 21 / 7;
+        }
+
+        .mane-city-card h3 {
+          overflow-wrap: normal;
         }
 
         .mane-city-grid {
