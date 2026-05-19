@@ -1116,7 +1116,7 @@ function renderLocalizedHeroCopy() {
       : "Read the articles, then follow the platforms where I publish.";
   }
 
-  const maneCityLabel = "Mane City Journal";
+  const maneCityLabel = isItalian ? "Diario Mane City" : "Mane City Journal";
   document.querySelectorAll('[data-link="mane-city"]').forEach((node) => {
     const span = node.querySelector("span");
     if (span) {
