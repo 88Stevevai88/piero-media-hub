@@ -274,7 +274,7 @@ html.theme-night .signal-stage {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("./io.png") center 20% / cover no-repeat;
+  background: url("./io-optimized.jpg") center 20% / cover no-repeat;
   background-position: 84% 10%;
   filter: contrast(1.05) saturate(1.0) brightness(0.99);
   transform: scale(1);

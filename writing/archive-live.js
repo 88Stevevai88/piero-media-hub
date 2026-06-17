@@ -73,7 +73,7 @@
           publishedAt: "2026-05-01T09:00:00+02:00",
           href: "https://www.linkedin.com/pulse/247-markets-need-better-mobile-experience-piero-pasquariello-zsbfc/",
           pageHref: "/writing/247-markets-need-better-mobile-experience/",
-          image: "/assets/ougo.png",
+          image: "/assets/ougo-optimized.jpg",
           imageAlt: "Cover image for 24/7 markets made understandable",
         },
         {
@@ -86,7 +86,7 @@
           publishedAt: "2026-04-28T09:00:00+02:00",
           href: "https://www.linkedin.com/posts/piero-pasquariello-778a9212a_ugcPost-7458535000385179649-lnZV?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB_XAswBp4NxXA595vwNFcielzlAweCzWcs",
           pageHref: "/writing/most-crypto-apps-still-feel-like-built-for-power-users/",
-          image: "/assets/ougo.png",
+          image: "/assets/ougo-optimized.jpg",
           imageAlt: "Cover image for markets made understandable",
         },
       ],
@@ -120,7 +120,7 @@
           publishedAt: "2026-05-09T09:00:00+02:00",
           href: "https://www.linkedin.com/pulse/247-markets-need-better-mobile-experience-piero-pasquariello-zsbfc/",
           pageHref: "/writing/perche-una-ux-chiara-costruisce-fiducia/",
-          image: "/assets/ougo.png",
+          image: "/assets/ougo-optimized.jpg",
           imageAlt: "Cover image for the Italian LinkedIn article about clear UX",
         },
         {
@@ -133,7 +133,7 @@
           publishedAt: "2026-05-08T09:00:00+02:00",
           href: "https://www.linkedin.com/posts/piero-pasquariello-778a9212a_ugcPost-7458536295452160000-2luA?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB_XAswBp4NxXA595vwNFcielzlAweCzWcs",
           pageHref: "/writing/cronos-funziona-meglio-quando-e-spiegato-bene/",
-          image: "/assets/ougo.png",
+          image: "/assets/ougo-optimized.jpg",
           imageAlt: "Cover image for the Italian LinkedIn article about explaining Cronos",
         },
       ],
@@ -189,7 +189,7 @@
         publishedAt: item.publishedAt || item.pubDate || "",
         href: item.href,
         pageHref: mediumPageMap[normalizeTitle(item.title)] || item.href,
-        image: item.image || "/assets/ougo.png",
+        image: item.image || "/assets/ougo-optimized.jpg",
         imageAlt: item.imageAlt || `${item.title} cover image`,
       }));
 
