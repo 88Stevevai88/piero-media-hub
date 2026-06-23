@@ -188,7 +188,7 @@
         meta: item.meta || "Medium",
         publishedAt: item.publishedAt || item.pubDate || "",
         href: item.href,
-        pageHref: mediumPageMap[normalizeTitle(item.title)] || item.href,
+        pageHref: mediumPageMap[normalizeTitle(item.title)] || item.pageHref || item.href,
         image: item.image || "/assets/ougo-optimized.jpg",
         imageAlt: item.imageAlt || `${item.title} cover image`,
       }));

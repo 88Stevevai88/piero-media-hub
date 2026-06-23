@@ -1,5 +1,11 @@
 const FEED_URL = "https://medium.com/feed/@pieropasquariello";
 
+const CURATED_PAGE_PATHS = new Map([
+  ["cronos app is not about turning everyone into a trader", "/writing/cronos-app-is-not-about-turning-everyone-into-a-trader/"],
+  ["cronos app and the problem of too many financial apps", "/writing/cronos-app-and-the-problem-of-too-many-financial-apps/"],
+  ["perche lapy non e il vero punto della nuova proposta cro", "/writing/perche-lapy-non-e-il-vero-punto-della-nuova-proposta-cro/"],
+]);
+
 module.exports = async function mediumFeedHandler(req, res) {
   if (req.method && req.method !== "GET") {
     res.statusCode = 405;
@@ -10,25 +16,13 @@ module.exports = async function mediumFeedHandler(req, res) {
   }
 
   try {
-    const response = await fetch(FEED_URL, {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        Accept: "application/rss+xml, application/xml;q=0.9, */*;q=0.8",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`Medium feed responded with ${response.status}`);
-    }
-
-    const xml = await response.text();
-    const items = parseMediumFeed(xml);
+    const items = await fetchMediumItems();
+    const publicItems = items.map(({ contentBlocks, ...item }) => item);
 
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/json; charset=utf-8");
     res.setHeader("Cache-Control", "no-store, max-age=0");
-    res.end(JSON.stringify({ items, updatedAt: new Date().toISOString() }));
+    res.end(JSON.stringify({ items: publicItems, updatedAt: new Date().toISOString() }));
   } catch (error) {
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -36,6 +30,22 @@ module.exports = async function mediumFeedHandler(req, res) {
     res.end(JSON.stringify({ items: [], error: "Unable to load Medium feed" }));
   }
 };
+
+async function fetchMediumItems() {
+  const response = await fetch(FEED_URL, {
+    headers: {
+      "User-Agent":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+      Accept: "application/rss+xml, application/xml;q=0.9, */*;q=0.8",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Medium feed responded with ${response.status}`);
+  }
+
+  return parseMediumFeed(await response.text());
+}
 
 function parseMediumFeed(xml) {
   const blocks = xml.match(/<item\b[\s\S]*?<\/item>/gi) || [];
@@ -61,6 +71,7 @@ function parseMediumFeed(xml) {
       const language = detectLanguage(`${title} ${textContent}`);
       const summary = textContent ? truncate(textContent, 190) : "";
       const readingMinutes = estimateReadTime(textContent);
+      const slug = slugify(title);
 
       return {
         id: href,
@@ -75,6 +86,9 @@ function parseMediumFeed(xml) {
         imageAlt: `${title} cover image`,
         pubDate,
         readingMinutes,
+        slug,
+        pageHref: getInternalPageHref(title, slug),
+        contentBlocks: extractTextBlocks(htmlContent),
       };
     })
     .filter(Boolean)
@@ -106,8 +120,47 @@ function parseMediumFeed(xml) {
         pubDate: item.pubDate,
         publishedAt: item.pubDate,
         readingMinutes: item.readingMinutes,
+        slug: item.slug,
+        pageHref: item.pageHref,
+        contentBlocks: item.contentBlocks,
       };
     });
+}
+
+function getInternalPageHref(title, slug = slugify(title)) {
+  return CURATED_PAGE_PATHS.get(normalizeForLookup(title)) || `/writing/read/${slug}/`;
+}
+
+function slugify(value) {
+  return normalizeForLookup(value)
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 90);
+}
+
+function normalizeForLookup(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’']/g, "")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function extractTextBlocks(html) {
+  const blocks = [];
+  const pattern = /<(h[1-3]|p|blockquote|li)\b[^>]*>([\s\S]*?)<\/\1>/gi;
+  let match;
+
+  while ((match = pattern.exec(String(html || "")))) {
+    const text = cleanText(stripHtml(match[2]));
+    if (text && text.length > 20 && !blocks.includes(text)) {
+      blocks.push(text);
+    }
+  }
+
+  return blocks.slice(0, 80);
 }
 
 function getTagValue(block, tagName) {
@@ -206,3 +259,7 @@ function decodeEntities(value) {
 function escapeRegex(value) {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
+
+module.exports.fetchMediumItems = fetchMediumItems;
+module.exports.getInternalPageHref = getInternalPageHref;
+module.exports.slugify = slugify;

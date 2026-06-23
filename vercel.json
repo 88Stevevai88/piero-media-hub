@@ -2,5 +2,19 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "buildCommand": "",
-  "installCommand": ""
+  "installCommand": "",
+  "rewrites": [
+    {
+      "source": "/writing/read/:slug/",
+      "destination": "/api/article?slug=:slug"
+    },
+    {
+      "source": "/writing/read/:slug",
+      "destination": "/api/article?slug=:slug"
+    },
+    {
+      "source": "/sitemap-articles.xml",
+      "destination": "/api/sitemap-articles"
+    }
+  ]
 }
