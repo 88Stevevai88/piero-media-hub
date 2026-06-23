@@ -69,7 +69,13 @@ function parseMediumFeed(xml) {
       }
 
       const language = detectLanguage(`${title} ${textContent}`);
-      const summary = textContent ? truncate(textContent, 190) : "";
+      const contentBlocks = extractTextBlocks(htmlContent);
+      const firstParagraph = contentBlocks.find((entry) => entry.type === "paragraph");
+      const summary = firstParagraph?.text
+        ? truncate(firstParagraph.text, 175)
+        : textContent
+          ? truncate(textContent, 175)
+          : "";
       const readingMinutes = estimateReadTime(textContent);
       const slug = slugify(title);
 
@@ -88,7 +94,7 @@ function parseMediumFeed(xml) {
         readingMinutes,
         slug,
         pageHref: getInternalPageHref(title, slug),
-        contentBlocks: extractTextBlocks(htmlContent),
+        contentBlocks,
       };
     })
     .filter(Boolean)
@@ -155,8 +161,17 @@ function extractTextBlocks(html) {
 
   while ((match = pattern.exec(String(html || "")))) {
     const text = cleanText(stripHtml(match[2]));
-    if (text && text.length > 20 && !blocks.includes(text)) {
-      blocks.push(text);
+    const tag = match[1].toLowerCase();
+    const type = tag.startsWith("h")
+      ? "heading"
+      : tag === "li"
+        ? "list-item"
+        : tag === "blockquote"
+          ? "quote"
+          : "paragraph";
+
+    if (text && text.length > 2 && !blocks.some((entry) => entry.text === text)) {
+      blocks.push({ type, text });
     }
   }
 
@@ -234,7 +249,10 @@ function truncate(value, maxLength) {
     return value;
   }
 
-  return `${value.slice(0, maxLength - 1).trimEnd()}…`;
+  const candidate = value.slice(0, maxLength - 1).trimEnd();
+  const lastSpace = candidate.lastIndexOf(" ");
+  const cleanEnd = lastSpace > maxLength * 0.65 ? candidate.slice(0, lastSpace) : candidate;
+  return `${cleanEnd.trimEnd()}…`;
 }
 
 function estimateReadTime(text) {

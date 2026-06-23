@@ -116,7 +116,7 @@ function renderArticle(item) {
           <a class="action-button action-primary" href="${escapeHtml(item.href)}" target="_blank" rel="noreferrer">${isItalian ? "Apri su Medium" : "Read on Medium"}</a>
         </div>
       </header>
-      <section class="article-hero panel reveal is-visible">
+      <section class="article-hero article-hero-auto panel reveal is-visible">
         <div class="article-hero-copy">
           <p class="eyebrow">Medium / ${isItalian ? "Italiano" : "English"}</p>
           <h1>${escapeHtml(item.title)}</h1>
@@ -158,17 +158,46 @@ function renderArticle(item) {
 }
 
 function renderBody(blocks, isItalian) {
-  const safeBlocks = Array.isArray(blocks) ? blocks.filter(Boolean).slice(0, 60) : [];
+  const safeBlocks = Array.isArray(blocks)
+    ? blocks.filter((entry) => entry?.text).slice(0, 80)
+    : [];
   if (!safeBlocks.length) {
     return `<h2>${isItalian ? "In sintesi" : "In brief"}</h2><p>${isItalian ? "Apri la fonte originale per leggere l’articolo completo." : "Open the original source to read the complete article."}</p>`;
   }
 
-  return safeBlocks
-    .map(
-      (block, index) =>
-        `${index === 0 ? `<h2>${isItalian ? "L’articolo" : "The article"}</h2>` : ""}<p>${escapeHtml(block)}</p>`,
-    )
-    .join("\n");
+  const output = [];
+  let listItems = [];
+
+  const flushList = () => {
+    if (!listItems.length) return;
+    output.push(
+      `<ul class="article-list">${listItems.map((text) => `<li>${escapeHtml(text)}</li>`).join("")}</ul>`,
+    );
+    listItems = [];
+  };
+
+  if (safeBlocks[0].type !== "heading") {
+    output.push(`<h2>${isItalian ? "L’articolo" : "The article"}</h2>`);
+  }
+
+  safeBlocks.forEach((block) => {
+    if (block.type === "list-item") {
+      listItems.push(block.text);
+      return;
+    }
+
+    flushList();
+    if (block.type === "heading") {
+      output.push(`<h2>${escapeHtml(block.text)}</h2>`);
+    } else if (block.type === "quote") {
+      output.push(`<blockquote>${escapeHtml(block.text)}</blockquote>`);
+    } else {
+      output.push(`<p>${escapeHtml(block.text)}</p>`);
+    }
+  });
+
+  flushList();
+  return output.join("\n");
 }
 
 function renderNotFound(res) {
