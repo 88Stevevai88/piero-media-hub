@@ -1,6 +1,13 @@
 const { fetchMediumItems } = require("./medium");
 
 module.exports = async function sitemapArticlesHandler(req, res) {
+  if (req.method && !["GET", "HEAD"].includes(req.method)) {
+    res.statusCode = 405;
+    res.setHeader("Allow", "GET, HEAD");
+    res.end("Method Not Allowed");
+    return;
+  }
+
   try {
     const items = await fetchMediumItems();
     const urls = items

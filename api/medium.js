@@ -7,9 +7,9 @@ const CURATED_PAGE_PATHS = new Map([
 ]);
 
 module.exports = async function mediumFeedHandler(req, res) {
-  if (req.method && req.method !== "GET") {
+  if (req.method && !["GET", "HEAD"].includes(req.method)) {
     res.statusCode = 405;
-    res.setHeader("Allow", "GET");
+    res.setHeader("Allow", "GET, HEAD");
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
     res.end("Method Not Allowed");
     return;

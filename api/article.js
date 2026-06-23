@@ -4,9 +4,9 @@ const SITE_URL = "https://pieropasquariello.com";
 const GA_ID = "G-QFLFW67PL7";
 
 module.exports = async function articleHandler(req, res) {
-  if (req.method && req.method !== "GET") {
+  if (req.method && !["GET", "HEAD"].includes(req.method)) {
     res.statusCode = 405;
-    res.setHeader("Allow", "GET");
+    res.setHeader("Allow", "GET, HEAD");
     res.end("Method Not Allowed");
     return;
   }
