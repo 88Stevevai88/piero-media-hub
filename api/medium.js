@@ -1,4 +1,5 @@
 const FEED_URL = "https://medium.com/feed/@pieropasquariello";
+const { cachedMediumItems } = require("../data/medium-cache");
 
 const CURATED_PAGE_PATHS = new Map([
   ["cronos app is not about turning everyone into a trader", "/writing/cronos-app-is-not-about-turning-everyone-into-a-trader/"],
@@ -32,19 +33,58 @@ module.exports = async function mediumFeedHandler(req, res) {
 };
 
 async function fetchMediumItems() {
-  const response = await fetch(FEED_URL, {
-    headers: {
-      "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-      Accept: "application/rss+xml, application/xml;q=0.9, */*;q=0.8",
-    },
+  try {
+    const response = await fetch(FEED_URL, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        Accept: "application/rss+xml, application/xml;q=0.9, */*;q=0.8",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Medium feed responded with ${response.status}`);
+    }
+
+    return mergeMediumItems(parseMediumFeed(await response.text()), cachedMediumItems);
+  } catch (error) {
+    return sortMediumItems(cachedMediumItems);
+  }
+}
+
+function mergeMediumItems(liveItems, fallbackItems) {
+  const bySlug = new Map();
+
+  fallbackItems.forEach((item) => {
+    if (item?.slug) {
+      bySlug.set(item.slug, normalizeCachedItem(item));
+    }
   });
 
-  if (!response.ok) {
-    throw new Error(`Medium feed responded with ${response.status}`);
-  }
+  liveItems.forEach((item) => {
+    if (item?.slug) {
+      bySlug.set(item.slug, item);
+    }
+  });
 
-  return parseMediumFeed(await response.text());
+  return sortMediumItems([...bySlug.values()]);
+}
+
+function normalizeCachedItem(item) {
+  return {
+    ...item,
+    pageHref: item.pageHref || getInternalPageHref(item.title, item.slug),
+    publishedAt: item.publishedAt || item.pubDate,
+    contentBlocks: Array.isArray(item.contentBlocks) ? item.contentBlocks : [],
+  };
+}
+
+function sortMediumItems(items) {
+  return [...items].sort((a, b) => {
+    const dateA = Date.parse(a.publishedAt || a.pubDate || "") || 0;
+    const dateB = Date.parse(b.publishedAt || b.pubDate || "") || 0;
+    return dateB - dateA;
+  });
 }
 
 function parseMediumFeed(xml) {
